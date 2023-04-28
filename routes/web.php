@@ -17,9 +17,11 @@ use Illuminate\Support\Facades\Auth;
 */
 //Test
 Route::get('/test', function () {
-    return view('admin.daftar.dudi.tambahdudi');
+    return view('admin.daftar.dudi.profiledudi');
 });
-
+Route::get('/login', function () {
+    return back();
+});
 Route::get('/', function () {
     if(Auth::user() != null){
         return back();
@@ -88,5 +90,7 @@ Route::middleware('role:admin')->get('/admin/administrator/master/company/create
 Route::middleware('role:admin')->post('/admin/administrator/master/company/newdata',  [AdminController::class, 'dudi_add']);
 Route::middleware('role:admin')->post('/admin/administrator/master/company/delete',  [AdminController::class, 'dudi_delete']);
 Route::middleware('role:admin')->get('/admin/administrator/master/company/search',  [AdminController::class, 'dudi_search']);
-
-
+Route::middleware('role:admin')->post('/admin/administrator/master/company/profile/{dudi}',  [AdminController::class, 'dudi_profile']);
+//Alumni Year
+Route::middleware('role:admin')->get('/admin/administrator/master/alumni',  [AdminController::class, 'alumni'])->name('admin@master_alumni');
+Route::middleware('role:admin')->get('/admin/administrator/master/alumni/search',  [AdminController::class, 'alumni_search']);

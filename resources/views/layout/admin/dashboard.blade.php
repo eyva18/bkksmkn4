@@ -139,7 +139,7 @@
                                             class="hide-menu"> Perusahaan
                                         </span></a>
                                 </li>
-                                <li class="sidebar-item"><a href="form-input-grid.html" class="sidebar-link"><span
+                                <li class="sidebar-item"><a href="/admin/administrator/master/alumni" class="sidebar-link"><span
                                             class="hide-menu"> Alumni
                                         </span></a>
                                 </li>

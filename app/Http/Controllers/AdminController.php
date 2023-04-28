@@ -12,6 +12,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+
 class AdminController extends Controller
 {
     public function index()
@@ -118,7 +119,7 @@ class AdminController extends Controller
         return back();
     }
 
-    //Category Function Here ------------------------------
+    //Dudi Function Here ------------------------------
     public function dudi()
     {
         //Jurusan Database Function
@@ -136,7 +137,8 @@ class AdminController extends Controller
     }
     public function dudi_create()
     {
-        return view('admin.daftar.dudi.tambahdudi');
+
+        return view('admin.daftar.dudi.tambahdudi', ['bidangdata' => CategoryModel::all()]);
     }
     public function dudi_update(Request $request)
     {
@@ -174,7 +176,7 @@ class AdminController extends Controller
             'alamat' => $request->alamat,
             'logo' => $logo,
         ]);
-       $userdudi = User::create([
+        $userdudi = User::create([
             'name' => $request->username,
             'email' => $request->email,
             'password' => bcrypt($request->password),
@@ -197,7 +199,7 @@ class AdminController extends Controller
     public function dudi_search(Request $request)
     {
         //Jurusan Database Function
-        $datadudi = DudiModel::where('nama','like',"%".$request->nama_perusahaan."%")->get();
+        $datadudi = DudiModel::where('nama', 'like', "%" . $request->nama_perusahaan . "%")->get();
         //Count Lowongan Kerja
         $lowongan = [];
         foreach ($datadudi as $data) {
@@ -207,6 +209,51 @@ class AdminController extends Controller
         return view('admin.daftar.dudi.dudi', [
             "datadudi" => $datadudi,
             "lowongan" => $lowongan
+        ]);
+    }
+    public function dudi_profile($dudi, Request $request)
+    {
+        //Jurusan Database Function
+        $datadudi = DudiModel::find($request->id);
+        //Count Lowongan Kerja
+        $lowongan = LowonganModel::where('id_dudi', $request->id)->with('dudi')->with('kategori')->get();
+        return view('admin.daftar.dudi.profiledudi', [
+            "datadudi" => $datadudi,
+            "lowongan" => $lowongan
+        ]);
+    }
+
+    //Alumni Function Here ------------------------------
+    public function alumni()
+    {
+        //Jurusan Database Function
+        $dataalumni = AlumniModel::with('jurusan')->with('tahunlulus')->get();
+        return view('admin.daftar.alumni.alumni', [
+            "dataalumni" => $dataalumni,
+            "datajurusan" => JurusanModel::all(),
+            "datatahunlulus" => TahunLulusModel::all()
+        ]);
+    }
+    public function alumni_search(Request $request)
+    {
+        //Jurusan Database Function
+        if($request->idjurusan != "Jurusan" and $request->idtahunlulus != "Tahun Lulus"){
+            $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->where('kode_jurusan', $request->idjurusan)->where('kode_lulus', $request->idtahunlulus)->get();
+        }
+        elseif($request->idjurusan != "Jurusan" and $request->idtahunlulus == "Tahun Lulus"){
+            $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->where('kode_jurusan', $request->idjurusan)->get();
+
+         }
+         elseif($request->idtahunlulus != "Tahun Lulus" and $request->idjurusan == "Jurusan" ){
+            $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->where('kode_lulus', $request->idtahunlulus)->get();
+         }
+         elseif($request->idjurusan == "Jurusan" and $request->idtahunlulus == "Tahun Lulus"){
+            $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->get();
+         }
+        return view('admin.daftar.alumni.alumni', [
+            "dataalumni" => $dataalumni,
+            "datajurusan" => JurusanModel::all(),
+            "datatahunlulus" => TahunLulusModel::all(),
         ]);
     }
 }

@@ -13,11 +13,19 @@ span.text-logo {
 .border-top-300 {
     border-top: 8px solid rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
 }
+.border-top-black-300 {
+    border-top: 8px solid #1c2d41;
+}
 
 .mrl-5 {
     margin-left: 5px;
 }
-
+.mrl-10 {
+    margin-left: 13px;
+}
+.text-capitalize {
+    text-transform: capitalize;
+}
 .color-23 {
     --tw-text-opacity: 1;
     color: rgba(79, 70, 229, var(--tw-text-opacity));

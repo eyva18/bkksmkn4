@@ -62,7 +62,7 @@
                                     <div class="media-body">
                                         <ul class="list-unstyled">
                                             <li><i class="fas fa-newspaper color-23"></i> <span class="mrl-5 text-black">{{ $lowongan[$dudi->id] }}
-                                                    Lowongan Aktif</span></li>
+                                                    Lowongan</span></li>
                                             <li><i class="fas fa-building color-23"></i> <span
                                                     class="mrl-5 text-black">{{ $dudi->bidang ?? '-'}}</span></li>
                                             <li><i class="fas fa-phone-square color-23"></i> <span
@@ -74,7 +74,14 @@
                                 </li>
                             </ul>
                         </div>
-                        <a href="javascript:void(0)" class="btn btn-primary">Profile Perusahaan</a>
+                        <form action="/admin/administrator/master/company/profile/{{ str_replace(' ', '-', $dudi->nama) }}" method="post">
+                            @csrf
+                            <div class="form-group">
+                                <input type="hidden" name="id" id="newsletter-id"
+                                    class="form-control form-control-lg" value="{{ $dudi->id }}">
+                            </div>
+                            <button type="submit" class="btn btn-primary full-size-width">Profile Perusahaan</button>
+                        </form>
                         <ul class="list-unstyled d-flex none-mbt">
                             <li class="half-size-width">
                                 <a href="javascript:void(0)" class="btn btn-warning text-white full-size-width">Masuk</a>

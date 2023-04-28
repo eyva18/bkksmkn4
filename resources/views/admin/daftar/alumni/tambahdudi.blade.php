@@ -53,9 +53,9 @@
                                 <label class="input-group-text" for="inputGroupSelect01">Pilih</label>
                                 <select class="form-select" id="inputGroupSelect01" name="bidang">
                                     <option selected="">Bidang Perusahaan</option>
-                                    @foreach ($bidangdata as $item)
-                                    <option value="{{ $item->nama_kategori }}">{{ $item->nama_kategori }}</option>
-                                    @endforeach
+                                    <option value="Test Bidang 1">Test Bidang 1</option>
+                                    <option value="Test Bidang 2">Test Bidang 2</option>
+                                    <option value="Test Bidang 3">Test Bidang 3</option>
                                 </select>
                             </div>
                         </div>
