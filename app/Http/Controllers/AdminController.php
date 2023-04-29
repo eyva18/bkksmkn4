@@ -123,7 +123,7 @@ class AdminController extends Controller
     public function dudi()
     {
         //Jurusan Database Function
-        $datadudi = DudiModel::all();
+        $datadudi = DudiModel::paginate(10);
         //Count Lowongan Kerja
         $lowongan = [];
         foreach ($datadudi as $data) {
@@ -227,7 +227,7 @@ class AdminController extends Controller
     public function alumni()
     {
         //Jurusan Database Function
-        $dataalumni = AlumniModel::with('jurusan')->with('tahunlulus')->get();
+        $dataalumni = AlumniModel::with('jurusan')->with('tahunlulus')->paginate(10);
         return view('admin.daftar.alumni.alumni', [
             "dataalumni" => $dataalumni,
             "datajurusan" => JurusanModel::all(),

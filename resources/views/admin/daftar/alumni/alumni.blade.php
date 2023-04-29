@@ -73,7 +73,7 @@
                             <div class="col-md-12 p-4">
                                 <h4 class="card-title">{{ $alumni->nama ?? '-' }}</h4>
                                 <ul class="list-unstyled">
-                                    <li class="media d-flex align-items-start">
+                                    <li class="media d-flex align-items-start alumni-show">
                                         <img class="d-flex me-3 logo-alumni"
                                             src="{{ URL::asset('images/profileimg/') . '/' . $alumni->photo_profile }}"
                                             alt="Logo {{ $alumni->nama }}" width="20%" style="max-height: 200">
@@ -151,6 +151,8 @@
                     </div>
                     {{-- Modal Delete End --}}
                 @endforeach
+                <div class="pagination">{{ $dataalumni->links() }}</div>
+                <br>
             </div>
         </div>
         <!-- ============================================================== -->
