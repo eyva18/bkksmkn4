@@ -227,33 +227,6 @@ class AdminController extends Controller
     public function alumni()
     {
         //Jurusan Database Function
-        $dataalumni = AlumniModel::with('jurusan')->with('tahunlulus')->get();
-        return view('admin.daftar.alumni.alumni', [
-            "dataalumni" => $dataalumni,
-            "datajurusan" => JurusanModel::all(),
-            "datatahunlulus" => TahunLulusModel::all()
-        ]);
     }
-    public function alumni_search(Request $request)
-    {
-        //Jurusan Database Function
-        if($request->idjurusan != "Jurusan" and $request->idtahunlulus != "Tahun Lulus"){
-            $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->where('kode_jurusan', $request->idjurusan)->where('kode_lulus', $request->idtahunlulus)->get();
-        }
-        elseif($request->idjurusan != "Jurusan" and $request->idtahunlulus == "Tahun Lulus"){
-            $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->where('kode_jurusan', $request->idjurusan)->get();
-
-         }
-         elseif($request->idtahunlulus != "Tahun Lulus" and $request->idjurusan == "Jurusan" ){
-            $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->where('kode_lulus', $request->idtahunlulus)->get();
-         }
-         elseif($request->idjurusan == "Jurusan" and $request->idtahunlulus == "Tahun Lulus"){
-            $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->get();
-         }
-        return view('admin.daftar.alumni.alumni', [
-            "dataalumni" => $dataalumni,
-            "datajurusan" => JurusanModel::all(),
-            "datatahunlulus" => TahunLulusModel::all(),
-        ]);
-    }
+    
 }
