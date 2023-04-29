@@ -16,8 +16,8 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 //Test
-Route::get('/test', function () {
-    return view('admin.daftar.dudi.profiledudi');
+Route::get('/alumni-design', function () {
+    return view('alumni.dashboard.dashboard');
 });
 Route::get('/login', function () {
     return back();

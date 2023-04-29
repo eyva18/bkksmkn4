@@ -16,6 +16,9 @@ span.text-logo {
 .border-top-black-300 {
     border-top: 8px solid #1c2d41;
 }
+.border-top-blue-300 {
+    border-top: 8px solid blue;
+}
 
 .mrl-5 {
     margin-left: 5px;
@@ -30,7 +33,10 @@ span.text-logo {
     --tw-text-opacity: 1;
     color: rgba(79, 70, 229, var(--tw-text-opacity));
 }
-
+.top-card {
+    border-bottom: 1px solid #e5e7eb;
+    margin-bottom: 20px;
+}
 .text-black {
     color: black;
 }
