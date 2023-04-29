@@ -89,10 +89,6 @@ class AdminAlumniController extends Controller
         }
 
         AlumniModel::destroy($request->id);
-<<<<<<< HEAD
-=======
-
->>>>>>> 81a02ba79432498b7a9efd9a9e3ea09b0f6be80c
         return redirect('/admin/administrator/master/alumni');
     }
 }

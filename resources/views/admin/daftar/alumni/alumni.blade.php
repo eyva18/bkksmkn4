@@ -142,11 +142,7 @@
                                         <p class="mt-3">Apakan Ingin Melanjutkan Menghapus data: <br> ID:
                                             {{ $alumni->id }}
                                             | {{ $alumni->nama }}</p>
-<<<<<<< HEAD
                                         <form action="/admin/administrator/master/alumni/{{ $alumni->id }}" method="post">
-=======
-                                        <form action="/admin/alumni/{{ $alumni->id }}" method="post">
->>>>>>> 81a02ba79432498b7a9efd9a9e3ea09b0f6be80c
                                             @method('delete')
                                             @csrf
                                             <input type="hidden" name="id" id="newsletter-id" class="form-control form-control-lg" value="{{ $alumni->id }}">
