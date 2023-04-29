@@ -42,7 +42,14 @@
                             </ul>
                             <div class="row">
                                 <div class="col-lg-12 text-center">
-                                    <a href="javascript:void(0)" class="btn btn-secondary">Ubah Profile</a>
+                                    <form action="/admin/administrator/master/company/edit/{{ str_replace(' ', '-', $datadudi->nama) }}" method="post">
+                                        @csrf
+                                        <div class="form-group">
+                                            <input type="hidden" name="id" id="newsletter-id"
+                                                class="form-control form-control-lg" value="{{ $datadudi->id }}">
+                                        </div>
+                                        <button type="submit" class="btn btn-secondary">Ubah Profile</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

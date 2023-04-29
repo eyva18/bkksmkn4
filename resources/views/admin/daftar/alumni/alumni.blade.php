@@ -104,7 +104,7 @@
                                 @csrf
                                 <div class="form-group">
                                     <input type="hidden" name="id" id="newsletter-id"
-                                        class="form-control form-control-lg" value="{{ $alumni->id }}">
+                                        class="form-control form-control-lg" value="{{ $alumni->id ??'-' }}">
                                 </div>
                                 <button type="submit" class="btn btn-primary full-size-width">Profile Alumni</button>
                             </form>
@@ -116,13 +116,13 @@
                                 <li class="half-size-width">
                                     <button type="button" class="btn btn-danger text-white full-size-width"
                                         data-bs-toggle="modal"
-                                        data-bs-target="#deletemodal{{ $alumni->id }}">Hapus</button>
+                                        data-bs-target="#deletemodal{{ $alumni->id ??'-' }}">Hapus</button>
                                 </li>
                             </ul>
                         </div>
                     </div>
                     {{-- Modal Delete Start --}}
-                    <div id="deletemodal{{ $alumni->id }}" class="modal fade" tabindex="-1" role="dialog"
+                    <div id="deletemodal{{ $alumni->id ??'-' }}" class="modal fade" tabindex="-1" role="dialog"
                         aria-hidden="true">
                         <div class="modal-dialog modal-sm">
                             <div class="modal-content modal-filled bg-danger">
@@ -131,13 +131,13 @@
                                         <i class="dripicons-wrong h1"></i>
                                         <h4 class="mt-2">Peringatan!</h4>
                                         <p class="mt-3">Apakan Ingin Melanjutkan Menghapus data: <br> ID:
-                                            {{ $alumni->id }}
-                                            | {{ $alumni->nama }}</p>
+                                            {{ $alumni->id ??'-' }}
+                                            | {{ $alumni->nama ??'-' }}</p>
                                         <form action="/admin/administrator/master/alumni/delete" method="post">
                                             @csrf
                                             <div class="form-group">
                                                 <input type="hidden" name="id" id="newsletter-id"
-                                                    class="form-control form-control-lg" value="{{ $alumni->id }}">
+                                                    class="form-control form-control-lg" value="{{ $alumni->id ??'-' }}">
                                             </div>
                                             <button type="submit" class="btn btn-light my-2"
                                                 data-bs-dismiss="modal">Delete</button>
