@@ -19,6 +19,9 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/alumni-design', function () {
     return view('alumni.dashboard.dashboard');
 });
+Route::get('/test', function () {
+    return view('admin.daftar.alumni.profilealumni');
+});
 Route::get('/login', function () {
     return back();
 });
@@ -91,6 +94,9 @@ Route::middleware('role:admin')->post('/admin/administrator/master/company/newda
 Route::middleware('role:admin')->post('/admin/administrator/master/company/delete',  [AdminController::class, 'dudi_delete']);
 Route::middleware('role:admin')->get('/admin/administrator/master/company/search',  [AdminController::class, 'dudi_search']);
 Route::middleware('role:admin')->post('/admin/administrator/master/company/profile/{dudi}',  [AdminController::class, 'dudi_profile']);
+Route::middleware('role:admin')->post('/admin/administrator/master/company/edit/{dudi}',  [AdminController::class, 'editdudi_profile']);
 //Alumni Year
 Route::middleware('role:admin')->get('/admin/administrator/master/alumni',  [AdminController::class, 'alumni'])->name('admin@master_alumni');
 Route::middleware('role:admin')->get('/admin/administrator/master/alumni/search',  [AdminController::class, 'alumni_search']);
+Route::middleware('role:admin')->post('/admin/administrator/master/alumni/delete',  [AdminController::class, 'alumni_delete']);
+Route::middleware('role:admin')->post('/admin/administrator/master/alumni/profile/{dudi}',  [AdminController::class, 'alumni_profile']);

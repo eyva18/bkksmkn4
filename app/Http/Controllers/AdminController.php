@@ -142,10 +142,42 @@ class AdminController extends Controller
     }
     public function dudi_update(Request $request)
     {
+        $olddata = DudiModel::find($request->id);
+        if ($image = $request->file('logo')) {
+            $destinationPath = 'images/profileimg/';
+            $logoimage = $request->id . "%" . $image->getClientOriginalName();
+            $image->move($destinationPath, $logoimage);
+            $logo = "$logoimage";
+            $imagename = $olddata->logo;
+            $image1 = $imagename;
+            File::delete(public_path("images/profileimg/$image1"));
+        } else {
+        }
         DudiModel::find($request->id)->update([
-            'nama_kategori' => $request->nama_kategori,
+            'nama' => $request->nama,
+            'bidang' => $request->bidang,
+            'no_telp' => $request->no_telp,
+            'deskripsi' => $request->deskripsi,
+            'alamat' => $request->alamat,
+            'logo' => $logo,
         ]);
-        return back();
+        $pw = null;
+        if($request->password != null){
+            User::where('kode_owner', $request->id)->update([
+                'name' => $request->username,
+                'email' => $request->email,
+                'password' => bcrypt($request->password),
+                'photo_profile' => $logo
+        ]);
+        }
+        elseif($request->password == null){
+            User::where('kode_owner', $request->id)->update([
+                'name' => $request->username,
+                'email' => $request->email,
+                'photo_profile' => $logo
+        ]);
+        }
+        return redirect()->route('admin@master_company');
     }
     public function dudi_add(Request $request)
     {
@@ -222,6 +254,18 @@ class AdminController extends Controller
             "lowongan" => $lowongan
         ]);
     }
+    public function editdudi_profile($dudi, Request $request)
+    {
+        //Jurusan Database Function
+        $datadudi = DudiModel::find($request->id);
+        $akundudi = User::where('kode_owner', $request->id)->first();
+        //Count Lowongan Kerja
+        return view('admin.daftar.dudi.ubahdudi', [
+            "datadudi" => $datadudi,
+            "dudiakun" => $akundudi,
+            'bidangdata' => CategoryModel::all()
+        ]);
+    }
 
     //Alumni Function Here ------------------------------
     public function alumni()
@@ -255,5 +299,15 @@ class AdminController extends Controller
             "datajurusan" => JurusanModel::all(),
             "datatahunlulus" => TahunLulusModel::all(),
         ]);
+    }
+    public function alumni_delete(Request $request) 
+    {
+        $data = AlumniModel::find($request->id);
+        $imagename = $data->photo_profile;
+        $image1 = $imagename;
+        File::delete(public_path("images/profileimg/$image1"));
+        AlumniModel::find($request->id)->delete();
+        User::where('kode_owner', $request->id)->delete();
+        return back();
     }
 }
