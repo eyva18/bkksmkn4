@@ -37,26 +37,35 @@
                     </div>
                     <div class="row pdt-20">
                         <div class="col-md-3">
-                            <form action="/admin/administrator/master/alumni/search" method="GET">
+                            <form action="/admin/administrator/master/alumni" method="GET">
+                                @method('GET')
                                 @csrf
-                            <select class="form-select full-size-width" id="inputGroupSelect01" name="idjurusan">
-                                <option selected="">Jurusan</option>
+                            <select class="form-select full-size-width" id="idjurusan" name="idjurusan" value="{{ request('idjurusan') }}">
+                                <option selected>Jurusan</option>
                                 @foreach ($datajurusan as $item)
-                                <option value="{{ $item->id }}">{{ $item->jurusan }}</option>
+                                    @if(request('idjurusan') == $item->id)
+                                        <option value="{{ $item->id }}" selected>{{ $item->jurusan }}</option>
+                                    @else
+                                        <option value="{{ $item->id }}">{{ $item->jurusan }}</option>
+                                    @endif
                                 @endforeach
                             </select>
                         </div>
                         <div class="col-md-3">
-                            <select class="form-select full-size-width" id="inputGroupSelect01" name="idtahunlulus">
-                                <option selected="">Tahun Lulus</option>
+                            <select class="form-select full-size-width" id="idtahunlulus" name="idtahunlulus" value="{{ request('idtahunlulus') }}">
+                                <option selected>Tahun Lulus</option>
                                 @foreach ($datatahunlulus as $item)
-                                <option value="{{ $item->id }}">{{ $item->tahun_lulus }}</option>
+                                    @if (request('idtahunlulus') == $item->id)
+                                        <option value="{{ $item->id }}"selected>{{ $item->tahun_lulus }}</option>
+                                    @else
+                                        <option value="{{ $item->id }}">{{ $item->tahun_lulus }}</option>
+                                    @endif
                                 @endforeach
                             </select>
                         </div>
                         <div class="col-md-3">
-                                <input type="text" id="example-input-large" name="nama_alumni"
-                                    class="form-control" placeholder="Nama Alumni">
+                                <input type="text" id="nama_alumni" name="nama_alumni"
+                                    class="form-control" placeholder="Nama Alumni" value="{{ request('nama_alumni') }}">
                         </div>
                         <div class="col-md-3">
                             <button type="submit" class="btn btn-primary full-size-width">Cari
@@ -133,17 +142,13 @@
                                         <p class="mt-3">Apakan Ingin Melanjutkan Menghapus data: <br> ID:
                                             {{ $alumni->id }}
                                             | {{ $alumni->nama }}</p>
-                                        <form action="/admin/administrator/master/alumni/delete" method="post">
+                                        <form action="/admin/alumni/{{ $alumni->id }}" method="post">
+                                            @method('delete')
                                             @csrf
-                                            <div class="form-group">
-                                                <input type="hidden" name="id" id="newsletter-id"
-                                                    class="form-control form-control-lg" value="{{ $alumni->id }}">
-                                            </div>
-                                            <button type="submit" class="btn btn-light my-2"
-                                                data-bs-dismiss="modal">Delete</button>
+                                            <input type="hidden" name="id" id="newsletter-id" class="form-control form-control-lg" value="{{ $alumni->id }}">
+                                            <button type="submit" class="btn btn-light my-2" >Delete</button>
                                         </form>
-                                        <button type="button" class="btn btn-success"
-                                            data-bs-dismiss="modal">Cancel</button>
+                                        <button type="button" class="btn btn-success" data-bs-dismiss="modal">Cancel</button>
                                     </div>
                                 </div>
                             </div>

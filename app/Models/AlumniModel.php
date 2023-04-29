@@ -9,7 +9,8 @@ class AlumniModel extends Model
 {
     use HasFactory;
     protected $table = 'alumni';
-    protected $fillable = ['NISN', 'NIS', 'nama', 'no_hp', 'biografi', 'agama', 'jk', 'alamat', 'TTL', 'photo_profile', 'transkrif_nilai', 'kode_jurusan', 'kode_lulus'];
+    protected $guarded = ['id'];
+
     public function jurusan()
     {
         return $this->belongsTo(JurusanModel::class, 'kode_jurusan', 'id');
