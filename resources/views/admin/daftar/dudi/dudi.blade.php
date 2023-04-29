@@ -56,7 +56,7 @@
                         <div class="col-md-12 p-4">
                             <h4 class="card-title">{{ $dudi->nama ?? '-'}}</h4>
                             <ul class="list-unstyled">
-                                <li class="media d-flex align-items-start">
+                                <li class="media d-flex align-items-start company-show">
                                     <img class="d-flex me-3 logo-company" src="{{ URL::asset('images/profileimg/').'/'.$dudi->logo }}"
                                         alt="Logo {{ $dudi->nama }}" width="100">
                                     <div class="media-body">
@@ -122,6 +122,7 @@
             {{-- Modal Delete End --}}
                 @endforeach
             </div>
+            <div class="pagination">{{ $datadudi->links() }}</div>
         </div>
         <!-- ============================================================== -->
         <!-- footer -->

@@ -39,7 +39,7 @@
                     <div class="navbar-brand">
                         <!-- Logo icon -->
                         <a href="#" class="pdl-10">
-                            <span class="text-logo">BKK - SMKN 4</span>
+                            <span class="text-logo">ADMIN - BKK</span>
                         </a>
                     </div>
                     <!-- ============================================================== -->
