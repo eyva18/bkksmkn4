@@ -36,7 +36,7 @@
                                 <li><i class="fas fa-building color-23"></i> <span class="mrl-5 text-black">{{ $datadudi->bidang ?? '-'}}</span></li>
                                 <li><i class="fas fa-map-marker-alt color-23"></i> <span class="mrl-5 text-black">{{ $datadudi->alamat ?? '-'}}</span></li>
                                 <li><i class="far fa-envelope color-23"></i> <span
-                                        class="mrl-5 text-black">{{ Auth::user()->email ?? '-'}}</span></li>
+                                        class="mrl-5 text-black">{{ $userdudi->email ?? '-'}}</span></li>
                                 <li><i class="fas fa-phone-square color-23"></i> <span
                                         class="mrl-5 text-black">{{ $datadudi->no_telp ?? '-'}}</span></li>
                             </ul>

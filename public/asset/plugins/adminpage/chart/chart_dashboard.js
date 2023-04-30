@@ -1,4 +1,4 @@
-// Chart Alumni Pertahun
+// Chart Alumni Pertahun 
 var ctx = document.getElementById("ds1").getContext('2d');
 var ds1 = new Chart(ctx, {
     type: 'bar',
@@ -6,7 +6,7 @@ var ds1 = new Chart(ctx, {
         labels: ["2020", "2021", "2022", "2023"],
         datasets: [{
             label: 'Alumni',
-            data: [300, 400, 430, 450, 600],
+            data: [450, 400, 430, 450, 600],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -70,7 +70,7 @@ new Chart("ds2", {
 var xValues = ["Januari", "Febuari", "Maret", "April"];
 var yValues = [40, 20, 35, 30];
 new Chart("ds3", {
-  type: "line",
+  type: "pie",
   data: {
     labels: xValues,
     datasets: [{

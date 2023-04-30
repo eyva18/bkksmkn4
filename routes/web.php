@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminLaporanTahunKelulusanController;
+use App\Http\Controllers\AdminLowonganController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +22,7 @@ Route::get('/alumni-design', function () {
     return view('alumni.dashboard.dashboard');
 });
 Route::get('/test', function () {
-    return view('admin.daftar.alumni.profilealumni');
+    return view('admin.daftar.alumni.tambahalumni');
 });
 Route::get('/login', function () {
     return back();
@@ -100,3 +102,15 @@ Route::middleware('role:admin')->get('/admin/administrator/master/alumni',  [Adm
 Route::middleware('role:admin')->get('/admin/administrator/master/alumni/search',  [AdminController::class, 'alumni_search']);
 Route::middleware('role:admin')->post('/admin/administrator/master/alumni/delete',  [AdminController::class, 'alumni_delete']);
 Route::middleware('role:admin')->post('/admin/administrator/master/alumni/profile/{dudi}',  [AdminController::class, 'alumni_profile']);
+
+
+//Lowongan Kerja
+Route::middleware('role:admin')->get('/admin/administrator/master/job',  [AdminLowonganController::class, 'job'])->name('admin@master_job');
+Route::middleware('role:admin')->get('/admin/administrator/master/job/search',  [AdminLowonganController::class, 'job_search']);
+Route::middleware('role:admin')->post('/admin/administrator/master/company/{dudi}/job/{lowongan}',  [AdminLowonganController::class, 'job_detail']);
+Route::middleware('role:admin')->post('/admin/administrator/master/job/delete',  [AdminLowonganController::class, 'job_delete']);
+
+
+//Laporan Tahun Kelulusan
+Route::middleware('role:admin')->get('/admin/administrator/master/report/yearly',  [AdminLaporanTahunKelulusanController::class, 'index'])->name('admin@master_laporanYearly');
+Route::middleware('role:admin')->get('/admin/administrator/master/report/yeary/pick/',  [AdminLaporanTahunKelulusanController::class, 'laporan_yearly']);
