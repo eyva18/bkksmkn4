@@ -51,7 +51,9 @@ span.text-logo {
 .text-white {
     color: white;
 }
-
+.card-text{
+    white-space: pre-wrap;
+}
 .icon-button-modal {
     background: 0;
     border: 0;

@@ -9,7 +9,7 @@ class LowonganModel extends Model
 {
     use HasFactory;
     protected $table = 'lowongan';
-    protected $fillable = ['deskripsi_pekerjaan', 'deskripsi_perusahaan', 'lokasi', 'gaji', 'tgl_upload', 'id_dudi', 'id_kategori_pekerjaan'];
+    protected $guarded = ['id'];
     public function dudi()
     {
         return $this->belongsTo(DudiModel::class, 'id_dudi', 'id');
