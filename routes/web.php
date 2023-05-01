@@ -107,10 +107,10 @@ Route::middleware('role:admin')->get('/admin/administrator/master/company/edit/{
 //Alumni Year
 // Route::middleware('role:admin')->get('/admin/administrator/master/alumni',  [AdminController::class, 'alumni'])->name('admin@master_alumni');
 // Route::middleware('role:admin')->post('/admin/administrator/master/alumni/profile/{dudi}',  [AdminController::class, 'alumni_profile']);
-
 Route::middleware(['auth', 'role:admin'])->group(function() {
     Route::resource('/admin/administrator/master/alumni', AdminAlumniController::class);
 });
+
 //Lowongan Kerja
 Route::middleware('role:admin')->get('/admin/administrator/master/job',  [AdminLowonganController::class, 'job'])->name('admin@master_job');
 Route::middleware('role:admin')->get('/admin/administrator/master/job/search',  [AdminLowonganController::class, 'job_search']);
