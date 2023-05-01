@@ -13,9 +13,11 @@ span.text-logo {
 .border-top-300 {
     border-top: 8px solid rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
 }
+
 .border-top-black-300 {
     border-top: 8px solid #1c2d41;
 }
+
 .border-top-blue-300 {
     border-top: 8px solid blue;
 }
@@ -23,26 +25,36 @@ span.text-logo {
 .mrl-5 {
     margin-left: 5px;
 }
+
 .mrl-10 {
     margin-left: 13px;
 }
+
 .text-capitalize {
     text-transform: capitalize;
 }
+
 .color-23 {
     --tw-text-opacity: 1;
     color: rgba(79, 70, 229, var(--tw-text-opacity));
 }
+
 .top-card {
     border-bottom: 1px solid #e5e7eb;
     margin-bottom: 20px;
 }
+
 .text-black {
     color: black;
 }
 
 .text-white {
     color: white;
+}
+
+.icon-button-modal {
+    background: 0;
+    border: 0;
 }
 
 .text-red {
@@ -77,6 +89,7 @@ span.text-logo {
 .pdt-6 {
     padding-top: 6px;
 }
+
 .mrt-6 {
     margin-top: 6px;
 }
@@ -92,4 +105,33 @@ span.text-logo {
 .logo-company {
     border: 3px solid #fff;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.logo-alumni {
+    border: 3px solid #fff;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+
+/* Responsive CSS */
+@media only screen and (max-width:640px) {
+    .company-show {
+        display: grid !important;
+    }
+
+    .alumni-show {
+        display: grid !important;
+    }
+
+    .logo-alumni {
+        width: 62%;
+        margin-bottom: 15px;
+        margin-left: 39px;
+    }
+
+    .logo-company {
+        width: 70%;
+        margin-bottom: 15px;
+        margin-left: 39px;
+    }
 }

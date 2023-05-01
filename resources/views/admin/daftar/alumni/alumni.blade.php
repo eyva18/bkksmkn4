@@ -30,14 +30,12 @@
                             <h4 class="card-title">Pencarian Alumni</h4>
                         </div>
                         <div class="col-md-3">
-                            <a href="/admin/administrator/master/alumni/create"
-                                class="btn btn-primary full-size-width">Tambah Alumni</a>
-
+                            <a href="{{ route('alumni.create') }}" class="btn btn-secondary full-size-width">Tambah Alumni</a>
                         </div>
                     </div>
                     <div class="row pdt-20">
                         <div class="col-md-3">
-                            <form action="/admin/administrator/master/alumni" method="GET">
+                            <form action="{{ route('alumni.index') }}" method="GET">
                                 @method('GET')
                                 @csrf
                             <select class="form-select full-size-width" id="idjurusan" name="idjurusan" value="{{ request('idjurusan') }}">
@@ -76,31 +74,35 @@
                 </div>
             </div>
             <div class="row">
+                @if (session()->has('success'))
+                    <div class="alert alert-info" role="alert">
+                        <strong>Info!</strong> {{ session('success') }}
+                    </div>
+                @endif
                 @foreach ($dataalumni as $alumni)
                     <div class="col-md-6">
                         <div class="card border-top-300">
                             <div class="col-md-12 p-4">
                                 <h4 class="card-title">{{ $alumni->nama ?? '-' }}</h4>
                                 <ul class="list-unstyled">
-                                    <li class="media d-flex align-items-start">
+                                    <li class="media d-flex align-items-start alumni-show">
                                         <img class="d-flex me-3 logo-alumni"
-                                            src="{{ URL::asset('images/profileimg/') . '/' . $alumni->photo_profile }}"
+                                            src="{{ URL::asset('storage') . '/' . $alumni->photo_profile }}"
                                             alt="Logo {{ $alumni->nama }}" width="20%" style="max-height: 200">
                                         <div class="media-body">
                                             <ul class="list-unstyled">
                                                 <li><i class="fas fa-key color-23"></i> <span
-                                                    class="mrl-10 text-black text-capitalize">{{ $alumni->NIS ?? '-' }}</span>
+                                                    class="mrl-10 text-black text-capitalize">{{ $alumni->nis ?? '-' }}</span>
                                                 <li><i class="fas fa-graduation-cap color-23"></i> <span
                                                         class="mrl-5 text-black">{{ $alumni->jurusan->jurusan ?? '-' }} -
                                                         {{ $alumni->tahunlulus->tahun_lulus ?? '-' }}</span></li>
                                                 <li><i class="fas fa-birthday-cake color-23"></i> <span
-                                                        class="mrl-10 text-black text-capitalize">{{ $alumni->TTL ?? '-' }}</span>
+                                                        class="mrl-10 text-black text-capitalize">{{ $alumni->tempatTanggalLahir ?? '-' }}</span>
                                                 </li>
                                                 <li><i class="fas fa-user color-23"></i> <span
-                                                        class="mrl-10 text-black text-capitalize">{{ $alumni->jk ?? '-' }}</span>
+                                                        class="mrl-10 text-black text-capitalize">{{ $alumni->Jenis_Kelamin->jenis_kelamin ?? '-' }}</span>
                                                 </li>
-                                                <li><i class="fas fa-fas fa-phone color-23"></i> <span
-                                                        class="mrl-10 text-black text-capitalize">{{ $alumni->no_hp ?? '-' }}</span>
+                                                <li><i class="fas fa-fas fa-phone color-23"></i> <span class="mrl-10 text-black text-capitalize">{{ $alumni->no_hp ?? '-' }}</span>
                                                 </li>
                                             </ul>
                                         </div>
@@ -113,7 +115,7 @@
                                 @csrf
                                 <div class="form-group">
                                     <input type="hidden" name="id" id="newsletter-id"
-                                        class="form-control form-control-lg" value="{{ $alumni->id }}">
+                                        class="form-control form-control-lg" value="{{ $alumni->id ??'-' }}">
                                 </div>
                                 <button type="submit" class="btn btn-primary full-size-width">Profile Alumni</button>
                             </form>
@@ -125,13 +127,13 @@
                                 <li class="half-size-width">
                                     <button type="button" class="btn btn-danger text-white full-size-width"
                                         data-bs-toggle="modal"
-                                        data-bs-target="#deletemodal{{ $alumni->id }}">Hapus</button>
+                                        data-bs-target="#deletemodal{{ $alumni->id ??'-' }}">Hapus</button>
                                 </li>
                             </ul>
                         </div>
                     </div>
                     {{-- Modal Delete Start --}}
-                    <div id="deletemodal{{ $alumni->id }}" class="modal fade" tabindex="-1" role="dialog"
+                    <div id="deletemodal{{ $alumni->id ??'-' }}" class="modal fade" tabindex="-1" role="dialog"
                         aria-hidden="true">
                         <div class="modal-dialog modal-sm">
                             <div class="modal-content modal-filled bg-danger">
@@ -142,7 +144,7 @@
                                         <p class="mt-3">Apakan Ingin Melanjutkan Menghapus data: <br> ID:
                                             {{ $alumni->id }}
                                             | {{ $alumni->nama }}</p>
-                                        <form action="/admin/administrator/master/alumni/{{ $alumni->id }}" method="post">
+                                        <form action="{{ route('alumni.destroy', $alumni->id) }}" method="post">
                                             @method('delete')
                                             @csrf
                                             <input type="hidden" name="id" id="newsletter-id" class="form-control form-control-lg" value="{{ $alumni->id }}">
@@ -156,6 +158,8 @@
                     </div>
                     {{-- Modal Delete End --}}
                 @endforeach
+                <div class="d-flex flex-column">{{ $dataalumni->links() }}</div>
+                <br>
             </div>
         </div>
         <!-- ============================================================== -->

@@ -12,7 +12,7 @@
         <div class="page-breadcrumb">
             <div class="row">
                 <div class="col-7 align-self-center">
-                    <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">Tambah Perusahaan</h3>
+                    <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">Merubah Profile Perusahaan</h3>
                 </div>
             </div>
         </div>
@@ -27,12 +27,14 @@
                 <div class="card-body collapse show">
                     <div class="row">
                         <div class="col-md-9">
-                            <h3 class="card-title">Informasi Profil</h3>
+                            <h3 class="card-title">Informasi Profil <u>{{ $datadudi->nama ??'-' }}</u></h3>
                             <h6 class="card-subtitle">Data Personal dan Deskripsi</h6>
                         </div>
                     </div>
-                    <form action="/admin/administrator/master/company/newdata" method="POST" enctype="multipart/form-data">
+                    <form action="/admin/administrator/master/company/update" method="POST" enctype="multipart/form-data">
                         @csrf
+                            <input type="hidden" name="id" class="form-control font-weight-normal"
+                                value="{{ $datadudi->id ?? '-' }}">
                     <div class="row pdt-20">
                         <div class="col-md-4">
                             <h4 class="text-black m-0">Nama Perusahaan<span class="text-red"> *</span></h4>
@@ -40,7 +42,7 @@
                         </div>
                         <div class="col-md-8 pdt-6">
                             <input type="text" name="nama" class="form-control font-weight-normal"
-                                placeholder="Nama Lengkap Perusahaan">
+                                value="{{ $datadudi->nama ?? '-' }}">
                         </div>
                     </div>
                     <div class="row mrt-6">
@@ -52,10 +54,9 @@
                             <div class="input-group mb-3">
                                 <label class="input-group-text" for="inputGroupSelect01">Pilih</label>
                                 <select class="form-select" id="inputGroupSelect01" name="bidang">
-                                    <option selected="">Bidang Perusahaan</option>
-                                    <option value="Test Bidang 1">Test Bidang 1</option>
-                                    <option value="Test Bidang 2">Test Bidang 2</option>
-                                    <option value="Test Bidang 3">Test Bidang 3</option>
+                                    @foreach ($bidangdata as $item)
+                                    <option value="{{ $item->nama_kategori ?? '-' }}" {{ $datadudi->bidang==$item->nama_kategori ? 'selected' : ''  }}>{{ $item->nama_kategori }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -67,7 +68,7 @@
                         </div>
                         <div class="col-md-8 pdt-6">
                             <input type="text" name="no_telp" class="form-control font-weight-normal"
-                                placeholder="08123456....">
+                                value="{{ $datadudi->no_telp ?? '-' }}">
                         </div>
                     </div>
                     <div class="row mrt-6">
@@ -77,7 +78,7 @@
                         </div>
                         <div class="col-md-8 pdt-6">
                             <div class="form-group">
-                                <textarea class="form-control" name="deskripsi" rows="7" placeholder="Deskripsi Perusahaan..."></textarea>
+                                <textarea class="form-control" name="deskripsi" rows="7">{{ $datadudi->deskripsi ??'-' }}</textarea>
                             </div>
                         </div>
                     </div>
@@ -88,14 +89,14 @@
                         </div>
                         <div class="col-md-8 pdt-6">
                             <div class="form-group">
-                                <textarea class="form-control" name="alamat" rows="3" placeholder="Alamat Perusahaan..."></textarea>
+                                <textarea class="form-control" name="alamat" rows="3">{{ $datadudi->alamat ??'-' }}</textarea>
                             </div>
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-4">
                             <h4 class="text-black m-0">Logo Perusahaan<span class="text-red"> *</span></h4>
-                            <p class="text-muted mt-0 text-sm">diutamakan Ukuran 300x300</p>
+                            <p class="text-muted mt-0 text-sm">Kosongkan untuk tidak merubah Logo</p>
                         </div>
                         <div class="col-md-8 pdt-6">
                             <input class="form-control" name="logo" type="file" id="formFile">
@@ -118,7 +119,7 @@
                         </div>
                         <div class="col-md-8 pdt-6">
                             <input type="text" class="form-control font-weight-normal"
-                                placeholder="E-Mail Perusahaan..." name="email">
+                                value="{{ $dudiakun->email ??'-' }}" name="email">
                         </div>
                     </div>
                     <div class="row mrt-6">
@@ -128,17 +129,17 @@
                         </div>
                         <div class="col-md-8 pdt-6">
                             <input type="text" class="form-control font-weight-normal"
-                                placeholder="Username Perusahaan..." name="username">
+                                value="{{ $dudiakun->name ??'-' }}" name="username">
                         </div>
                     </div>
                     <div class="row mrt-6">
                         <div class="col-md-4">
                             <h4 class="text-black m-0">Password<span class="text-red"> *</span></h4>
-                            <p class="text-muted mt-0 text-sm">Password Pengguna Perusahaan</p>
+                            <p class="text-muted mt-0 text-sm">Kosongkan Untuk Tidak Mengubah Password</p>
                         </div>
                         <div class="col-md-8 pdt-6">
                             <input type="text" class="form-control font-weight-normal"
-                                placeholder="Password Pengguna Perusahaan..." name="password">
+                                value="" name="password">
                         </div>
                     </div>
                     <div class="row mrt-6">

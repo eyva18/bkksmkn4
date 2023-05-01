@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace app\Http\Controllers\ControllersAdmin;;
 
-use App\Models\AlumniModel;
-use App\Models\CategoryModel;
+use App\Models\User;
 use App\Models\DudiModel;
+use App\Models\AlumniModel;
 use App\Models\JurusanModel;
+use Illuminate\Http\Request;
+use App\Models\CategoryModel;
 use App\Models\LowonganModel;
 use App\Models\TahunLulusModel;
-use App\Models\User;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
@@ -30,7 +31,7 @@ class AdminController extends Controller
         //Data Foward Function
         $datajurusanalumni = [];
         foreach ($originaljurusan as $original) {
-            $yz = AlumniModel::where('kode_jurusan', $original->id)->count();
+            $yz = AlumniModel::where('kode_jurusanId', $original->id)->count();
             $datajurusanalumni[$original->id] = $yz;
         }
         return view('admin.master-page.department', [
@@ -65,7 +66,7 @@ class AdminController extends Controller
         //Data Foward Function
         $datatahunlulusanalumni = [];
         foreach ($originaltahunlulusan as $original) {
-            $yz = AlumniModel::where('kode_lulus', $original->id)->count();
+            $yz = AlumniModel::where('kode_lulusId', $original->id)->count();
             $datatahunlulusanalumni[$original->id] = $yz;
         }
         return view('admin.master-page.graduation-year', [
@@ -123,7 +124,7 @@ class AdminController extends Controller
     public function dudi()
     {
         //Jurusan Database Function
-        $datadudi = DudiModel::all();
+        $datadudi = DudiModel::paginate(10);
         //Count Lowongan Kerja
         $lowongan = [];
         foreach ($datadudi as $data) {
@@ -142,10 +143,42 @@ class AdminController extends Controller
     }
     public function dudi_update(Request $request)
     {
+        $olddata = DudiModel::find($request->id);
+        if ($image = $request->file('logo')) {
+            $destinationPath = 'images/profileimg/';
+            $logoimage = $request->id . "%" . $image->getClientOriginalName();
+            $image->move($destinationPath, $logoimage);
+            $logo = "$logoimage";
+            $imagename = $olddata->logo;
+            $image1 = $imagename;
+            File::delete(public_path("images/profileimg/$image1"));
+        } else {
+        }
         DudiModel::find($request->id)->update([
-            'nama_kategori' => $request->nama_kategori,
+            'nama' => $request->nama,
+            'bidang' => $request->bidang,
+            'no_telp' => $request->no_telp,
+            'deskripsi' => $request->deskripsi,
+            'alamat' => $request->alamat,
+            'logo' => $logo,
         ]);
-        return back();
+        $pw = null;
+        if($request->password != null){
+            User::where('kode_owner', $request->id)->update([
+                'name' => $request->username,
+                'email' => $request->email,
+                'password' => bcrypt($request->password),
+                'photo_profile' => $logo
+        ]);
+        }
+        elseif($request->password == null){
+            User::where('kode_owner', $request->id)->update([
+                'name' => $request->username,
+                'email' => $request->email,
+                'photo_profile' => $logo
+        ]);
+        }
+        return redirect()->route('admin@master_company');
     }
     public function dudi_add(Request $request)
     {
@@ -222,11 +255,61 @@ class AdminController extends Controller
             "lowongan" => $lowongan
         ]);
     }
+    public function editdudi_profile($dudi, Request $request)
+    {
+        //Jurusan Database Function
+        $datadudi = DudiModel::find($request->id);
+        $akundudi = User::where('kode_owner', $request->id)->first();
+        //Count Lowongan Kerja
+        return view('admin.daftar.dudi.ubahdudi', [
+            "datadudi" => $datadudi,
+            "dudiakun" => $akundudi,
+            'bidangdata' => CategoryModel::all()
+        ]);
+    }
 
     //Alumni Function Here ------------------------------
     public function alumni()
     {
         //Jurusan Database Function
+        $dataalumni = AlumniModel::with('jurusan')->with('tahunlulus')->paginate(10);
+        return view('admin.daftar.alumni.alumni', [
+            "dataalumni" => $dataalumni,
+            "datajurusan" => JurusanModel::all(),
+            "datatahunlulus" => TahunLulusModel::all()
+        ]);
     }
     
+    public function alumni_search(Request $request)
+    {
+        //Jurusan Database Function
+        if($request->idjurusan != "Jurusan" and $request->idtahunlulus != "Tahun Lulus"){
+            $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->where('kode_jurusan', $request->idjurusan)->where('kode_lulus', $request->idtahunlulus)->get();
+        }
+        elseif($request->idjurusan != "Jurusan" and $request->idtahunlulus == "Tahun Lulus"){
+            $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->where('kode_jurusan', $request->idjurusan)->get();
+
+         }
+         elseif($request->idtahunlulus != "Tahun Lulus" and $request->idjurusan == "Jurusan" ){
+            $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->where('kode_lulus', $request->idtahunlulus)->get();
+         }
+         elseif($request->idjurusan == "Jurusan" and $request->idtahunlulus == "Tahun Lulus"){
+            $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->get();
+         }
+        return view('admin.daftar.alumni.alumni', [
+            "dataalumni" => $dataalumni,
+            "datajurusan" => JurusanModel::all(),
+            "datatahunlulus" => TahunLulusModel::all(),
+        ]);
+    }
+    public function alumni_delete(Request $request) 
+    {
+        $data = AlumniModel::find($request->id);
+        $imagename = $data->photo_profile;
+        $image1 = $imagename;
+        File::delete(public_path("images/profileimg/$image1"));
+        AlumniModel::find($request->id)->delete();
+        User::where('kode_owner', $request->id)->delete();
+        return back();
+    }
 }

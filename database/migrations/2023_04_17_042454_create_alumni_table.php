@@ -13,19 +13,19 @@ return new class extends Migration
     {
         Schema::create('alumni', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('NISN');
-            $table->bigInteger('NIS');
+            $table->bigInteger('nisn');
+            $table->bigInteger('nis');
             $table->string('nama');
-            $table->integer('no_hp');
+            $table->bigInteger('no_hp');
             $table->text('biografi');
-            $table->string('agama');
-            $table->enum('jk', ['laki-laki', 'perempuan']);
+            $table->foreignId('agamaId');
+            $table->foreignId('jenis_kelaminId');
             $table->text('alamat');
-            $table->text('TTL');
+            $table->text('tempatTanggalLahir');
             $table->text('photo_profile');
-            $table->text('transkrif_nilai');
-            $table->bigInteger('kode_jurusan')->unsigned();
-            $table->bigInteger('kode_lulus')->unsigned();
+            $table->text('transkrip_nilai');
+            $table->foreignId('kode_jurusanId');
+            $table->foreignId('kode_lulusId');
             $table->timestamps();
         });
     }

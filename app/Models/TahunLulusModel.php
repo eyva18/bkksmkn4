@@ -10,4 +10,8 @@ class TahunLulusModel extends Model
     use HasFactory;
     protected $table = 'tahun_lulus';
     protected $fillable = ['tahun_lulus', 'id_jurusan'];
+
+    public function Alumni() {
+        return $this->hasMany(AlumniModel::class);
+    }
 }

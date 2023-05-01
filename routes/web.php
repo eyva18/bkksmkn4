@@ -1,10 +1,12 @@
 <?php
 
-use App\Http\Controllers\AdminAlumniController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\HomeController;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ControllersAdmin\AdminController;
+use App\Http\Controllers\ControllersAdmin\AdminAlumniController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +21,9 @@ use Illuminate\Support\Facades\Auth;
 //Test
 Route::get('/alumni-design', function () {
     return view('alumni.dashboard.dashboard');
+});
+Route::get('/test', function () {
+    return view('admin.daftar.alumni.profilealumni');
 });
 Route::get('/login', function () {
     return back();
