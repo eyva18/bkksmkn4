@@ -98,16 +98,7 @@
                                     </li>
                                 </ul>
                             </div>
-                            <form
-                                action="/admin/administrator/master/alumni/profile/{{ str_replace(' ', '-', $alumni->nama) }}"
-                                method="post">
-                                @csrf
-                                <div class="form-group">
-                                    <input type="hidden" name="id" id="newsletter-id"
-                                        class="form-control form-control-lg" value="{{ $alumni->id ??'-' }}">
-                                </div>
-                                <button type="submit" class="btn btn-primary full-size-width">Profile Alumni</button>
-                            </form>
+                            <a href="/admin/administrator/master/alumni/profile/{{ $alumni->nama }}" class="btn btn-primary full-size-width">Profile Alumni</a>
                             <ul class="list-unstyled d-flex none-mbt">
                                 <li class="half-size-width">
                                     <a href="javascript:void(0)"

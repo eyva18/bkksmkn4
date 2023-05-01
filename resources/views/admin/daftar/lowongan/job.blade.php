@@ -74,29 +74,11 @@
                                     </li>
                                 </ul>
                             </div>
-                            <form
-                            action="/admin/administrator/master/company/profile/{{ str_replace(' ', '-', $lowongan->dudi->nama) }}"
-                            method="post">
-                            @csrf
-                            <div class="form-group">
-                                <input type="hidden" name="id" id="newsletter-id"
-                                    class="form-control form-control-lg" value="{{ $lowongan->dudi->id }}">
-                            </div>
-                            <button type="submit" class="btn btn-primary full-size-width">Profile Perusahaan</button>
-                        </form>
+                            <a href="/admin/administrator/master/company/profile/{{ $lowongan->dudi->nama }}" class="btn btn-primary full-size-width">Profile Perusahaan</a>
                             <ul class="list-unstyled d-flex none-mbt">
                                 <li class="half-size-width">
-                                        <form
-                                        action="/admin/administrator/master/company/{{ str_replace(' ', '-', $lowongan->dudi->nama) }}/job/{{ str_replace(' ', '-', $lowongan->nama) }}"
-                                        method="post">
-                                        @csrf
-                                        <div class="form-group">
-                                            <input type="hidden" name="lowonganid" id="newsletter-id"
-                                                class="form-control form-control-lg" value="{{ $lowongan->id }}">
-                                        </div>
-                                        <button type="submit"
-                                        class="btn btn-warning text-white full-size-width">Detail Lowongan</button>
-                                    </form>
+                                    <a href="/admin/administrator/master/company/{{ $lowongan->dudi->nama }}/job/{{  $lowongan->nama }}"
+                                        class="btn btn-warning text-white full-size-width">Detail Lowongan</a>
                                 </li>
                                 <li class="half-size-width">
                                     <button type="button" class="btn btn-danger text-white full-size-width"
