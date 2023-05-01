@@ -1,9 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ControllersAdmin\AdminController;
+use App\Http\Controllers\ControllersAdmin\AdminLaporanTahunKelulusanController;
+use App\Http\Controllers\ControllersAdmin\AdminLowonganController;
+use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ControllersAdmin\AdminAlumniController;
 
 
@@ -23,7 +25,7 @@ Route::get('/alumni-design', function () {
     return view('alumni.dashboard.dashboard');
 });
 Route::get('/test', function () {
-    return view('admin.daftar.alumni.profilealumni');
+    return view('admin.daftar.alumni.tambahalumni');
 });
 Route::get('/login', function () {
     return back();
@@ -103,7 +105,18 @@ Route::middleware('role:admin')->post('/admin/administrator/master/company/profi
 
 //Alumni Year
 // Route::middleware('role:admin')->get('/admin/administrator/master/alumni',  [AdminController::class, 'alumni'])->name('admin@master_alumni');
+// Route::middleware('role:admin')->post('/admin/administrator/master/alumni/profile/{dudi}',  [AdminController::class, 'alumni_profile']);
 
 Route::middleware(['auth', 'role:admin'])->group(function() {
     Route::resource('/admin/administrator/master/alumni', AdminAlumniController::class);
 });
+//Lowongan Kerja
+Route::middleware('role:admin')->get('/admin/administrator/master/job',  [AdminLowonganController::class, 'job'])->name('admin@master_job');
+Route::middleware('role:admin')->get('/admin/administrator/master/job/search',  [AdminLowonganController::class, 'job_search']);
+Route::middleware('role:admin')->post('/admin/administrator/master/company/{dudi}/job/{lowongan}',  [AdminLowonganController::class, 'job_detail']);
+Route::middleware('role:admin')->post('/admin/administrator/master/job/delete',  [AdminLowonganController::class, 'job_delete']);
+
+
+//Laporan Tahun Kelulusan
+Route::middleware('role:admin')->get('/admin/administrator/master/report/yearly',  [AdminLaporanTahunKelulusanController::class, 'index'])->name('admin@master_laporanYearly');
+Route::middleware('role:admin')->get('/admin/administrator/master/report/yeary/pick/',  [AdminLaporanTahunKelulusanController::class, 'laporan_yearly']);

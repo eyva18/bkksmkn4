@@ -9,6 +9,7 @@ use App\Models\JurusanModel;
 use Illuminate\Http\Request;
 use App\Models\CategoryModel;
 use App\Models\LowonganModel;
+use App\Models\StatusAlumniModel;
 use App\Models\TahunLulusModel;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -18,8 +19,58 @@ class AdminController extends Controller
 {
     public function index()
     {
+        $originaltahunlulusan = TahunLulusModel::orderBy("created_at")->get();
+        $originaljurusan = JurusanModel::orderBy("created_at")->get();
+        $originaldudi = DudiModel::orderBy("created_at")->get();
+        //Data Foward Function
+        $datatahunlulusanalumni = [];
+        $chartTahunLulusAlumni = [];
+        $tahunLulusChart = [];
+        foreach ($originaltahunlulusan as $original) {
+            $yz = AlumniModel::where('kode_lulusId', $original->id)->count();
+            $datatahunlulusanalumni[$original->tahun_lulus] = $yz;
+            $chartTahunLulusAlumni[] = $yz;
+            $tahunLulusChart[] = $original->tahun_lulus;
+        }
+        //Data Foward Function
+        $DataChartJurusan = [];
+        $LabelsChartJurusan = [];
+        foreach ($originaljurusan as $original) {
+            $yz = AlumniModel::where('kode_jurusanId', $original->id)->count();
+            $DataChartJurusan[] = $yz;
+            $LabelsChartJurusan[] = $original->jurusan;
+        }
+        $DataChartStatus = [
+            'bekerja' => StatusAlumniModel::where('bekerja', 'bekerja')->count(),
+            'tidak_bekerja' => StatusAlumniModel::where('bekerja', 'tidak bekerja')->count(),
+            'malanjutkan_pendidikan' => StatusAlumniModel::where('pendidikan', 'melanjutkan pendidikan')->count(),
+            'tidakmalanjutkan_pendidikan' => StatusAlumniModel::where('pendidikan', 'tidak melanjutkan pendidikan')->count(),
+        ];
+        $DataLowonganKerja = [];
+        $LabelLowonganDudi = [];
+        foreach ($originaldudi as $original) {
+            $yz = LowonganModel::where('id_dudi', $original->id)->count();
+            if($yz != 0){
+            $DataLowonganKerja[] = $yz;
+            $LabelLowonganDudi[] = $original->nama;
+            }
+            else{
+
+            }
+        }
         return view('admin.dashboard.dashboard', [
-            'totalAlumni' => AlumniModel::count()
+            'totalAlumni' => AlumniModel::count(),
+            'totalperusahaan' => DudiModel::count(),
+            'totallowongan' => LowonganModel::count(),
+            "datatahunlulusanalumni" => $datatahunlulusanalumni,
+            "datatahunlulusan" => $originaltahunlulusan,
+            'LabelCharttahunlulus' => ($tahunLulusChart),
+            'DataCharttahunlulus' => ($chartTahunLulusAlumni),
+            'LabelsChartJurusan' => ($LabelsChartJurusan),
+            'DataChartJurusan' => ($DataChartJurusan),
+            'DataChartStatus' => ($DataChartStatus),
+            'LabelLowonganDudi' => ($LabelLowonganDudi),
+            'DataLowonganKerja' => ($DataLowonganKerja),
         ]);
     }
 
@@ -232,7 +283,7 @@ class AdminController extends Controller
     public function dudi_search(Request $request)
     {
         //Jurusan Database Function
-        $datadudi = DudiModel::where('nama', 'like', "%" . $request->nama_perusahaan . "%")->get();
+        $datadudi = DudiModel::where('nama', 'like', "%" . $request->nama_perusahaan . "%")->paginate(10);
         //Count Lowongan Kerja
         $lowongan = [];
         foreach ($datadudi as $data) {
@@ -248,11 +299,13 @@ class AdminController extends Controller
     {
         //Jurusan Database Function
         $datadudi = DudiModel::find($request->id);
+        $userdudi = User::where('kode_owner', $request->id)->first();
         //Count Lowongan Kerja
         $lowongan = LowonganModel::where('id_dudi', $request->id)->with('dudi')->with('kategori')->get();
         return view('admin.daftar.dudi.profiledudi', [
             "datadudi" => $datadudi,
-            "lowongan" => $lowongan
+            "lowongan" => $lowongan,
+            "userdudi" => $userdudi
         ]);
     }
     public function editdudi_profile($dudi, Request $request)
@@ -284,17 +337,17 @@ class AdminController extends Controller
     {
         //Jurusan Database Function
         if($request->idjurusan != "Jurusan" and $request->idtahunlulus != "Tahun Lulus"){
-            $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->where('kode_jurusan', $request->idjurusan)->where('kode_lulus', $request->idtahunlulus)->get();
+            $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->where('kode_jurusan', $request->idjurusan)->where('kode_lulus', $request->idtahunlulus)->paginate(10);
         }
         elseif($request->idjurusan != "Jurusan" and $request->idtahunlulus == "Tahun Lulus"){
-            $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->where('kode_jurusan', $request->idjurusan)->get();
+            $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->where('kode_jurusan', $request->idjurusan)->paginate(10);
 
          }
          elseif($request->idtahunlulus != "Tahun Lulus" and $request->idjurusan == "Jurusan" ){
-            $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->where('kode_lulus', $request->idtahunlulus)->get();
+            $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->where('kode_lulus', $request->idtahunlulus)->paginate(10);
          }
          elseif($request->idjurusan == "Jurusan" and $request->idtahunlulus == "Tahun Lulus"){
-            $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->get();
+            $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->paginate(10);
          }
         return view('admin.daftar.alumni.alumni', [
             "dataalumni" => $dataalumni,

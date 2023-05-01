@@ -143,7 +143,7 @@
                                             class="hide-menu"> Alumni
                                         </span></a>
                                 </li>
-                                <li class="sidebar-item"><a href="form-checkbox-radio.html"
+                                <li class="sidebar-item"><a href="/admin/administrator/master/job"
                                         class="sidebar-link"><span class="hide-menu"> Lowongan
                                         </span></a></li>
                             </ul>
@@ -153,14 +153,11 @@
                             aria-expanded="false"><i class="fas fa-angle-right"></i><span
                                 class="hide-menu">Laporan </span></a>
                         <ul aria-expanded="false" class="collapse  first-level base-level-line">
-                            <li class="sidebar-item"><a href="form-inputs.html" class="sidebar-link"><span
+                            <li class="sidebar-item"><a href="/admin/administrator/master/report/yearly" class="sidebar-link"><span
                                         class="hide-menu"> Laporan Tahun
                                         Kelulusan
                                     </span></a>
                             </li>
-                            <li class="sidebar-item"><a href="form-input-grid.html" class="sidebar-link"><span
-                                        class="hide-menu"> Laporan Aktivitas
-                                    </span></a>
                             </li>
 
                         </ul>
