@@ -68,14 +68,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <form action="/admin/administrator/master/company/profile/Stella-Toy1" method="post">
-                            <input type="hidden" name="_token" value="ke1DqtlQ2pNbDB3gaQVYpEdfKoiLYBiQ8H4sW8d4">
-                            <div class="form-group">
-                                <input type="hidden" name="id" id="newsletter-id" class="form-control form-control-lg"
-                                    value="1">
-                            </div>
-                            <button type="submit" class="btn btn-primary full-size-width">Profile Perusahaan</button>
-                        </form>
+                        <a href="/admin/administrator/master/company/profile/{{ $datalowongan->dudi->nama }}" class="btn btn-primary full-size-width">Profile Perusahaan</a>
                     </div>
                     <!-- Card -->
                 </div>

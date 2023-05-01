@@ -74,14 +74,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <form action="/admin/administrator/master/company/profile/{{ str_replace(' ', '-', $dudi->nama) }}" method="post">
-                            @csrf
-                            <div class="form-group">
-                                <input type="hidden" name="id" id="newsletter-id"
-                                    class="form-control form-control-lg" value="{{ $dudi->id }}">
-                            </div>
-                            <button type="submit" class="btn btn-primary full-size-width">Profile Perusahaan</button>
-                        </form>
+                        <a href="/admin/administrator/master/company/profile/{{ $dudi->nama }}" class="btn btn-primary full-size-width">Profile Perusahaan</a>
                         <ul class="list-unstyled d-flex none-mbt">
                             <li class="half-size-width">
                                 <a href="javascript:void(0)" class="btn btn-warning text-white full-size-width">Masuk</a>

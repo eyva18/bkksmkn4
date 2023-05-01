@@ -29,6 +29,15 @@
                         <div class="col-md-9">
                             <h3 class="card-title">Informasi Profil</h3>
                             <h6 class="card-subtitle">Data Personal dan Deskripsi</h6>
+                            @if (count($errors) > 0)
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            @endif
                         </div>
                     </div>
                     <form action="/admin/administrator/master/company/newdata" method="POST" enctype="multipart/form-data">
