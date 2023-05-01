@@ -42,14 +42,7 @@
                             </ul>
                             <div class="row">
                                 <div class="col-lg-12 text-center">
-                                    <form action="/admin/administrator/master/company/edit/{{ str_replace(' ', '-', $datadudi->nama) }}" method="post">
-                                        @csrf
-                                        <div class="form-group">
-                                            <input type="hidden" name="id" id="newsletter-id"
-                                                class="form-control form-control-lg" value="{{ $datadudi->id }}">
-                                        </div>
-                                        <button type="submit" class="btn btn-secondary">Ubah Profile</button>
-                                    </form>
+                                    <a href="/admin/administrator/master/company/edit/{{ $datadudi->nama }}" class="btn btn-secondary">Ubah Profile</a>
                                 </div>
                             </div>
                         </div>
@@ -99,7 +92,8 @@
                                 </li>
                             </ul>
                         </div>
-                        <a href="javascript:void(0)" class="btn btn-primary">Detail Lowongan</a>
+                        <a href="/admin/administrator/master/company/{{ $data->dudi->nama }}/job/{{  $data->nama }}"
+                                        class="btn btn-primary text-white full-size-width">Detail Lowongan</a>
                     </div>
                 </div>
                 @endforeach

@@ -2,9 +2,10 @@
 
 namespace app\Http\Controllers\ControllersAdmin;
 
+use App\Models\DudiModel;
+use App\Models\LowonganModel;
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Models\LowonganModel;
 use App\Http\Controllers\Controller;
 
 class AdminLowonganController extends Controller
@@ -30,10 +31,10 @@ class AdminLowonganController extends Controller
         LowonganModel::find($request->id)->delete();
         return back();
     }
-    public function job_detail($dudi, $lowongan, Request $request)
-    {
+    public function job_detail($dudi, LowonganModel $lowongan)
+    {   
         //Jurusan Database Function
-        $datalowongan = LowonganModel::where('id', $request->lowonganid)->with('dudi')->with('kategori')->first();
+        $datalowongan = LowonganModel::where('id', $lowongan->id)->with('dudi')->with('kategori')->first();
         $userdudi = User::where('kode_owner', $datalowongan->dudi->id)->first();
         return view('admin.daftar.lowongan.detailjob', [
             "datalowongan" => $datalowongan,

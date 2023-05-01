@@ -12,7 +12,7 @@
         <div class="page-breadcrumb">
             <div class="row">
                 <div class="col-7 align-self-center">
-                    <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">Laporan Tahun Kelulusan</h3>
+                    <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">Laporan Detail <u>{{ $tahunlulusdata->tahun_lulus ?? ''}} </u></h3>
                 </div>
             </div>
         </div>
@@ -75,7 +75,7 @@
                             <form action="/admin/administrator/master/report/yeary/pick/" method="GET">
                                 @csrf
                                 <select class="form-select full-size-width" id="inputGroupSelect01" name="idtahunlulus">
-                                    <option value="{{ $tahunlulus[0]->id ?? '' }}">Tahun Lulus</option>
+                                    <option selected="">Tahun Lulus</option>
                                     @foreach ($tahunlulus as $item)
                                         <option value="{{ $item->id }}">{{ $item->tahun_lulus }}</option>
                                     @endforeach
@@ -141,7 +141,7 @@
                                                     <td>{{ $dataalumnibekerja[$data->id] }}</td>
                                                     <td>{{ $datajurusanalumni[$data->id] }}</td>
                                                     <td>
-                                                        <a href="/admin/administrator/master/report/yearly/all/jurusan/{{ $data->id }}" class="btn btn-info">Detail</a>
+                                                        <a href="/admin/administrator/master/report/yearly/{{ $tahunlulusdata->tahun_lulus ?? ''}}/jurusan/{{ $data->id }}" class="btn btn-info">Detail</a>
                                                     </td>
                                                 </tr>
                                             @endforeach

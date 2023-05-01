@@ -204,6 +204,7 @@ class AdminController extends Controller
             $image1 = $imagename;
             File::delete(public_path("images/profileimg/$image1"));
         } else {
+            $logo = $olddata->logo;
         }
         DudiModel::find($request->id)->update([
             'nama' => $request->nama,
@@ -233,6 +234,12 @@ class AdminController extends Controller
     }
     public function dudi_add(Request $request)
     {
+        $this->validate($request,[
+            'nama' => 'required',
+            'email' => 'required',
+            'username' => 'required',
+            'password' => 'required',
+         ]);
         $number = 1000;
         for ($z1 = 1; $z1 <= $number; $z1++) {
             $getlatest = DudiModel::count();
@@ -295,24 +302,24 @@ class AdminController extends Controller
             "lowongan" => $lowongan
         ]);
     }
-    public function dudi_profile($dudi, Request $request)
+    public function dudi_profile(DudiModel $dudi)
     {
         //Jurusan Database Function
-        $datadudi = DudiModel::find($request->id);
-        $userdudi = User::where('kode_owner', $request->id)->first();
+        $datadudi = $dudi;
+        $userdudi = User::where('kode_owner', $dudi->id)->first();
         //Count Lowongan Kerja
-        $lowongan = LowonganModel::where('id_dudi', $request->id)->with('dudi')->with('kategori')->get();
+        $lowongan = LowonganModel::where('id_dudi', $dudi->id)->with('dudi')->with('kategori')->get();
         return view('admin.daftar.dudi.profiledudi', [
             "datadudi" => $datadudi,
             "lowongan" => $lowongan,
             "userdudi" => $userdudi
         ]);
     }
-    public function editdudi_profile($dudi, Request $request)
+    public function editdudi_profile(DudiModel $dudi)
     {
         //Jurusan Database Function
-        $datadudi = DudiModel::find($request->id);
-        $akundudi = User::where('kode_owner', $request->id)->first();
+        $datadudi = $dudi;
+        $akundudi = User::where('kode_owner', $dudi->id)->first();
         //Count Lowongan Kerja
         return view('admin.daftar.dudi.ubahdudi', [
             "datadudi" => $datadudi,
