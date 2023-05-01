@@ -10,12 +10,22 @@ class AlumniModel extends Model
     use HasFactory;
     protected $table = 'alumni';
     protected $guarded = ['id'];
+
     public function jurusan()
     {
-        return $this->belongsTo(JurusanModel::class, 'kode_jurusan', 'id');
+        return $this->belongsTo(JurusanModel::class, 'kode_jurusanId', 'id');
+
     }
     public function tahunlulus()
     {
-        return $this->belongsTo(TahunLulusModel::class, 'kode_lulus', 'id');
+        return $this->belongsTo(TahunLulusModel::class, 'kode_lulusId', 'id');
+    }
+
+    public function Agama() {
+        return $this->belongsTo(AgamaModel::class, 'agamaId', 'id');
+    }
+
+    public function Jenis_Kelamin() {
+        return $this->belongsTo(JenisKelaminModel::class, 'jenis_kelaminId', 'id');
     }
 }

@@ -75,7 +75,7 @@
                             <h4 class="card-title">{{ $data->nama ?? '-'}}</h4>
                             <ul class="list-unstyled">
                                 <li class="media d-flex align-items-start">
-                                    <img class="d-flex me-3 logo-company" src="/images/profileimg/ph.png"
+                                    <img class="d-flex me-3 logo-company" src="/images/profileimg/{{ $data->logo }}"
                                         alt="Logo Test" width="100">
                                     <div class="media-body">
                                         <ul class="list-unstyled">

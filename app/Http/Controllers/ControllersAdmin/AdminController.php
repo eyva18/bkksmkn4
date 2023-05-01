@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace app\Http\Controllers\ControllersAdmin;;
 
-use App\Models\AlumniModel;
-use App\Models\CategoryModel;
+use App\Models\User;
 use App\Models\DudiModel;
+use App\Models\AlumniModel;
 use App\Models\JurusanModel;
+use Illuminate\Http\Request;
+use App\Models\CategoryModel;
 use App\Models\LowonganModel;
 use App\Models\StatusAlumniModel;
 use App\Models\TahunLulusModel;
-use App\Models\User;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
@@ -26,7 +27,7 @@ class AdminController extends Controller
         $chartTahunLulusAlumni = [];
         $tahunLulusChart = [];
         foreach ($originaltahunlulusan as $original) {
-            $yz = AlumniModel::where('kode_lulus', $original->id)->count();
+            $yz = AlumniModel::where('kode_lulusId', $original->id)->count();
             $datatahunlulusanalumni[$original->tahun_lulus] = $yz;
             $chartTahunLulusAlumni[] = $yz;
             $tahunLulusChart[] = $original->tahun_lulus;
@@ -35,7 +36,7 @@ class AdminController extends Controller
         $DataChartJurusan = [];
         $LabelsChartJurusan = [];
         foreach ($originaljurusan as $original) {
-            $yz = AlumniModel::where('kode_jurusan', $original->id)->count();
+            $yz = AlumniModel::where('kode_jurusanId', $original->id)->count();
             $DataChartJurusan[] = $yz;
             $LabelsChartJurusan[] = $original->jurusan;
         }
@@ -81,7 +82,7 @@ class AdminController extends Controller
         //Data Foward Function
         $datajurusanalumni = [];
         foreach ($originaljurusan as $original) {
-            $yz = AlumniModel::where('kode_jurusan', $original->id)->count();
+            $yz = AlumniModel::where('kode_jurusanId', $original->id)->count();
             $datajurusanalumni[$original->id] = $yz;
         }
         return view('admin.master-page.department', [
@@ -116,7 +117,7 @@ class AdminController extends Controller
         //Data Foward Function
         $datatahunlulusanalumni = [];
         foreach ($originaltahunlulusan as $original) {
-            $yz = AlumniModel::where('kode_lulus', $original->id)->count();
+            $yz = AlumniModel::where('kode_lulusId', $original->id)->count();
             $datatahunlulusanalumni[$original->id] = $yz;
         }
         return view('admin.master-page.graduation-year', [
@@ -338,6 +339,7 @@ class AdminController extends Controller
             "datatahunlulus" => TahunLulusModel::all()
         ]);
     }
+    
     public function alumni_search(Request $request)
     {
         //Jurusan Database Function

@@ -1,14 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace app\Http\Controllers\ControllersAdmin;
 
-use App\Models\AlumniModel;
 use App\Models\DudiModel;
+use App\Models\AlumniModel;
 use App\Models\JurusanModel;
-use App\Models\LowonganModel;
-use App\Models\StatusAlumniModel;
-use App\Models\TahunLulusModel;
 use Illuminate\Http\Request;
+use App\Models\LowonganModel;
+use App\Models\TahunLulusModel;
+use App\Models\StatusAlumniModel;
+use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\LaporanPerTahun;
+use App\Imports\LaporanPickTahunan;
 
 class AdminLaporanTahunKelulusanController extends Controller
 {
@@ -24,7 +28,7 @@ class AdminLaporanTahunKelulusanController extends Controller
         $DataJurusan = [];
         $LabelJurusan = [];
         foreach ($originaljurusan as $original) {
-            $yz = AlumniModel::where('kode_jurusan', $original->id)->count();
+            $yz = AlumniModel::where('kode_jurusanId', $original->id)->count();
             $DataJurusan[] = $yz;
             $LabelJurusan[] = $original->jurusan;
         }
@@ -33,7 +37,7 @@ class AdminLaporanTahunKelulusanController extends Controller
         //Data Foward Function
         $datajurusanalumni = [];
         foreach ($datajurusanOriginal as $original) {
-            $yz = AlumniModel::where('kode_jurusan', $original->id)->count();
+            $yz = AlumniModel::where('kode_jurusanId', $original->id)->count();
             $datajurusanalumni[$original->id] = $yz;
         }
         $dataalumnikuliah = [];
@@ -73,7 +77,7 @@ class AdminLaporanTahunKelulusanController extends Controller
         $DataJurusan = [];
         $LabelJurusan = [];
         foreach ($originaljurusan as $original) {
-            $yz = AlumniModel::where('kode_lulus', $request->idtahunlulus)->where('kode_jurusan', $original->id)->count();
+            $yz = AlumniModel::where('kode_lulusId', $request->idtahunlulus)->where('kode_jurusanId', $original->id)->count();
             $DataJurusan[] = $yz;
             $LabelJurusan[] = $original->jurusan;
         }
@@ -82,7 +86,7 @@ class AdminLaporanTahunKelulusanController extends Controller
         //Data Foward Function
         $datajurusanalumni = [];
         foreach ($datajurusanOriginal as $original) {
-            $yz = AlumniModel::where('kode_lulus', $request->idtahunlulus)->where('kode_jurusan', $original->id)->count();
+            $yz = AlumniModel::where('kode_lulusId', $request->idtahunlulus)->where('kode_jurusanId', $original->id)->count();
             $datajurusanalumni[$original->id] = $yz;
         }
         $dataalumnikuliah = [];
@@ -119,10 +123,10 @@ class AdminLaporanTahunKelulusanController extends Controller
             'malanjutkan_pendidikan' => StatusAlumniModel::where('id_jurusan', $idjurusan)->where('pendidikan', 'melanjutkan pendidikan')->count(),
             'tidakmalanjutkan_pendidikan' => StatusAlumniModel::where('id_jurusan', $idjurusan)->where('pendidikan', 'tidak melanjutkan pendidikan')->count(),
         ];
-        $originalalumnidata = AlumniModel::where('kode_jurusan', $idjurusan)->paginate(10);
+        $originalalumnidata = AlumniModel::where('kode_jurusanId', $idjurusan)->paginate(10);
         $statusalumni = [];
         foreach ($originalalumnidata as $original) {
-            $status = StatusAlumniModel::where('nisn_alumni', $original->NISN)->first();
+            $status = StatusAlumniModel::where('nisn_alumni', $original->nisn)->first();
             $statusalumni[$original->id] = $status;
         }
         return view('admin.laporan.detailalltahun', [
@@ -141,10 +145,10 @@ class AdminLaporanTahunKelulusanController extends Controller
             'malanjutkan_pendidikan' => StatusAlumniModel::where('id_jurusan', $idjurusan)->where('tahun_lulus', $tahun_lulus->id)->where('pendidikan', 'melanjutkan pendidikan')->count(),
             'tidakmalanjutkan_pendidikan' => StatusAlumniModel::where('id_jurusan', $idjurusan)->where('tahun_lulus', $tahun_lulus->id)->where('pendidikan', 'tidak melanjutkan pendidikan')->count(),
         ];
-        $originalalumnidata = AlumniModel::where('kode_jurusan', $idjurusan)->where('kode_lulus', $tahun_lulus->id)->paginate(10);
+        $originalalumnidata = AlumniModel::where('kode_jurusanId', $idjurusan)->where('kode_lulusId', $tahun_lulus->id)->paginate(10);
         $statusalumni = [];
         foreach ($originalalumnidata as $original) {
-            $status = StatusAlumniModel::where('nisn_alumni', $original->NISN)->first();
+            $status = StatusAlumniModel::where('nisn_alumni', $original->nisn)->first();
             $statusalumni[$original->id] = $status;
         }
         return view('admin.laporan.detailpertahun', [
@@ -152,30 +156,20 @@ class AdminLaporanTahunKelulusanController extends Controller
             'jurusandata' => JurusanModel::find($idjurusan),
             'dataalumni' => $originalalumnidata,
             'statusalumni' => $statusalumni,
-            'tahunlulusdata' => TahunLulusModel::where('tahun_lulus', $tahun_lulus)->first(),
+            'tahunlulusdata' => TahunLulusModel::where('tahun_lulus', $tahun_lulus->tahun_lulus)->first(),
 
         ]);
     }
     public function detail_laporan_perjurusan_export($idjurusan)
     {
-        $DataChartStatus = [
-            'bekerja' => StatusAlumniModel::where('id_jurusan', $idjurusan)->where('bekerja', 'bekerja')->count(),
-            'tidak_bekerja' => StatusAlumniModel::where('id_jurusan', $idjurusan)->where('bekerja', 'tidak bekerja')->count(),
-            'malanjutkan_pendidikan' => StatusAlumniModel::where('id_jurusan', $idjurusan)->where('pendidikan', 'melanjutkan pendidikan')->count(),
-            'tidakmalanjutkan_pendidikan' => StatusAlumniModel::where('id_jurusan', $idjurusan)->where('pendidikan', 'tidak melanjutkan pendidikan')->count(),
-        ];
-        $originalalumnidata = AlumniModel::where('kode_jurusan', $idjurusan)->paginate(10);
-        $statusalumni = [];
-        foreach ($originalalumnidata as $original) {
-            $status = StatusAlumniModel::where('nisn_alumni', $original->NISN)->first();
-            $statusalumni[$original->id] = $status;
-        }
-        return view('admin.laporan.detailalltahun', [
-            'DataChartStatus' => ($DataChartStatus),
-            'jurusandata' => JurusanModel::find($idjurusan),
-            'dataalumni' => $originalalumnidata,
-            'statusalumni' => $statusalumni,
-
-        ]);
+        return Excel::download(new LaporanPerTahun($idjurusan), 'laporansemuatahun.xlsx');
+        return back();
+    }
+    public function detail_laporan_perjurusan_pertahun_export(TahunLulusModel $tahun_lulus ,$idjurusan)
+    {
+        $jurusanget = JurusanModel::find($idjurusan);
+        $namepathfile = 'laporandjursan#'.$jurusanget->nama.'- Tahun#'.$tahun_lulus->tahun_lulus.'.xlsx';
+        return Excel::download(new LaporanPickTahunan($tahun_lulus->id, $idjurusan), $namepathfile);
+        return back();
     }
 }

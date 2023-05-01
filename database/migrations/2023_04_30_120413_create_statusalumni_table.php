@@ -18,6 +18,8 @@ return new class extends Migration
             $table->bigInteger('id_jurusan')->unsigned();
             $table->enum('bekerja', ['bekerja', 'tidak bekerja']);
             $table->enum('pendidikan', ['melanjutkan pendidikan', 'tidak melanjutkan pendidikan']);
+            $table->string('universitas')->nullable();
+            $table->string('perusahaan')->nullable();
             $table->timestamps();
         });
     }

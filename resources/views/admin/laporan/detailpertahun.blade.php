@@ -110,7 +110,8 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
-                                <div class="table-responsive">
+                                <a href="/admin/administrator/master/report/yearly/{{ $tahunlulusdata->tahun_lulus ?? ''}}/jurusan/{{ $jurusandata->id }}/export" class="btn btn-lg btn-primary"><i class="fas fa-share-square"></i> Export</a>
+                                <div class="table-responsive mt-3">
                                     <table id="zero_config" class="table border table-striped table-bordered text-nowrap">
                                         <thead>
                                             <tr>

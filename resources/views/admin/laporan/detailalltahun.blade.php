@@ -116,8 +116,8 @@
                                         <thead>
                                             <tr>
                                                 <th>Nama Alumni</th>
-                                                <th>Melanjutkan Pendidikan</th>
                                                 <th>Bekerja</th>
+                                                <th>Melanjutkan Pendidikan</th>
                                                 <th>Nama Universitas</th>
                                                 <th>Nama Perusahaan</th>
                                             </tr>
