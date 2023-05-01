@@ -2,17 +2,17 @@
 
 namespace app\Http\Controllers\ControllersAdmin;
 
+use App\Imports\LaporanPerTahun;
+use App\Imports\LaporanPickTahunan;
 use App\Models\DudiModel;
 use App\Models\AlumniModel;
 use App\Models\JurusanModel;
 use Illuminate\Http\Request;
 use App\Models\LowonganModel;
-use App\Models\TahunLulusModel;
 use App\Models\StatusAlumniModel;
+use App\Models\TahunLulusModel;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Imports\LaporanPerTahun;
-use App\Imports\LaporanPickTahunan;
 
 class AdminLaporanTahunKelulusanController extends Controller
 {
