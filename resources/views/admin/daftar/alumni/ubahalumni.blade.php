@@ -12,7 +12,7 @@
         <div class="page-breadcrumb">
             <div class="row">
                 <div class="col-7 align-self-center">
-                    <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">Tambah Alumni</h3>
+                    <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">Ubah Data Alumni</h3>
                 </div>
             </div>
         </div>
@@ -31,7 +31,9 @@
                             <h6 class="card-subtitle">Data Personal dan Deskripsi</h6>
                         </div>
                     </div>
-                    <form action="/admin/administrator/master/alumni" method="post" enctype="multipart/form-data">
+                    {{-- @dd($alumni->id) --}}
+                    <form action="{{ route('alumni.update', $alumni->id) }}" method="post" enctype="multipart/form-data">
+                        @method('put')
                         @csrf
                     <div class="row pdt-20">
                         <div class="col-md-4">
@@ -39,7 +41,7 @@
                             <p class="text-muted mt-0 text-sm">Nomor Induk Siswa Nasional</p>
                         </div>
                         <div class="col-md-8 pdt-6">
-                            <input type="text" name="nisn" class="form-control font-weight-normal  @error('nisn') is-invalid @enderror" required autofocus value="{{ old('nisn') }}">
+                            <input type="text" name="nisn" class="form-control font-weight-normal  @error('nisn') is-invalid @enderror" required autofocus value="{{ old('nisn', $alumni->nisn) }}">
                             @error('nisn')
                                 <div class="invalid-feedback">
                                     {{ $message }}

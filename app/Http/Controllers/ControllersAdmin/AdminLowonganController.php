@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace app\Http\Controllers\ControllersAdmin;
 
-use App\Models\DudiModel;
-use App\Models\LowonganModel;
 use App\Models\User;
+use App\Models\DudiModel;
 use Illuminate\Http\Request;
+use App\Models\LowonganModel;
+use App\Http\Controllers\Controller;
 
 class AdminLowonganController extends Controller
 {

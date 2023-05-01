@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace app\Http\Controllers\ControllersAdmin;
 
-use App\Models\AlumniModel;
 use App\Models\DudiModel;
+use App\Models\AlumniModel;
 use App\Models\JurusanModel;
-use App\Models\LowonganModel;
-use App\Models\StatusAlumniModel;
-use App\Models\TahunLulusModel;
 use Illuminate\Http\Request;
+use App\Models\LowonganModel;
+use App\Models\TahunLulusModel;
+use App\Models\StatusAlumniModel;
+use App\Http\Controllers\Controller;
 
 class AdminLaporanTahunKelulusanController extends Controller
 {

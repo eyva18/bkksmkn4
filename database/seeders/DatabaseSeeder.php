@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(JurusanSeeder::class);
+        $this->call(JenisKelaminSeeder::class);
+        $this->call(AgamaSeeder::class);
         $this->call(TahunLulusSeeder::class);
         AlumniModel::factory(10)->create();
         DudiModel::factory(10)->create();
