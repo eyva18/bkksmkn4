@@ -109,6 +109,7 @@ Route::middleware('role:admin')->get('/admin/administrator/master/company/edit/{
 // Route::middleware('role:admin')->post('/admin/administrator/master/alumni/profile/{dudi}',  [AdminController::class, 'alumni_profile']);
 Route::middleware(['auth', 'role:admin'])->group(function() {
     Route::resource('/admin/administrator/master/alumni', AdminAlumniController::class);
+    Route::get('/admin/administrator/master/alumni/{alumni:nama}/edit', [AdminAlumniController::class, 'edit']);
 });
 
 //Lowongan Kerja

@@ -2,7 +2,7 @@
 
 namespace app\Http\Controllers\ControllersAdmin;
 
-use App\Models\JenisKelamin;
+use App\Models\JenisKelaminModel;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreJenisKelaminRequest;
 use App\Http\Requests\UpdateJenisKelaminRequest;
@@ -36,7 +36,7 @@ class JenisKelaminController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(JenisKelamin $jenisKelamin)
+    public function show(JenisKelaminModel $jenisKelamin)
     {
         //
     }
@@ -44,7 +44,7 @@ class JenisKelaminController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(JenisKelamin $jenisKelamin)
+    public function edit(JenisKelaminModel $jenisKelamin)
     {
         //
     }
@@ -52,7 +52,7 @@ class JenisKelaminController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateJenisKelaminRequest $request, JenisKelamin $jenisKelamin)
+    public function update(UpdateJenisKelaminRequest $request, JenisKelaminModel $jenisKelamin)
     {
         //
     }
@@ -60,7 +60,7 @@ class JenisKelaminController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(JenisKelamin $jenisKelamin)
+    public function destroy(JenisKelaminModel $jenisKelamin)
     {
         //
     }

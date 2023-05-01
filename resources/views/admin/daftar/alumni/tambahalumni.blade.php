@@ -39,7 +39,7 @@
                             <p class="text-muted mt-0 text-sm">Nomor Induk Siswa Nasional</p>
                         </div>
                         <div class="col-md-8 pdt-6">
-                            <input type="text" name="nisn" class="form-control font-weight-normal  @error('nisn') is-invalid @enderror" required autofocus value="{{ old('nisn') }}">
+                            <input type="text" name="nisn" class="form-control font-weight-normal  @error('nisn') is-invalid @enderror" required value="{{ old('nisn') }}" autofocus>
                             @error('nisn')
                                 <div class="invalid-feedback">
                                     {{ $message }}

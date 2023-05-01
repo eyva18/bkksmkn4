@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use app\Http\Controllers\ControllersAdmin\AdminLaporanTahunKelulusanController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -27,5 +28,9 @@ class AlumniModel extends Model
 
     public function Jenis_Kelamin() {
         return $this->belongsTo(JenisKelaminModel::class, 'jenis_kelaminId', 'id');
+    }
+
+    public function Laporan_Kelulusan() {
+        return $this->belongsTo(AdminLaporanTahunKelulusanController::class);
     }
 }

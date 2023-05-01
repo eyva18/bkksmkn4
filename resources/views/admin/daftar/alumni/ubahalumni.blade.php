@@ -12,7 +12,8 @@
         <div class="page-breadcrumb">
             <div class="row">
                 <div class="col-7 align-self-center">
-                    <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">Ubah Data Alumni</h3>
+                    <h3 class="page-title text-truncate text-dark font-weight-medium mb-3">Ubah Data Alumni</h3>
+                    <a class="btn btn-secondary" href="/admin/administrator/master/alumni">Kembali</a>
                 </div>
             </div>
         </div>
@@ -35,6 +36,7 @@
                     <form action="{{ route('alumni.update', $alumni->id) }}" method="post" enctype="multipart/form-data">
                         @method('put')
                         @csrf
+                        <input type="hidden" name="id" value="{{ $alumni->id }}">
                     <div class="row pdt-20">
                         <div class="col-md-4">
                             <h4 class="text-black m-0">NISN<span class="text-red"> *</span></h4>
@@ -55,7 +57,7 @@
                             <p class="text-muted mt-0 text-sm">Nomor Induk Siswa Sekolah</p>
                         </div>
                         <div class="col-md-8 pdt-6">
-                            <input type="text" name="nis" class="form-control font-weight-normal @error('nis') is-invalid @enderror" required value="{{ old('nis') }}">
+                            <input type="text" name="nis" class="form-control font-weight-normal @error('nis') is-invalid @enderror" required value="{{ old('nis', $alumni->nis) }}">
                             @error('nis')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -69,7 +71,7 @@
                             <p class="text-muted mt-0 text-sm">Nama Siswa Sesuai Akta Kelahiran</p>
                         </div>
                         <div class="col-md-8 pdt-6">
-                            <input type="text" name="nama" class="form-control font-weight-normal @error('nama') is-invalid @enderror" required value="{{ old('nama') }}">
+                            <input type="text" name="nama" class="form-control font-weight-normal @error('nama') is-invalid @enderror" required value="{{ old('nama', $alumni->nama) }}">
                             @error('nama')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -83,7 +85,7 @@
                             <p class="text-muted mt-0 text-sm">Nomor Handphone / Telepon / Whatsapp</p>
                         </div>
                         <div class="col-md-8 pdt-6">
-                            <input type="text" name="no_hp" class="form-control font-weight-normal @error('no_hp') is-invalid @enderror"  required value="{{ old('no_hp') }}">
+                            <input type="text" name="no_hp" class="form-control font-weight-normal @error('no_hp') is-invalid @enderror"  required value="{{ old('no_hp', $alumni->no_hp) }}">
                             @error('no_hp')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -97,7 +99,7 @@
                             <p class="text-muted mt-0 text-sm">Biografi Anda</p>
                         </div>
                         <div class="col-md-8">
-                            <textarea name="biografi" class="form-control font-weight-normal @error('biografi') is-invalid @enderror" rows="5" required>{{ old('biografi') }}</textarea>
+                            <textarea name="biografi" class="form-control font-weight-normal @error('biografi') is-invalid @enderror" rows="5" required>{{ old('biografi', $alumni->biografi) }}</textarea>
                             @error('biografi')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -116,7 +118,7 @@
                                 <select class="form-select @error('agamaId') is-invalid @enderror" id="agamaId" name="agamaId" >
                                     <option selected>Agama</option>
                                     @foreach ($dataAgama as $item)
-                                    @if (old('agamaId') == $item->id)
+                                    @if (old('agamaId', $alumni->agamaId) == $item->id)
                                         <option value="{{ $item->id }}" selected>{{ $item->agama }}</option>
                                     @else
                                         <option value="{{ $item->id }}">{{ $item->agama }}</option>
@@ -142,7 +144,7 @@
                                 <select class="form-select @error('jenis_kelaminId') is-invalid @enderror" id="jenis_kelaminId" name="jenis_kelaminId">
                                     <option selected>Jenis Kelamin</option>
                                     @foreach ($dataJenisKelamin as $item)
-                                        @if (old('jenis_kelaminId') == $item->id)
+                                        @if (old('jenis_kelaminId', $alumni->jenis_kelaminId) == $item->id)
                                             <option value="{{ $item->id }}" selected>{{ $item->jenis_kelamin }}</option>
                                         @else
                                             <option value="{{ $item->id }}">{{ $item->jenis_kelamin }}</option>
@@ -164,7 +166,7 @@
                         </div>
                         <div class="col-md-8 pdt-6">
                             <div class="form-group">
-                                <textarea class="form-control @error('alamat') is-invalid @enderror" name="alamat" rows="7" placeholder="Alamat Rumah..." required>{{ old('alamat') }}</textarea>
+                                <textarea class="form-control @error('alamat') is-invalid @enderror" name="alamat" rows="7" placeholder="Alamat Rumah..." required>{{ old('alamat', $alumni->alamat) }}</textarea>
                                 @error('alamat')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -179,7 +181,7 @@
                             <p class="text-muted mt-0 text-sm">Tempat Lahir, Tanggal Lahir</p>
                         </div>
                         <div class="col-md-8 pdt-6">
-                            <input type="text" name="tempatTanggalLahir" class="form-control font-weight-normal @error('tempatTanggalLahir') is-invalid @enderror" placeholder="Example: Banjarmasin, 1 Januari 2000" required value="{{ old('tempatTanggalLahir') }}">
+                            <input type="text" name="tempatTanggalLahir" class="form-control font-weight-normal @error('tempatTanggalLahir') is-invalid @enderror" placeholder="Example: Banjarmasin, 1 Januari 2000" required value="{{ old('tempatTanggalLahir', $alumni->tempatTanggalLahir) }}">
                             @error('tempatTanggalLahir')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -193,7 +195,8 @@
                             <p class="text-muted mt-0 text-sm">Pas Photo, diutamakan Formal</p>
                         </div>
                         <div class="col-md-8 pdt-6">
-                            <input class="form-control @error('photo_profile') is-invalid @enderror" name="photo_profile" type="file" id="formFile" required value="{{ old('photo_profile') }}">
+                            <input type="hidden" name="oldPhotoProfile" value="{{ $alumni->photo_profile }}">
+                            <input class="form-control @error('photo_profile') is-invalid @enderror" name="photo_profile" type="file" id="formFile" value="{{ old('photo_profile') }}">
                             @error('photo_profile')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -207,7 +210,8 @@
                             <p class="text-muted mt-0 text-sm">Transkrip Terakhir</p>
                         </div>
                         <div class="col-md-8 pdt-6">
-                            <input class="form-control @error('transkrip_nilai') is-invalid @enderror" name="transkrip_nilai" type="file" id="formFile" required value="{{ old('transkrip_nilai') }}">
+                            <input type="hidden" name="oldTranskripNilai" value="{{ $alumni->transkrip_nilai }}">
+                            <input class="form-control @error('transkrip_nilai') is-invalid @enderror" name="transkrip_nilai" type="file" id="formFile" value="{{ old('transkrip_nilai') }}">
                             @error('transkrip_nilai')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -236,7 +240,7 @@
                                 <select class="form-select @error('kode_jurusanId') is-invalid @enderror" id="kode_jurusanId" name="kode_jurusanId">
                                     <option selected="">Jurusan</option>
                                     @foreach ($dataJurusan as $item)
-                                        @if (old('kode_jurusanId') == $item->id)
+                                        @if (old('kode_jurusanId', $alumni->kode_jurusanId) == $item->id)
                                             <option value="{{ $item->id }}" selected>{{ $item->jurusan }}</option>
                                         @else
                                             <option value="{{ $item->id }}">{{ $item->jurusan }}</option>
@@ -263,7 +267,7 @@
                                 <select class="form-select @error('kode_lulusId') is-invalid @enderror" id="kode_lulusId" name="kode_lulusId">
                                     <option selected>Tahun Kelulusan</option>
                                     @foreach ($dataTahunLulus as $item)
-                                        @if (old('kode_lulusId') == $item->id)
+                                        @if (old('kode_lulusId', $alumni->kode_lulusId) == $item->id)
                                             <option value="{{ $item->id }}" selected>{{ $item->tahun_lulus }}</option>
                                         @else
                                             <option value="{{ $item->id }}">{{ $item->tahun_lulus }}</option>
@@ -280,8 +284,8 @@
                     </div>
                     <div class="row mrt-6">
                         <div class="col-md-12 pdt-6" style="text-align: right">
-                            <button class="btn btn-primary" type="submit">Simpan</button>
-                            <a class="btn btn-secondary" href="/admin/administrator/master/alumni">Batal</a>
+                            <button class="btn btn-primary" type="">Simpan</button>
+                            <button class="btn btn-danger" type="reset">Batal</button>
                         </div>
                     </div>
                 </form>

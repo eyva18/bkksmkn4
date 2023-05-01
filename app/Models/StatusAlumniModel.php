@@ -10,6 +10,7 @@ class StatusAlumniModel extends Model
     use HasFactory;
     protected $table = 'status_alumni';
     protected $guarded = 'id';
+
     public function tahunlulus()
     {
         return $this->belongsTo(TahunLulusModel::class, 'tahun_lulus', 'id');
@@ -17,5 +18,9 @@ class StatusAlumniModel extends Model
     public function jurusan()
     {
         return $this->belongsTo(TahunLulusModel::class, 'tahun_lulus', 'id');
+    }
+
+    public function Alumni() {
+        return $this->belongsTo(AlumniModel::class);
     }
 }

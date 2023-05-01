@@ -115,6 +115,7 @@ class AdminLaporanTahunKelulusanController extends Controller
 
         ]);
     }
+
     public function detail_laporan_perjurusan($idjurusan)
     {
         $DataChartStatus = [
@@ -137,6 +138,7 @@ class AdminLaporanTahunKelulusanController extends Controller
 
         ]);
     }
+
     public function detail_laporan_perjurusan_pertahun(TahunLulusModel $tahun_lulus, $idjurusan)
     {
         $DataChartStatus = [
@@ -160,11 +162,13 @@ class AdminLaporanTahunKelulusanController extends Controller
 
         ]);
     }
+
     public function detail_laporan_perjurusan_export($idjurusan)
     {
         return Excel::download(new LaporanPerTahun($idjurusan), 'laporansemuatahun.xlsx');
         return back();
     }
+    
     public function detail_laporan_perjurusan_pertahun_export(TahunLulusModel $tahun_lulus ,$idjurusan)
     {
         $jurusanget = JurusanModel::find($idjurusan);

@@ -74,11 +74,15 @@
                 </div>
             </div>
             <div class="row">
-                @if (session()->has('success'))
-                    <div class="alert alert-info" role="alert">
-                        <strong>Info!</strong> {{ session('success') }}
-                    </div>
-                @endif
+                <div class="col-md-12">
+                    @if (session()->has('success'))
+                        <div class="alert alert-info" role="alert">
+                            <strong>Info!</strong> {{ session('success') }}
+                        </div>
+                    @endif
+                </div>
+            </div>
+            <div class="row">
                 @foreach ($dataalumni as $alumni)
                     <div class="col-md-6">
                         <div class="card border-top-300">
@@ -103,6 +107,12 @@
                                                         class="mrl-10 text-black text-capitalize">{{ $alumni->Jenis_Kelamin->jenis_kelamin ?? '-' }}</span>
                                                 </li>
                                                 <li><i class="fas fa-fas fa-phone color-23"></i> <span class="mrl-10 text-black text-capitalize">{{ $alumni->no_hp ?? '-' }}</span>
+                                                    <form action="{{ route('alumni.edit', $alumni->nama) }}" method="get">
+                                                        @method('get')
+                                                        @csrf
+                                                        <input type="hidden" name="id" class="form-control form-control-lg" value="{{ $alumni->id }}">
+                                                        <button type="submit" class="btn btn-light my-2" >Edit</button>
+                                                    </form>
                                                 </li>
                                             </ul>
                                         </div>
@@ -132,8 +142,8 @@
                                     <div class="text-center">
                                         <i class="dripicons-wrong h1"></i>
                                         <h4 class="mt-2">Peringatan!</h4>
-                                        <p class="mt-3">Apakan Ingin Melanjutkan Menghapus data: <br> ID:
-                                            {{ $alumni->id }}
+                                        <p class="mt-3">Apakan Ingin Melanjutkan Menghapus data: <br> NISN:
+                                            {{ $alumni->nisn }}
                                             | {{ $alumni->nama }}</p>
                                         <form action="{{ route('alumni.destroy', $alumni->id) }}" method="post">
                                             @method('delete')
