@@ -36,7 +36,7 @@
                     <div class="row pdt-20">
                         <div class="col-md-3">
                             <form action="{{ route('alumni.index') }}" method="GET">
-                                @method('GET')
+                                @method('get')
                                 @csrf
                             <select class="form-select full-size-width" id="idjurusan" name="idjurusan" value="{{ request('idjurusan') }}">
                                 <option selected>Jurusan</option>

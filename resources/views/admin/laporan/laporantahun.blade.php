@@ -73,16 +73,23 @@
                     <div class="row pdt-20">
                         <div class="col-md-9">
                             <form action="/admin/administrator/master/report/yeary/pick/" method="GET">
+                                @method('get')
                                 @csrf
-                                <select class="form-select full-size-width" id="inputGroupSelect01" name="idtahunlulus">
-                                    <option value="{{ $tahunlulus[0]->id ?? '' }}">Tahun Lulus</option>
+                                @dd($tahunlulus)
+                                <select class="form-select full-size-width" id="idtahunlulus" name="idtahunlulus" value="{{ request('idtahunlulus') }}">
+                                    <option selected>Tahun Lulus</option>
                                     @foreach ($tahunlulus as $item)
-                                        <option value="{{ $item->id }}">{{ $item->tahun_lulus }}</option>
+                                        @if (request('idtahunlulus') == $item->id)
+                                            <option value="{{ $item->id }}" selected>{{ $item->tahun_lulus }}</option>
+                                        @else
+                                            <option value="{{ $item->id }}">{{ $item->tahun_lulus }}</option>
+                                        @endif
                                     @endforeach
                                 </select>
-                        </div>
-                        <div class="col-md-3">
-                            <button type="submit" class="btn btn-primary pdt- full-size-width">Submit</button>
+                            </div>
+                            
+                            <div class="col-md-3">
+                                <button type="submit" class="btn btn-primary pdt- full-size-width">Submit</button>
                             </form>
                         </div>
                     </div>
