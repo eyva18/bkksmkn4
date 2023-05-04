@@ -110,7 +110,7 @@
                                 <label for="newsletter-email" class="content-hidden">E-Mail / Username</label>
                                 <input type="email" name="email" id="newsletter-email"
                                     class="form-control form-control-lg" placeholder="E-Mail / Username"
-                                    autocomplete="off">
+                                    autocomplete="off" autofocus>
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

@@ -17,6 +17,11 @@ return new class extends Migration
             $table->string('nama_instansi');
             $table->string('jenis_pendidikan');
             $table->bigInteger('nilai_rata_rata');
+            $table->string('nama_perusahaan');
+            $table->string('jenis_pekerjaan');
+            $table->string('bidang');
+            $table->string('awal_bekerja');
+            $table->string('akhir_bekerja');
             $table->timestamps();
         });
     }

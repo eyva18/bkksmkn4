@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="col-7 align-self-center">
                     <h3 class="page-title text-truncate text-dark font-weight-medium mb-3">Ubah Data Alumni</h3>
-                    <a class="btn btn-secondary" href="/admin/administrator/master/alumni">Kembali</a>
+                    <a class="btn btn-secondary" href="{{ route('alumni.index') }}">Kembali</a>
                 </div>
             </div>
         </div>

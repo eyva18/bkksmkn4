@@ -1,12 +1,13 @@
 <?php
 
-use App\Http\Controllers\ControllersAdmin\AdminController;
-use App\Http\Controllers\ControllersAdmin\AdminLaporanTahunKelulusanController;
-use App\Http\Controllers\ControllersAdmin\AdminLowonganController;
-use App\Http\Controllers\HomeController;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ControllersAdmin\AdminController;
 use App\Http\Controllers\ControllersAdmin\AdminAlumniController;
+use App\Http\Controllers\ControllersAdmin\AdminLowonganController;
+use App\Http\Controllers\ControllersAlumni\ProfileAlumniController;
+use App\Http\Controllers\ControllersAdmin\AdminLaporanTahunKelulusanController;
 
 
 
@@ -108,9 +109,15 @@ Route::middleware('role:admin')->get('/admin/administrator/master/company/edit/{
 // Route::middleware('role:admin')->get('/admin/administrator/master/alumni',  [AdminController::class, 'alumni'])->name('admin@master_alumni');
 // Route::middleware('role:admin')->post('/admin/administrator/master/alumni/profile/{dudi}',  [AdminController::class, 'alumni_profile']);
 Route::middleware(['auth', 'role:admin'])->group(function() {
-    Route::resource('/admin/administrator/master/alumni', AdminAlumniController::class);
-    Route::get('/admin/administrator/master/alumni/{alumni:nama}/edit', [AdminAlumniController::class, 'edit']);
+    Route::resource('/alumni', AdminAlumniController::class);
+    Route::get('/alumni/{alumni:nama}/edit', [AdminAlumniController::class, 'edit']);
+
 });
+
+Route::middleware(['auth', 'role:admin|alumni'])->group(function() {
+    Route::resource('/alumni/profile', ProfileAlumniController::class);
+});
+
 
 //Lowongan Kerja
 Route::middleware('role:admin')->get('/admin/administrator/master/job',  [AdminLowonganController::class, 'job'])->name('admin@master_job');

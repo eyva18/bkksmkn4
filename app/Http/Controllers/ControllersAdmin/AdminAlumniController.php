@@ -99,9 +99,12 @@ class AdminAlumniController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(AlumniModel $alumniModel)
+    public function show(Request $request, AlumniModel $alumniModel)
     {
-        //
+        $findSiswaProfile = AlumniModel::findOrFail($request->id);
+        return view('admin.daftar.alumni.profilealumni', [
+            'dataAlumni' => $findSiswaProfile
+        ]);
     }
 
     /**

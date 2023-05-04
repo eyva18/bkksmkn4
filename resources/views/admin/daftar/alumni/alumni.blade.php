@@ -30,7 +30,7 @@
                             <h4 class="card-title">Pencarian Alumni</h4>
                         </div>
                         <div class="col-md-3">
-                            <a href="{{ route('alumni.create') }}" class="btn btn-secondary full-size-width">Tambah Alumni</a>
+                            <a href="{{ route('alumni.create') }}" class="btn btn-secondary full-size-width" style="border-radius:8px ">Tambah Alumni</a>
                         </div>
                     </div>
                     <div class="row pdt-20">
@@ -66,7 +66,7 @@
                                     class="form-control" placeholder="Nama Alumni" value="{{ request('nama_alumni') }}">
                         </div>
                         <div class="col-md-3">
-                            <button type="submit" class="btn btn-primary full-size-width">Cari
+                            <button type="submit" class="btn btn-primary full-size-width" style="border-radius: 8px">Cari
                                 Alumni</button>
                             </form>
                         </div>
@@ -107,19 +107,18 @@
                                                         class="mrl-10 text-black text-capitalize">{{ $alumni->Jenis_Kelamin->jenis_kelamin ?? '-' }}</span>
                                                 </li>
                                                 <li><i class="fas fa-fas fa-phone color-23"></i> <span class="mrl-10 text-black text-capitalize">{{ $alumni->no_hp ?? '-' }}</span>
-                                                    <form action="{{ route('alumni.edit', $alumni->nama) }}" method="get">
-                                                        @method('get')
-                                                        @csrf
-                                                        <input type="hidden" name="id" class="form-control form-control-lg" value="{{ $alumni->id }}">
-                                                        <button type="submit" class="btn btn-light my-2" >Edit</button>
-                                                    </form>
                                                 </li>
                                             </ul>
                                         </div>
                                     </li>
                                 </ul>
                             </div>
-                            <a href="/admin/administrator/master/alumni/profile/{{ $alumni->nama }}" class="btn btn-primary full-size-width">Profile Alumni</a>
+                            <form action="{{ route('alumni.show', $alumni->nama) }}" method="post">
+                                @method('get')
+                                @csrf
+                                <input type="hidden" name="id" class="form-control form-control-lg" value="{{ $alumni->id }}">
+                                <button class="btn btn-primary full-size-width">Profile Alumni</button>
+                            </form>
                             <ul class="list-unstyled d-flex none-mbt">
                                 <li class="half-size-width">
                                     <a href="javascript:void(0)"

@@ -3,7 +3,7 @@
 @endsection
 @section('page-wrapper')
     <!-- ============================================================== -->
-    <!-- Page wrapper  -->
+    <!-- Page wrapper -->
     <!-- ============================================================== -->
     <div class="page-wrapper">
         <!-- ============================================================== -->
@@ -28,16 +28,17 @@
                 <div class="col-lg-4 col-md-6">
                     <!-- Card -->
                     <div class="card">
-                        <img class="card-img-top img-fluid" src="{{ URL::asset('images/profileimg/alumni.jpg') }}"
+                        {{-- @dd($dataAlumni->photo_profile) --}}
+                        <img class="card-img-top img-fluid" src="{{ URL::asset('storage' . '/' . $dataAlumni->photo_profile) }}"
                             height="50%" alt="Card image cap">
                         <div class="card-body">
-                            <h3 class="card-title">Querida Novania Bening Safitri</h3>
+                            <h3 class="card-title">{{ $dataAlumni->nama }}</h3>
                             <h3>Personal</h3>
                             <ul class="list-unstyled">
                                 <li><i class="	fas fa-birthday-cake color-23"></i> <span
-                                        class="mrl-5 text-black">Banjarmasin, 1 Januari 2000</span></li>
-                                <li><i class="fas fa-heart color-23"></i> <span class="mrl-5 text-black">Islam</span></li>
-                                <li><i class="fas fa-user color-23"></i> <span class="mrl-5 text-black">Perempuan</span>
+                                        class="mrl-5 text-black">{{ $dataAlumni->tempatTanggalLahir }}</span></li>
+                                <li><i class="fas fa-heart color-23"></i> <span class="mrl-5 text-black">{{ $dataAlumni->Agama->agama }}</span></li>
+                                <li><i class="fas fa-user color-23"></i> <span class="mrl-5 text-black">{{ $dataAlumni->Jenis_Kelamin->jenis_kelamin }}</span>
                                 </li>
                             </ul>
                             <h3>Contact</h3>
@@ -45,11 +46,16 @@
                                 <li><i class="fas fa-at color-23"></i> <span
                                         class="mrl-5 text-black">qnovania@gmail.com</span></li>
                                 <li><i class="fas fa-phone color-23"></i> <span
-                                        class="mrl-5 text-black">+6289618557907</span></li>
+                                        class="mrl-5 text-black">{{ $dataAlumni->no_hp }}</span></li>
                             </ul>
                             <div class="row">
                                 <div class="col-lg-12 text-center">
-                                    <a href="javascript:void(0)" class="btn btn-secondary">Ubah Profile</a>
+                                    <form action="{{ route('alumni.edit', $dataAlumni->nama . '-' . $dataAlumni->nisn) }}" method="post">
+                                        @method('get')
+                                        @csrf
+                                        <input type="hidden" name="id" class="form-control form-control-lg" value="{{ $dataAlumni->id }}">
+                                        <button type="submit" class="btn btn-light my-2" >Ubah Profile</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -68,9 +74,7 @@
                                                 class="fas fa-pencil-alt text-white mrl-10"></i></button></h4>
                                 </div>
                                 <div class="card-body">
-                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A atque
-                                        rerum, ex, modi asperiores ut odit quasi dolorem quia nihil tenetur nulla veniam
-                                        aspernatur, itaque tempore labore tempora harum magnam?</p>
+                                    <p class="card-text">{{ $dataAlumni->biografi }}</p>
                                 </div>
                             </div>
                         </div>
@@ -140,7 +144,12 @@
                         @csrf
                         <div class="modal-body">
                             <div class="form-group">
-                                <textarea name="biografi" rows="5" id="newsletter-kategori" class="form-control" autocomplete="off">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A atque rerum, ex, modi asperiores ut odit quasi dolorem quia nihil tenetur nulla veniam aspernatur, itaque tempore labore tempora harum magnam?</textarea>
+                                <textarea name="biografi" rows="5" id="newsletter-kategori" class="form-control @error('biografi') is-invalid @enderror" autocomplete="off">{{ old('biografi', $dataAlumni->biografi) }}</textarea>
+                                @error('biografi')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
                         </div>
                         <div class="modal-footer">

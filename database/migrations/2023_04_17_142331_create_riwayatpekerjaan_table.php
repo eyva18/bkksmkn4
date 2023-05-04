@@ -11,14 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('riwayatpekerjaan', function (Blueprint $table) {
+        Schema::create('riwayat_pekerjaan', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('NISN');
-            $table->string('nama_perusahaan');
-            $table->string('jenis_pekerjaan');
-            $table->string('bidang');
-            $table->string('awal_bekerja');
-            $table->string('akhir_bekerja');
             $table->timestamps();
         });
     }

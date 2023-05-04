@@ -75,7 +75,6 @@
                             <form action="/admin/administrator/master/report/yeary/pick/" method="GET">
                                 @method('get')
                                 @csrf
-                                @dd($tahunlulus)
                                 <select class="form-select full-size-width" id="idtahunlulus" name="idtahunlulus" value="{{ request('idtahunlulus') }}">
                                     <option selected>Tahun Lulus</option>
                                     @foreach ($tahunlulus as $item)
