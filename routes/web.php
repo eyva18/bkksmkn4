@@ -26,10 +26,10 @@ Route::get('/alumni-design', function () {
     return view('alumni.dashboard.dashboard');
 });
 Route::get('/test', function () {
-    return view('admin.daftar.alumni.tambahalumni');
+    return view('home');
 });
 Route::get('/login', function () {
-    return back();
+    return view('login.login');
 });
 Route::get('/', function () {
     if(Auth::user() != null){
@@ -114,9 +114,9 @@ Route::middleware(['auth', 'role:admin'])->group(function() {
 
 });
 
-Route::middleware(['auth', 'role:admin|alumni'])->group(function() {
-    Route::resource('/alumni/profile', ProfileAlumniController::class);
-});
+// Route::middleware(['auth', 'role:admin|alumni'])->group(function() {
+//     Route::resource('/alumni/profile', ProfileAlumniController::class);
+// });
 
 
 //Lowongan Kerja
@@ -134,3 +134,7 @@ Route::middleware('role:admin')->get('/admin/administrator/master/report/yearly/
 //Laporan Export Tahun Kelulusan
 Route::middleware('role:admin')->get('/admin/administrator/master/report/yearly/all/jurusan/{idjurusan}/export',  [AdminLaporanTahunKelulusanController::class, 'detail_laporan_perjurusan_export']);
 Route::middleware('role:admin')->get('/admin/administrator/master/report/yearly/{tahun_lulus:tahun_lulus}/jurusan/{idjurusan}/export',  [AdminLaporanTahunKelulusanController::class, 'detail_laporan_perjurusan_pertahun_export']);
+
+Auth::routes();
+
+Route::get('/test', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -44,7 +44,7 @@
                             <h3>Contact</h3>
                             <ul class="list-unstyled">
                                 <li><i class="fas fa-at color-23"></i> <span
-                                        class="mrl-5 text-black">qnovania@gmail.com</span></li>
+                                        class="mrl-5 text-black">{{ Auth()->user()->email }}</span></li>
                                 <li><i class="fas fa-phone color-23"></i> <span
                                         class="mrl-5 text-black">{{ $dataAlumni->no_hp }}</span></li>
                             </ul>

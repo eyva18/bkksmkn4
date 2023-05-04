@@ -12,8 +12,8 @@
         <div class="page-breadcrumb">
             <div class="row">
                 <div class="col-7 align-self-center">
-                    <h3 class="page-title text-truncate text-dark font-weight-medium mb-3">Ubah Data Alumni</h3>
-                    <a class="btn btn-secondary" href="{{ route('alumni.index') }}">Kembali</a>
+                    {{-- <h3 class="page-title text-truncate text-dark font-weight-medium mb-3">Ubah Data Alumni</h3> --}}
+                    <a class="btn btn-secondary" style="border-radius: 8px;" href="{{ route('alumni.index') }}">Kembali</a>
                 </div>
             </div>
         </div>
@@ -28,7 +28,7 @@
                 <div class="card-body collapse show">
                     <div class="row">
                         <div class="col-md-9">
-                            <h3 class="card-title">Informasi Profil</h3>
+                            <h3 class="card-title">Informasi Profil <span style="text-decoration-line: underline;">{{ $alumni->nama }}</span></h3>
                             <h6 class="card-subtitle">Data Personal dan Deskripsi</h6>
                         </div>
                     </div>
@@ -225,7 +225,7 @@
                 <div class="card-body collapse show">
                     <div class="row">
                         <div class="col-md-9">
-                            <h3 class="card-title">Jurusan & Angkatan</h3>
+                            <h3 class="card-title">Jurusan & Angkatan <span style="text-decoration-line: underline;">{{ $alumni->nama }}</span></h3>
                             <h6 class="card-subtitle">Data Jurusan dan Angkatan Tahun Alumni </h6>
                         </div>
                     </div>
@@ -295,7 +295,7 @@
                 <div class="card-body collapse show">
                     <div class="row">
                         <div class="col-md-9">
-                            <h3 class="card-title">Pengguna</h3>
+                            <h3 class="card-title">Pengguna <span style="text-decoration-line: underline;">{{ $alumni->nama }}</span></h3>
                             <h6 class="card-subtitle">Data Akses Pengguna</h6>
                         </div>
                     </div>

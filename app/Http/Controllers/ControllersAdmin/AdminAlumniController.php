@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AgamaModel;
 use App\Models\JenisKelaminModel;
 use Illuminate\Auth\Events\Validated;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
@@ -93,7 +94,7 @@ class AdminAlumniController extends Controller
         $validasiData['users'] = auth()->user()->id;
 
         AlumniModel::create($validasiData);
-        return redirect('/admin/administrator/master/alumni')->with('success', 'Alumni telah ditambahkan!');
+        return redirect('/alumni')->with('success', 'Alumni telah ditambahkan!');
     }
 
     /**
@@ -159,11 +160,11 @@ class AdminAlumniController extends Controller
             $validasiData['transkrip_nilai'] = $request->file('transkrip_nilai')->storeAs('Transkrip_Nilai_Alumni', $validasiData['transkrip_nilai']);
         }
         
+        // $validasiData['user'] = Auth()->user()->id;
         // dd($validasiData);
         
         AlumniModel::where('id', $request->id)->update($validasiData);
-        
-        return redirect('/admin/administrator/master/alumni')->with('success', 'Data Alumni Telah Berhasi Diubah!');
+        return redirect('/alumni')->with('success', 'Data Alumni Telah Berhasi Diubah!');
     }
 
     /**
@@ -181,6 +182,6 @@ class AdminAlumniController extends Controller
         }
 
         AlumniModel::destroy($request->id);
-        return redirect('/admin/administrator/master/alumni');
+        return redirect('/alumni');
     }
 }
