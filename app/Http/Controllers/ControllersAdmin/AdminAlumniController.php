@@ -11,6 +11,7 @@ use App\Models\JenisKelaminModel;
 use App\Http\Controllers\Controller;
 use App\Models\JenisPendidikanModel;
 use App\Models\RiwayatPendidikanModel;
+use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 
 class AdminAlumniController extends Controller
@@ -62,7 +63,6 @@ class AdminAlumniController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
         $validasiData = $request->validate([
             'nisn' => 'required|digits_between:1,15|numeric|unique:alumni',
             'nis' => 'required|digits_between:1,15|numeric|unique:alumni',
@@ -77,6 +77,10 @@ class AdminAlumniController extends Controller
             'transkrip_nilai' => 'required|file|min:10|max:4096|mimes:doc,pdf,docx,jpg,jpeg',
             'kode_jurusanId' => 'required|in:1, 2, 3, 4, 5, 6, 7',
             'kode_lulusId' => 'required',
+        ]);
+        $validasiDataUser = $request->validate([
+            'username' => 'required|max:225',
+            'email' => 'required|max:225',
         ]);
 
         // $validasiData['biografi'] = strip_tags($request->biografi);
@@ -94,6 +98,13 @@ class AdminAlumniController extends Controller
         $validasiData['user_id'] = auth()->user()->id;
 
         AlumniModel::create($validasiData);
+        $useralumnicreate = User::create([
+            'name' => $validasiDataUser['username'],
+            'email' => $validasiDataUser['email'],
+            'password' => bcrypt($validasiData['nisn']),
+            'photo_profile' => $validasiData['photo_profile'] ?? null,
+        ]);
+        $useralumnicreate->assignRole('alumni');
         return redirect('/alumni')->with('success', 'Alumni telah ditambahkan!');
     }
 

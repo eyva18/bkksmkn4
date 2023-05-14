@@ -193,7 +193,7 @@
                             <p class="text-muted mt-0 text-sm">Pas Photo, diutamakan Formal</p>
                         </div>
                         <div class="col-md-8 pdt-6">
-                            <input class="form-control @error('photo_profile') is-invalid @enderror" name="photo_profile" type="file" id="formFile" required value="{{ old('photo_profile') }}">
+                            <input class="form-control @error('photo_profile') is-invalid @enderror" name="photo_profile" type="file" id="formFile" value="{{ old('photo_profile') }}">
                             @error('photo_profile')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -207,7 +207,7 @@
                             <p class="text-muted mt-0 text-sm">Transkrip Terakhir</p>
                         </div>
                         <div class="col-md-8 pdt-6">
-                            <input class="form-control @error('transkrip_nilai') is-invalid @enderror" name="transkrip_nilai" type="file" id="formFile" required value="{{ old('transkrip_nilai') }}">
+                            <input class="form-control @error('transkrip_nilai') is-invalid @enderror" name="transkrip_nilai" type="file" id="formFile" value="{{ old('transkrip_nilai') }}">
                             @error('transkrip_nilai')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -278,20 +278,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row mrt-6">
-                        <div class="col-md-12 pdt-6" style="text-align: right">
-                            <button class="btn btn-primary" type="submit">Simpan</button>
-                            <a class="btn btn-secondary" href="/alumni">Batal</a>
-                        </div>
-                    </div>
-                </form>
                 </div>
             </div>
             <div class="card">
                 <div class="card-body collapse show">
-                    <form action="/alumni/buat-akun/" method="post" enctype="multipart/form-data">
-                        @method('post')
-                        @csrf
                         <div class="row">
                             <div class="col-md-9">
                                 <h3 class="card-title">Pengguna</h3>
@@ -329,7 +319,7 @@
                         <div class="row mrt-6">
                             <div class="col-md-12 pdt-6" style="text-align: right">
                                 <button class="btn btn-primary" type="submit">Simpan</button>
-                                <button class="btn btn-primary" type="reset">Batal</button>
+                                <button class="btn btn-secondary" type="reset">Batal</button>
                             </div>
                         </div>
                     </form>

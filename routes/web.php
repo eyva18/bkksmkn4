@@ -110,7 +110,7 @@ Route::middleware(['auth', 'role:admin'])->group(function() {
     // Route::resource('/alumni', AdminAlumniController::class);
     Route::get('/alumni/', [AdminAlumniController::class, 'index']);
     Route::get('/alumni/create', [AdminAlumniController::class, 'create']);
-    Route::get('/alumni/store', [AdminAlumniController::class, 'store']);
+    Route::post('/alumni/store', [AdminAlumniController::class, 'store']);
     // Route::get('/alumni/buat-akun/', [AdminController::class, 'storeAlumniAccount']);
     Route::post('/alumni/{alumniModel:nama}/show', [AdminAlumniController::class, 'show']);
     Route::get('/alumni/{alumniModel:nama}/edit', [AdminAlumniController::class, 'edit']);
