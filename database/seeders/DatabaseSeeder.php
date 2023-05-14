@@ -21,7 +21,8 @@ class DatabaseSeeder extends Seeder
         $this->call(JenisKelaminSeeder::class);
         $this->call(AgamaSeeder::class);
         $this->call(TahunLulusSeeder::class);
-        AlumniModel::factory(10)->create();
+        $this->call(JenisPendidikanSeeder::class);
+        AlumniModel::factory(25)->create();
         DudiModel::factory(10)->create();
     }
 }

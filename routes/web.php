@@ -110,13 +110,18 @@ Route::middleware('role:admin')->get('/admin/administrator/master/company/edit/{
 // Route::middleware('role:admin')->post('/admin/administrator/master/alumni/profile/{dudi}',  [AdminController::class, 'alumni_profile']);
 Route::middleware(['auth', 'role:admin'])->group(function() {
     Route::resource('/alumni', AdminAlumniController::class);
-    Route::get('/alumni/{alumni:nama}/edit', [AdminAlumniController::class, 'edit']);
-
+    // Route::get('/alumni/', [AdminAlumniController::class, 'index']);
+    // Route::get('/alumni/create', [AdminAlumniController::class, 'create']);
+    // Route::get('/alumni/store', [AdminAlumniController::class, 'store']);
+    // Route::post('/alumni/{alumni:nama}/show', [AdminAlumniController::class, 'show']);
+    // Route::get('/alumni/{alumni:nama}/edit', [AdminAlumniController::class, 'edit']);
+    // Route::put('/alumni/{alumni:nama}/update', [AdminAlumniController::class, 'update']);
+    // Route::post('/alumni/{alumni:nama}/destroy', [AdminAlumniController::class, 'destroy']);
 });
 
-// Route::middleware(['auth', 'role:admin|alumni'])->group(function() {
-//     Route::resource('/alumni/profile', ProfileAlumniController::class);
-// });
+Route::middleware(['auth', 'role:admin|alumni'])->group(function() {
+    Route::resource('/alumni/profile', ProfileAlumniController::class);
+});
 
 
 //Lowongan Kerja
@@ -137,4 +142,4 @@ Route::middleware('role:admin')->get('/admin/administrator/master/report/yearly/
 
 Auth::routes();
 
-Route::get('/test', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

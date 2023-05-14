@@ -26,6 +26,7 @@ return new class extends Migration
             $table->text('transkrip_nilai');
             $table->foreignId('kode_jurusanId');
             $table->foreignId('kode_lulusId');
+            $table->foreignId('user_id')->nullable();
             $table->timestamps();
         });
     }

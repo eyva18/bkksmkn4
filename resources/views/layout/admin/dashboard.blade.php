@@ -11,10 +11,13 @@
     <title>Dashboard - Bursa Kerja Khusus - SMKN 4 Banjarmasin</title>
     <link href="{{ URL::asset('asset/plugins/adminpage/extra-libs/c3/c3.min.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('asset/plugins/adminpage/libs/chartist/dist/chartist.min.css') }}" rel="stylesheet">
-    <link href="{{ URL::asset('asset/plugins/adminpage/extra-libs/jvector/jquery-jvectormap-2.0.2.css') }}"
-        rel="stylesheet" />
+    <link href="{{ URL::asset('asset/plugins/adminpage/extra-libs/jvector/jquery-jvectormap-2.0.2.css') }}" rel="stylesheet" />
     <link href="{{ URL::asset('asset/plugins/adminpage/dist/css/style.min.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('asset/plugins/adminpage/costume.css') }}" rel="stylesheet">
+
+    {{-- Trix --}}
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
+    
     @yield('css-tambahan')
 </head>
 
@@ -202,6 +205,10 @@
     <script src="{{ URL::asset('asset/plugins/adminpage/extra-libs/jvector/jquery-jvectormap-world-mill-en.js') }}">
     </script>
     <script src="{{ URL::asset('asset/plugins/adminpage/dist/js/pages/dashboards/dashboard1.min.js') }}"></script>
+
+    {{-- Trix --}}
+    <script type="text/javascript" src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
+
     @yield('js-tambahan')
 </body>
 
