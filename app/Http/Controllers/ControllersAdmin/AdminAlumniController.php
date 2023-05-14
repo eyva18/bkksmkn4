@@ -82,7 +82,7 @@ class AdminAlumniController extends Controller
             'photo_profile' => 'required|file|min:10|max:1024|image|mimes:jpeg,jpg',
             'transkrip_nilai' => 'required|file|min:10|max:4096|mimes:doc,pdf,docx,jpg,jpeg',
             'kode_jurusanId' => 'required|in:1, 2, 3, 4, 5, 6, 7',
-            'kode_lulusId' => 'required|in:1,2,3',
+            'kode_lulusId' => 'required',
         ]);
 
         // $validasiData['biografi'] = strip_tags($request->biografi);
