@@ -4,20 +4,14 @@ namespace app\Http\Controllers\ControllersAdmin;
 
 use App\Models\AgamaModel;
 use App\Models\AlumniModel;
-use Illuminate\Support\Str;
 use App\Models\JurusanModel;
 use Illuminate\Http\Request;
 use App\Models\TahunLulusModel;
 use App\Models\JenisKelaminModel;
-use App\Models\RiwayatAlumniModel;
 use App\Http\Controllers\Controller;
 use App\Models\JenisPendidikanModel;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
-use Illuminate\Auth\Events\Validated;
 use App\Models\RiwayatPendidikanModel;
 use Illuminate\Support\Facades\Storage;
-use Symfony\Component\Console\Input\Input;
 
 class AdminAlumniController extends Controller
 {
@@ -136,24 +130,24 @@ class AdminAlumniController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, AlumniModel $alumni)
+    public function update(Request $request, AlumniModel $alumniModel)
     {
         $validasiData = $request->validate([
-            'nisn' => 'required|digits_between:1,15|numeric',
-            'nis' => 'required|digits_between:1,15|numeric',
-            'nama' => 'required|max:225',
-            'no_hp' => 'required|digits_between:1,15|numeric',
-            'biografi' => 'required',
-            'agamaId' => 'required|in:1,2,3,4,5',
-            'jenis_kelaminId' => 'required|in:1,2',
-            'alamat' => 'required',
-            'tempatTanggalLahir' => 'required',
+            'nisn' => 'digits_between:1,15|numeric',
+            'nis' => 'digits_between:1,15|numeric',
+            'nama' => 'max:225',
+            'no_hp' => 'digits_between:1,15|numeric',
+            'biografi' => '',
+            'agamaId' => 'in:1,2,3,4,5',
+            'jenis_kelaminId' => 'in:1,2',
+            'alamat' => '',
+            'tempatTanggalLahir' => '',
             'photo_profile' => 'file|min:10|max:1024|image|mimes:jpeg,jpg',
             'transkrip_nilai' => 'file|min:10|max:4096|mimes:doc,pdf,docx,jpg,jpeg',
-            'kode_jurusanId' => 'required|in:1, 2, 3, 4, 5, 6, 7',      
-            'kode_lulusId' => 'required|in:1,2,3',
+            'kode_jurusanId' => 'in:1, 2, 3, 4, 5, 6, 7',      
+            'kode_lulusId' => 'in:1,2,3',
         ]);
-
+        
         // $validasiData['biografi'] = strip_tags($request->biografi);
         
         if($request->file('photo_profile')) {
@@ -176,7 +170,7 @@ class AdminAlumniController extends Controller
         // dd($request->input('id'));
         
         AlumniModel::where('id', $request->id)->update($validasiData);
-        $dataRequest = $alumni->findOrFail($request->id);
+        $dataRequest = $alumniModel->findOrFail($request->id);
         return redirect('/alumni')->with('success', 'Data Alumni Telah Berhasi Diubah!');
     }
 

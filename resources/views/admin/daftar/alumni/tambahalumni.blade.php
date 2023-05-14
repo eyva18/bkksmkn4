@@ -31,9 +31,9 @@
                             <h6 class="card-subtitle">Data Personal dan Deskripsi</h6>
                         </div>
                     </div>
-                    <form action="{{ route('alumni.store') }}" method="post" enctype="multipart/form-data">
-                        @method('post')
-                        @csrf
+                    <form action="/alumni/store" method="post" enctype="multipart/form-data">
+                    @method('post')
+                    @csrf
                     <div class="row pdt-20">
                         <div class="col-md-4">
                             <h4 class="text-black m-0">NISN<span class="text-red"> *</span></h4>
@@ -289,49 +289,50 @@
             </div>
             <div class="card">
                 <div class="card-body collapse show">
-                    <div class="row">
-                        <div class="col-md-9">
-                            <h3 class="card-title">Pengguna</h3>
-                            <h6 class="card-subtitle">Data Akses Pengguna</h6>
+                    <form action="/alumni/buat-akun/" method="post" enctype="multipart/form-data">
+                        @method('post')
+                        @csrf
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h3 class="card-title">Pengguna</h3>
+                                <h6 class="card-subtitle">Data Akses Pengguna</h6>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row pdt-20">
-                        <div class="col-md-4">
-                            <h4 class="text-black m-0">E-Mail<span class="text-red"> *</span></h4>
-                            <p class="text-muted mt-0 text-sm">E-Mail Perusahaan</p>
+                        <div class="row mrt-6">
+                            <div class="col-md-4">
+                                <h4 class="text-black m-0">Username<span class="text-red"> *</span></h4>
+                                <p class="text-muted mt-0 text-sm">Username Perusahaan</p>
+                            </div>
+                            <div class="col-md-8 pdt-6">
+                                <input type="text" class="form-control font-weight-normal @error('username') is-invalid @enderror" placeholder="Username Perusahaan..." name="username" value="{{ old('username') }}">
+                                @error('username')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
                         </div>
-                        <div class="col-md-8 pdt-6">
-                            <input type="text" class="form-control font-weight-normal"
-                                placeholder="E-Mail Perusahaan..." name="email">
+                        <div class="row pdt-20">
+                            <div class="col-md-4">
+                                <h4 class="text-black m-0">E-Mail<span class="text-red"> *</span></h4>
+                                <p class="text-muted mt-0 text-sm">E-Mail Perusahaan</p>
+                            </div>
+                            <div class="col-md-8 pdt-6">
+                                <input type="email" class="form-control font-weight-normal @error('email') is-invalid @enderror" placeholder="E-Mail Perusahaan..." name="email" value="{{ old('email') }}">
+                                @error('email')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
                         </div>
-                    </div>
-                    <div class="row mrt-6">
-                        <div class="col-md-4">
-                            <h4 class="text-black m-0">Username<span class="text-red"> *</span></h4>
-                            <p class="text-muted mt-0 text-sm">Username Perusahaan</p>
+                        <div class="row mrt-6">
+                            <div class="col-md-12 pdt-6" style="text-align: right">
+                                <button class="btn btn-primary" type="submit">Simpan</button>
+                                <button class="btn btn-primary" type="reset">Batal</button>
+                            </div>
                         </div>
-                        <div class="col-md-8 pdt-6">
-                            <input type="text" class="form-control font-weight-normal"
-                                placeholder="Username Perusahaan..." name="username">
-                        </div>
-                    </div>
-                    <div class="row mrt-6">
-                        <div class="col-md-4">
-                            <h4 class="text-black m-0">Password<span class="text-red"> *</span></h4>
-                            <p class="text-muted mt-0 text-sm">Password Pengguna Perusahaan</p>
-                        </div>
-                        <div class="col-md-8 pdt-6">
-                            <input type="text" class="form-control font-weight-normal"
-                                placeholder="Password Pengguna Perusahaan..." name="password">
-                        </div>
-                    </div>
-                    <div class="row mrt-6">
-                        <div class="col-md-12 pdt-6" style="text-align: right">
-                            <button class="btn btn-primary" type="submit">Simpan</button>
-                            <a class="btn btn-secondary" href="/admin/administrator/master/company">Cencel</a>
-                        </div>
-                    </div>
-                </form>
+                    </form>
                 </div>
             </div>
         </div>

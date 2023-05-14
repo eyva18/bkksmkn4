@@ -107,14 +107,15 @@ Route::middleware('role:admin')->get('/admin/administrator/master/company/edit/{
 // Route::middleware('role:admin')->get('/admin/administrator/master/alumni',  [AdminController::class, 'alumni'])->name('admin@master_alumni');
 // Route::middleware('role:admin')->post('/admin/administrator/master/alumni/profile/{dudi}',  [AdminController::class, 'alumni_profile']);
 Route::middleware(['auth', 'role:admin'])->group(function() {
-    Route::resource('/alumni', AdminAlumniController::class);
-    // Route::get('/alumni/', [AdminAlumniController::class, 'index']);
-    // Route::get('/alumni/create', [AdminAlumniController::class, 'create']);
-    // Route::get('/alumni/store', [AdminAlumniController::class, 'store']);
-    // Route::post('/alumni/{alumni:nama}/show', [AdminAlumniController::class, 'show']);
-    // Route::get('/alumni/{alumni:nama}/edit', [AdminAlumniController::class, 'edit']);
-    // Route::put('/alumni/{alumni:nama}/update', [AdminAlumniController::class, 'update']);
-    // Route::post('/alumni/{alumni:nama}/destroy', [AdminAlumniController::class, 'destroy']);
+    // Route::resource('/alumni', AdminAlumniController::class);
+    Route::get('/alumni/', [AdminAlumniController::class, 'index']);
+    Route::get('/alumni/create', [AdminAlumniController::class, 'create']);
+    Route::get('/alumni/store', [AdminAlumniController::class, 'store']);
+    // Route::get('/alumni/buat-akun/', [AdminController::class, 'storeAlumniAccount']);
+    Route::post('/alumni/{alumniModel:nama}/show', [AdminAlumniController::class, 'show']);
+    Route::get('/alumni/{alumniModel:nama}/edit', [AdminAlumniController::class, 'edit']);
+    Route::put('/alumni/{alumniModel:nama}/update', [AdminAlumniController::class, 'update']);
+    Route::post('/alumni/{alumniModel:nama}/destroy', [AdminAlumniController::class, 'destroy']);
 });
 
 Route::middleware(['auth', 'role:admin|alumni'])->group(function() {

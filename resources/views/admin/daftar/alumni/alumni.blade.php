@@ -30,12 +30,12 @@
                             <h4 class="card-title">Pencarian Alumni</h4>
                         </div>
                         <div class="col-md-3">
-                            <a href="{{ route('alumni.create') }}" class="btn btn-secondary full-size-width" style="border-radius:8px ">Tambah Alumni</a>
+                            <a href="/alumni/create" class="btn btn-secondary full-size-width" style="border-radius:8px ">Tambah Alumni</a>
                         </div>
                     </div>
                     <div class="row pdt-20">
                         <div class="col-md-3">
-                            <form action="{{ route('alumni.index') }}" method="GET">
+                            <form action="/alumni" method="GET">
                                 @method('get')
                                 @csrf
                             <select class="form-select full-size-width" id="idjurusan" name="idjurusan" value="{{ request('idjurusan') }}">
@@ -113,8 +113,8 @@
                                     </li>
                                 </ul>
                             </div>
-                            <form action="{{ route('alumni.show', $alumni->nama) }}" method="post">
-                                @method('get')
+                            <form action="/alumni/{{ $alumni->nama }}/show" method="post">
+                                @method('post')
                                 @csrf
                                 <input type="hidden" name="id" class="form-control form-control-lg" value="{{ $alumni->id }}">
                                 <button class="btn btn-primary full-size-width">Profile Alumni</button>
@@ -144,8 +144,8 @@
                                         <p class="mt-3">Apakan Ingin Melanjutkan Menghapus data: <br> NISN:
                                             {{ $alumni->nisn }}
                                             | {{ $alumni->nama }}</p>
-                                        <form action="{{ route('alumni.destroy', $alumni->id) }}" method="post">
-                                            @method('delete')
+                                        <form action="/alumni/{{ $alumni->nama }}/destroy" method="post">
+                                            @method('post')
                                             @csrf
                                             <input type="hidden" name="id" id="newsletter-id" class="form-control form-control-lg" value="{{ $alumni->id }}">
                                             <button type="submit" class="btn btn-light my-2" >Delete</button>

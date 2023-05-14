@@ -4,16 +4,20 @@ namespace app\Http\Controllers\ControllersAdmin;;
 
 use App\Models\User;
 use App\Models\DudiModel;
+use App\Models\AgamaModel;
 use App\Models\AlumniModel;
 use App\Models\JurusanModel;
 use Illuminate\Http\Request;
 use App\Models\CategoryModel;
 use App\Models\LowonganModel;
 use App\Models\TahunLulusModel;
+use App\Models\JenisKelaminModel;
 use App\Models\StatusAlumniModel;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
+use App\Models\JenisPendidikanModel;
 use Illuminate\Support\Facades\File;
+use App\Models\RiwayatPekerjaanModel;
+use App\Models\RiwayatPendidikanModel;
 use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
@@ -330,7 +334,7 @@ class AdminController extends Controller
     }
 
     //Alumni Function Here ------------------------------
-    public function alumni()
+    public function alumni_index()
     {
         //Jurusan Database Function
         $dataalumni = AlumniModel::with('jurusan')->with('tahunlulus')->paginate(10);
@@ -368,10 +372,168 @@ class AdminController extends Controller
         ]);
     }
 
-    public function alumni_delete(Request $request, AlumniModel $alumniModel) 
+    public function alumni_create() {
+        return view('admin.daftar.alumni.tambahalumni', [
+            'dataAgama' => AgamaModel::all(),
+            'dataJenisKelamin' => JenisKelaminModel::all(),
+            'dataJurusan' => JurusanModel::all(),
+            'dataTahunLulus' => TahunLulusModel::all(),
+        ]);
+    }
+
+    public function alumni_store(Request $request) {
+        $validasiData = $request->validate([
+            'nisn' => 'required|digits_between:1,15|numeric|unique:alumni',
+            'nis' => 'required|digits_between:1,15|numeric|unique:alumni',
+            'nama' => 'required|max:225',
+            'no_hp' => 'required|digits_between:1,15|numeric',
+            'biografi' => 'required',
+            'agamaId' => 'required|in:1,2,3,4,5',
+            'jenis_kelaminId' => 'required|in:1,2',
+            'alamat' => 'required',
+            'tempatTanggalLahir' => 'required',
+            'photo_profile' => 'required|file|min:10|max:1024|image|mimes:jpeg,jpg',
+            'transkrip_nilai' => 'required|file|min:10|max:4096|mimes:doc,pdf,docx,jpg,jpeg',
+            'kode_jurusanId' => 'required|in:1, 2, 3, 4, 5, 6, 7',
+            'kode_lulusId' => 'required|in:1,2,3',
+        ]);
+        
+
+        // $validasiData['biografi'] = strip_tags($request->biografi);
+        // dd($validasiData);
+        if($request->file('photo_profile')) {
+            $validasiData['photo_profile'] = $request->file('photo_profile')->getClientOriginalName();
+            $validasiData['photo_profile'] = $request->file('photo_profile')->storeAs('Photo_Profile_Alumni', $validasiData['photo_profile']);
+        }
+
+        if($request->file('transkrip_nilai')) {
+            $validasiData['transkrip_nilai'] = $request->file('transkrip_nilai')->getClientOriginalName();
+            $validasiData['transkrip_nilai'] = $request->file('transkrip_nilai')->storeAs('Transkrip_Nilai_Alumni', $validasiData['transkrip_nilai']);
+        }
+
+        $validasiData['user_id'] = auth()->user()->id;
+
+        AlumniModel::create($validasiData);
+        return redirect('/alumni')->with('success', 'Alumni telah ditambahkan!');
+    }
+
+    public function storeAlumniAccount(Request $request) {
+
+        // $request['username'] = AlumniModel
+        $validasiData = $request->validate([
+            'username' => '',
+            'email' => '',
+            'password' => ''
+        ]);
+
+    }
+
+    public function storeRiwayatPendidikan(Request $request) {
+        $validasiDataRiwayatPendidikan = $request->validate([
+            'nama_instansi' => '',
+            'jenis_pendidikan' => 'required|in:1, 2, 3, 4, 5',
+            'nilai_rata_rata' => 'numeric|decimal:0,100.00',
+        ]);
+
+        // $dataRiwayat = RiwayatAlumniModel::find($request->id);
+        RiwayatPendidikanModel::create($validasiDataRiwayatPendidikan);
+        return back()->with('success', 'Riwayat pendidikan berhasil ditambahkan');
+    }
+
+    public function storeRiwayatPekerjaan(Request $request) {
+
+        $validasiRiwayatPekerjaan = $request->validate([
+            'nama_perusahaan' => '',
+            'jenis_pekerjaan' => '',
+            'bidang' => '',
+            'awal_bekerja' => '',
+            'akhir_bekerja' => '',
+        ]);
+
+        // $dataRiwayat = RiwayatAlumniModel::find($request->id);
+        RiwayatPekerjaanModel::create($validasiRiwayatPekerjaan);
+        return back()->with('success', 'Riwayat pekerjaan berhasil ditambahkan');
+    }
+
+    public function alumni_show(Request $request, AlumniModel $alumniModel) {
+        $findSiswaProfile = $alumniModel->findOrFail($request->id);
+        // dd($alumniModel);
+        return view('admin.daftar.alumni.profilealumni', [
+            'dataAlumni' => $findSiswaProfile,
+            'dataJenisPendidikan' => JenisPendidikanModel::all(),
+            'dataPendidikan' => RiwayatPendidikanModel::all(),
+            'dataPekerjaan' => RiwayatPendidikanModel::all(),
+        ]);
+    }
+
+    public function alumni_edit(Request $request, AlumniModel $alumniModel) {
+        $dataAlumni = $alumniModel->find($request->id);
+        return view('admin.daftar.alumni.ubahalumni', [
+            "alumni" => $dataAlumni,
+            'dataAgama' => AgamaModel::all(),
+            'dataJenisKelamin' => JenisKelaminModel::all(),
+            'dataJurusan' => JurusanModel::all(),
+            'dataTahunLulus' => TahunLulusModel::all()
+        ]);
+    }
+
+    public function alumni_update(Request $request, AlumniModel $alumniModel) {
+        $validasiData = $request->validate([
+            'nisn' => 'digits_between:1,15|numeric',
+            'nis' => 'digits_between:1,15|numeric',
+            'nama' => 'max:225',
+            'no_hp' => 'digits_between:1,15|numeric',
+            'biografi' => '',
+            'agamaId' => 'in:1,2,3,4,5',
+            'jenis_kelaminId' => 'in:1,2',
+            'alamat' => '',
+            'tempatTanggalLahir' => '',
+            'photo_profile' => 'file|min:10|max:1024|image|mimes:jpeg,jpg',
+            'transkrip_nilai' => 'file|min:10|max:4096|mimes:doc,pdf,docx,jpg,jpeg',
+            'kode_jurusanId' => 'in:1, 2, 3, 4, 5, 6, 7',      
+            'kode_lulusId' => 'in:1,2,3',
+        ]);
+        // $validasiData['biografi'] = strip_tags($request->biografi);
+        
+        if($request->file('photo_profile')) {
+            if($request->oldPhotoProfile) {
+                Storage::delete($request->oldPhotoProfile);
+            }
+            $validasiData['photo_profile'] = $request->file('photo_profile')->getClientOriginalName();
+            $validasiData['photo_profile'] = $request->file('photo_profile')->storeAs('Photo_Profile_Alumni', $validasiData['photo_profile']);
+        }
+        
+        if($request->file('transkrip_nilai')) {
+            if($request->oldTranskripNilai) {
+                Storage::delete($request->oldTranskripNilai);
+            }
+            $validasiData['transkrip_nilai'] = $request->file('transkrip_nilai')->getClientOriginalName();
+            $validasiData['transkrip_nilai'] = $request->file('transkrip_nilai')->storeAs('Transkrip_Nilai_Alumni', $validasiData['transkrip_nilai']);
+        }
+        
+        $validasiData['user_id'] = auth()->user()->id;
+        // dd($request->input('id'));
+        
+        AlumniModel::where('id', $request->id)->update($validasiData);
+        $dataRequest = $alumniModel->findOrFail($request->id);
+        // return redirect('')->with('success', 'Data Alumni Telah Berhasi Diubah!'); // tampilkan ke funtion show 
+    }
+
+    public function update_biografi(Request $request) {
+        $validasiDataBiografi = $request->validate([
+            'biografi' => '',
+        ]);
+        // $validasiData['biografi'] = strip_tags($request->biografi);
+        // dd($validasiData['biografi']);
+
+        $dataBio = AlumniModel::find($request->id);
+        AlumniModel::where('id', $dataBio->id)->update($validasiDataBiografi);
+        return back()->with('success', 'Biografi berhasil diubah');
+    }
+
+    public function alumni_destroy(Request $request, AlumniModel $alumniModel) 
     {
         $data = $alumniModel->findOrFail($request->id);
-
         if($data->photo_profile) {
             Storage::delete($data->photo_profile);
         }
