@@ -100,7 +100,7 @@ Route::middleware('role:admin')->get('/admin/administrator/master/company/create
 Route::middleware('role:admin')->post('/admin/administrator/master/company/newdata',  [AdminController::class, 'dudi_add']);
 Route::middleware('role:admin')->post('/admin/administrator/master/company/delete',  [AdminController::class, 'dudi_delete']);
 Route::middleware('role:admin')->get('/admin/administrator/master/company/search',  [AdminController::class, 'dudi_search']);
-Route::middleware('role:admin')->post('/admin/administrator/master/company/profile/{dudi}',  [AdminController::class, 'dudi_profile']);
+Route::middleware('role:admin')->get('/admin/administrator/master/company/profile/{dudi:nama}',  [AdminController::class, 'dudi_profile']);
 Route::middleware('role:admin')->get('/admin/administrator/master/company/edit/{dudi:nama}',  [AdminController::class, 'editdudi_profile']);
 
 //Alumni Year
