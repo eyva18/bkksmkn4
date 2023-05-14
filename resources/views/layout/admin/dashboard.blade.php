@@ -142,7 +142,7 @@
                                             class="hide-menu"> Perusahaan
                                         </span></a>
                                 </li>
-                                <li class="sidebar-item"><a href="{{ route('alumni.index') }}" class="sidebar-link"><span
+                                <li class="sidebar-item"><a href="/alumni" class="sidebar-link"><span
                                             class="hide-menu"> Alumni
                                         </span></a>
                                 </li>

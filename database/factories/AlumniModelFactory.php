@@ -3,11 +3,14 @@
 namespace Database\Factories;
 
 use App\Models\AgamaModel;
+use App\Models\AlumniModel;
 use Illuminate\Support\Arr;
 use App\Models\JurusanModel;
 use App\Models\TahunLulusModel;
 use App\Models\JenisKelaminModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Auth;
+
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\AlumniModel>
  */

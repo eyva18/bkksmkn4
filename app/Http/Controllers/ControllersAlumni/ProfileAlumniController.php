@@ -10,18 +10,19 @@ use App\Models\RiwayatAlumniModel;
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\Validated;
 use App\Models\RiwayatPendidikanModel;
+use Illuminate\Support\Facades\Auth;
 
 class ProfileAlumniController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, AlumniModel $alumniModel)
+    public function index()
     {
-        // $findSiswaProfile = AlumniModel::findOrFail($request->id);
-        // return view('admin.daftar.alumni.profilealumni', [
-        //     'dataAlumni' => $findSiswaProfile
-        // ]);
+        $findSiswaProfile = Auth::user()->id;
+        return view('alumni.dashboard', [
+            'dataAlumni' => $findSiswaProfile
+        ]);
     }
 
     /**

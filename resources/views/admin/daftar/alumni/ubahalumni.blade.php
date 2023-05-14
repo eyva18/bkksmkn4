@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="col-7 align-self-center">
                     {{-- <h3 class="page-title text-truncate text-dark font-weight-medium mb-3">Ubah Data Alumni</h3> --}}
-                    <a class="btn btn-secondary" style="border-radius: 8px;" href="{{ route('alumni.index') }}">Kembali</a>
+                    <a class="btn btn-secondary" style="border-radius: 8px;" href="/alumni">Kembali</a>
                 </div>
             </div>
         </div>
@@ -33,7 +33,7 @@
                         </div>
                     </div>
                     {{-- @dd($alumni->id) --}}
-                    <form action="{{ route('alumni.update', $alumni->id) }}" method="post" enctype="multipart/form-data">
+                    <form action="/alumni/{{ $alumni->nama }}/update" method="post" enctype="multipart/form-data">
                         @method('put')
                         @csrf
                         <input type="hidden" name="id" value="{{ $alumni->id }}">
@@ -294,49 +294,64 @@
             </div>
             <div class="card">
                 <div class="card-body collapse show">
-                    <div class="row">
-                        <div class="col-md-9">
-                            <h3 class="card-title">Pengguna <span style="text-decoration-line: underline;">{{ $alumni->nama }}</span></h3>
-                            <h6 class="card-subtitle">Data Akses Pengguna</h6>
+                    <form action="#" method="post" enctype="multipart/form-data">
+                        @method('put')
+                        @csrf
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h3 class="card-title">Pengguna</h3>
+                                <h6 class="card-subtitle">Data Akses Pengguna</h6>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row pdt-20">
-                        <div class="col-md-4">
-                            <h4 class="text-black m-0">E-Mail<span class="text-red"> *</span></h4>
-                            <p class="text-muted mt-0 text-sm">E-Mail Perusahaan</p>
+                        <div class="row mrt-6">
+                            <div class="col-md-4">
+                                <h4 class="text-black m-0">Username<span class="text-red"> *</span></h4>
+                                <p class="text-muted mt-0 text-sm">Username Perusahaan</p>
+                            </div>
+                            <div class="col-md-8 pdt-6">
+                                <input type="text" class="form-control font-weight-normal @error('username') is-invalid @enderror" placeholder="Username Perusahaan..." name="username" value="{{ old('username', Auth()->User()->name) }}">
+                                @error('username')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
                         </div>
-                        <div class="col-md-8 pdt-6">
-                            <input type="text" class="form-control font-weight-normal"
-                                placeholder="E-Mail Perusahaan..." name="email">
+                        <div class="row pdt-20">
+                            <div class="col-md-4">
+                                <h4 class="text-black m-0">E-Mail<span class="text-red"> *</span></h4>
+                                <p class="text-muted mt-0 text-sm">E-Mail Perusahaan</p>
+                            </div>
+                            <div class="col-md-8 pdt-6">
+                                <input type="email" class="form-control font-weight-normal @error('email') is-invalid @enderror" placeholder="E-Mail Perusahaan..." name="email" value="{{ old('email', Auth()->User()->email) }}">
+                                @error('email')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
                         </div>
-                    </div>
-                    <div class="row mrt-6">
-                        <div class="col-md-4">
-                            <h4 class="text-black m-0">Username<span class="text-red"> *</span></h4>
-                            <p class="text-muted mt-0 text-sm">Username Perusahaan</p>
+                        <div class="row mrt-6">
+                            <div class="col-md-4">
+                                <h4 class="text-black m-0">Password<span class="text-red"> *</span></h4>
+                                <p class="text-muted mt-0 text-sm">Password Pengguna Perusahaan</p>
+                            </div>
+                            <div class="col-md-8 pdt-6">
+                                <input type="password" class="form-control font-weight-normal @error('password') is-invalid @enderror" placeholder="Password Pengguna Perusahaan..." name="password" value="{{ old('password') }}">
+                                @error('password')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
                         </div>
-                        <div class="col-md-8 pdt-6">
-                            <input type="text" class="form-control font-weight-normal"
-                                placeholder="Username Perusahaan..." name="username">
+                        <div class="row mrt-6">
+                            <div class="col-md-12 pdt-6" style="text-align: right">
+                                <button class="btn btn-primary" type="submit">Simpan</button>
+                                <button class="btn btn-primary" type="reset">Batal</button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row mrt-6">
-                        <div class="col-md-4">
-                            <h4 class="text-black m-0">Password<span class="text-red"> *</span></h4>
-                            <p class="text-muted mt-0 text-sm">Password Pengguna Perusahaan</p>
-                        </div>
-                        <div class="col-md-8 pdt-6">
-                            <input type="text" class="form-control font-weight-normal"
-                                placeholder="Password Pengguna Perusahaan..." name="password">
-                        </div>
-                    </div>
-                    <div class="row mrt-6">
-                        <div class="col-md-12 pdt-6" style="text-align: right">
-                            <button class="btn btn-primary" type="submit">Simpan</button>
-                            <a class="btn btn-secondary" href="/admin/administrator/master/company">Cencel</a>
-                        </div>
-                    </div>
-                </form>
+                    </form>
                 </div>
             </div>
         </div>

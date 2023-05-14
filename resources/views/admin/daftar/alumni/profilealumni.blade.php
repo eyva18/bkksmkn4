@@ -50,7 +50,7 @@
                             </ul>
                             <div class="row">
                                 <div class="col-lg-12 text-center">
-                                    <form action="{{ route('alumni.edit', $dataAlumni->nama . '-' . $dataAlumni->nisn) }}" method="post">
+                                    <form action="/alumni/{{ $dataAlumni->nama }}/edit" method="post">
                                         @method('get')
                                         @csrf
                                         <input type="hidden" name="id" class="form-control form-control-lg" value="{{ $dataAlumni->id }}">
@@ -136,7 +136,7 @@
                         <h4 class="modal-title" id="myLargeModalLabel">Edit Biografi</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                     </div>
-                    <form action="{{ route('profile.update', $dataAlumni->nama) }}" method="post">
+                    <form action="#" method="post">
                         @method('put')
                         @csrf
                         <input type="hidden" name="id" value="{{ $dataAlumni->id }}">
