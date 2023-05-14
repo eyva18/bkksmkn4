@@ -62,9 +62,7 @@ Route::get('/home', function () {
 //Route For Login-----------------------------------
 Route::middleware('role:admin')->get('/admin/dashboard', [AdminController::class, 'index'])->name('admin@dashboard');
 
-Route::middleware('role:alumni')->get('/alumni/dashboard', function () {
-    return 'Alumni Dashboard Here';
-})->name('alumni@dashboard');
+Route::middleware('role:alumni')->get('/dashboard', [ProfileAlumniController::class, 'index'])->name('alumni@dashboard');
 
 Route::middleware('role:kepala_sekolah')->get('/kepala-sekolah/dashboard', function () {
     return 'Kepala Sekolah Dashboard Here';

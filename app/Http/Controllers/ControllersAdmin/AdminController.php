@@ -9,11 +9,12 @@ use App\Models\JurusanModel;
 use Illuminate\Http\Request;
 use App\Models\CategoryModel;
 use App\Models\LowonganModel;
-use App\Models\StatusAlumniModel;
 use App\Models\TahunLulusModel;
+use App\Models\StatusAlumniModel;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -340,36 +341,45 @@ class AdminController extends Controller
         ]);
     }
     
-    public function alumni_search(Request $request)
+    public function alumni_search(Request $request, AlumniModel $Alumni)
     {
         //Jurusan Database Function
-        if($request->idjurusan != "Jurusan" and $request->idtahunlulus != "Tahun Lulus"){
-            $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->where('kode_jurusan', $request->idjurusan)->where('kode_lulus', $request->idtahunlulus)->paginate(10);
+        if($request->idjurusan == null and $request->idtahunlulus == null and $request->nama_alumni == null){
+            $dataalumni = AlumniModel::with('jurusan')->with('tahunlulus')->latest()->paginate(25);
+        }  
+        elseif($request->idjurusan != "Jurusan" and $request->idtahunlulus != "Tahun Lulus"){
+            $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->where('kode_jurusanId', $request->idjurusan)->where('kode_lulusId', $request->idtahunlulus)->latest()->paginate(25);
         }
         elseif($request->idjurusan != "Jurusan" and $request->idtahunlulus == "Tahun Lulus"){
-            $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->where('kode_jurusan', $request->idjurusan)->paginate(10);
+            $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->where('kode_jurusanId', $request->idjurusan)->latest()->paginate(25);
+        }
+        elseif($request->idtahunlulus != "Tahun Lulus" and $request->idjurusan == "Jurusan" ){
+            $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->where('kode_lulusId', $request->idtahunlulus)->latest()->paginate(25);
+        }
+        elseif($request->idjurusan == "Jurusan" and $request->idtahunlulus == "Tahun Lulus"){
+            $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->latest()->paginate(25);
+        }
 
-         }
-         elseif($request->idtahunlulus != "Tahun Lulus" and $request->idjurusan == "Jurusan" ){
-            $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->where('kode_lulus', $request->idtahunlulus)->paginate(10);
-         }
-         elseif($request->idjurusan == "Jurusan" and $request->idtahunlulus == "Tahun Lulus"){
-            $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->paginate(10);
-         }
         return view('admin.daftar.alumni.alumni', [
+            'Alumni' => $Alumni,
             "dataalumni" => $dataalumni,
             "datajurusan" => JurusanModel::all(),
-            "datatahunlulus" => TahunLulusModel::all(),
+            "datatahunlulus" => TahunLulusModel::all()
         ]);
     }
-    public function alumni_delete(Request $request) 
+
+    public function alumni_delete(Request $request, AlumniModel $alumniModel) 
     {
-        $data = AlumniModel::find($request->id);
-        $imagename = $data->photo_profile;
-        $image1 = $imagename;
-        File::delete(public_path("images/profileimg/$image1"));
-        AlumniModel::find($request->id)->delete();
-        User::where('kode_owner', $request->id)->delete();
+        $data = $alumniModel->findOrFail($request->id);
+
+        if($data->photo_profile) {
+            Storage::delete($data->photo_profile);
+        }
+        if($data->transkrip_nilai) {
+            Storage::delete($data->transkrip_nilai);
+        }
+
+        AlumniModel::destroy($request->id);
         return back();
     }
 }
