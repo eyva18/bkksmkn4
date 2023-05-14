@@ -99,7 +99,8 @@
                             <p class="text-muted mt-0 text-sm">Biografi Anda</p>
                         </div>
                         <div class="col-md-8">
-                            <textarea name="biografi" class="form-control font-weight-normal @error('biografi') is-invalid @enderror" rows="5" required>{{ old('biografi', $alumni->biografi) }}</textarea>
+                            <input id="biografi" placeholder="Tentang diri anda" class="form-control font-weight-normal @error('biografi') is-invalid @enderror" type="hidden" name="biografi" value="{{ old('biografi', $alumni->biografi) }}" required>
+                            <trix-editor input="biografi"></trix-editor>
                             @error('biografi')
                                 <div class="invalid-feedback">
                                     {{ $message }}

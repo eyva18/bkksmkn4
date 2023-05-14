@@ -2,18 +2,22 @@
 
 namespace app\Http\Controllers\ControllersAdmin;
 
+use App\Models\AgamaModel;
 use App\Models\AlumniModel;
+use Illuminate\Support\Str;
 use App\Models\JurusanModel;
 use Illuminate\Http\Request;
 use App\Models\TahunLulusModel;
-use App\Http\Controllers\Controller;
-use App\Models\AgamaModel;
 use App\Models\JenisKelaminModel;
-use Illuminate\Auth\Events\Validated;
+use App\Models\RiwayatAlumniModel;
+use App\Http\Controllers\Controller;
+use App\Models\JenisPendidikanModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Auth\Events\Validated;
+use App\Models\RiwayatPendidikanModel;
 use Illuminate\Support\Facades\Storage;
-
+use Symfony\Component\Console\Input\Input;
 
 class AdminAlumniController extends Controller
 {
@@ -80,6 +84,8 @@ class AdminAlumniController extends Controller
             'kode_jurusanId' => 'required|in:1, 2, 3, 4, 5, 6, 7',
             'kode_lulusId' => 'required|in:1,2,3',
         ]);
+
+        // $validasiData['biografi'] = strip_tags($request->biografi);
         // dd($validasiData);
         if($request->file('photo_profile')) {
             $validasiData['photo_profile'] = $request->file('photo_profile')->getClientOriginalName();
@@ -91,7 +97,7 @@ class AdminAlumniController extends Controller
             $validasiData['transkrip_nilai'] = $request->file('transkrip_nilai')->storeAs('Transkrip_Nilai_Alumni', $validasiData['transkrip_nilai']);
         }
 
-        $validasiData['users'] = auth()->user()->id;
+        $validasiData['user_id'] = auth()->user()->id;
 
         AlumniModel::create($validasiData);
         return redirect('/alumni')->with('success', 'Alumni telah ditambahkan!');
@@ -102,9 +108,13 @@ class AdminAlumniController extends Controller
      */
     public function show(Request $request, AlumniModel $alumniModel)
     {
-        $findSiswaProfile = AlumniModel::findOrFail($request->id);
+        $findSiswaProfile = $alumniModel->findOrFail($request->id);
+        // dd($alumniModel);
         return view('admin.daftar.alumni.profilealumni', [
-            'dataAlumni' => $findSiswaProfile
+            'dataAlumni' => $findSiswaProfile,
+            'dataJenisPendidikan' => JenisPendidikanModel::all(),
+            'dataPendidikan' => RiwayatPendidikanModel::all(),
+            'dataPekerjaan' => RiwayatPendidikanModel::all(),
         ]);
     }
 
@@ -126,7 +136,7 @@ class AdminAlumniController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, AlumniModel $alumniModel)
+    public function update(Request $request, AlumniModel $alumni)
     {
         $validasiData = $request->validate([
             'nisn' => 'required|digits_between:1,15|numeric',
@@ -140,9 +150,11 @@ class AdminAlumniController extends Controller
             'tempatTanggalLahir' => 'required',
             'photo_profile' => 'file|min:10|max:1024|image|mimes:jpeg,jpg',
             'transkrip_nilai' => 'file|min:10|max:4096|mimes:doc,pdf,docx,jpg,jpeg',
-            'kode_jurusanId' => 'required|in:1, 2, 3, 4, 5, 6, 7',
+            'kode_jurusanId' => 'required|in:1, 2, 3, 4, 5, 6, 7',      
             'kode_lulusId' => 'required|in:1,2,3',
         ]);
+
+        // $validasiData['biografi'] = strip_tags($request->biografi);
         
         if($request->file('photo_profile')) {
             if($request->oldPhotoProfile) {
@@ -160,10 +172,11 @@ class AdminAlumniController extends Controller
             $validasiData['transkrip_nilai'] = $request->file('transkrip_nilai')->storeAs('Transkrip_Nilai_Alumni', $validasiData['transkrip_nilai']);
         }
         
-        // $validasiData['user'] = Auth()->user()->id;
-        // dd($validasiData);
+        $validasiData['user_id'] = auth()->user()->id;
+        // dd($request->input('id'));
         
         AlumniModel::where('id', $request->id)->update($validasiData);
+        $dataRequest = $alumni->findOrFail($request->id);
         return redirect('/alumni')->with('success', 'Data Alumni Telah Berhasi Diubah!');
     }
 

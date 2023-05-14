@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('riwayat_pekerjaan', function (Blueprint $table) {
+        Schema::create('riwayat_pendidikan', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('NISN');
+            $table->foreignId('nisn')->nullable();
+            $table->string('nama_instansi')->nullable();
+            $table->foreignId('jenis_pendidikan')->nullable();
+            $table->float('nilai_rata_rata')->nullable();
             $table->timestamps();
         });
     }
@@ -23,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('riwayatpekerjaan');
+        Schema::dropIfExists('riwayat');
     }
 };

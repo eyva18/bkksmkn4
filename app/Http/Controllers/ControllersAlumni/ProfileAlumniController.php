@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\ControllersAlumni;
 
+use App\Models\AlumniModel;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\ProfileAlumni;
+use App\Models\RiwayatAlumniModel;
 use App\Http\Controllers\Controller;
-use App\Models\AlumniModel;
+use Illuminate\Auth\Events\Validated;
+use App\Models\RiwayatPendidikanModel;
 
 class ProfileAlumniController extends Controller
 {
@@ -33,7 +37,26 @@ class ProfileAlumniController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validasiDataRiwayatPendidikan = $request->validate([
+            'nama_instansi' => 'string',
+            'jenis_pendidikan' => 'required|in:1, 2, 3, 4, 5',
+            'nilai_rata_rata' => 'numeric|decimal:0,100.00',
+        ]);
+
+        $validasiRiwayatPengalamanKerja = $request->validate([
+            'nama_perusahaan' => '',
+            'jenis_pekerjaan' => '',
+            'bidang' => '',
+            'awal_bekerja' => '',
+            'akhir_bekerja' => '',
+        ]);
+
+        // $dataRiwayat = RiwayatAlumniModel::find($request->id);
+        if ($validasiDataRiwayatPendidikan != null) {
+            RiwayatPendidikanModel::create($validasiDataRiwayatPendidikan);
+        } elseif ($validasiRiwayatPengalamanKerja != null) {
+            RiwayatPendidikanModel::create($validasiRiwayatPengalamanKerja);
+        }
     }
 
     /**
@@ -57,7 +80,16 @@ class ProfileAlumniController extends Controller
      */
     public function update(Request $request)
     {
-        //
+        $validasiDataBiografi = $request->validate([
+            'biografi' => '',
+        ]);
+        
+        // $validasiData['biografi'] = strip_tags($request->biografi);
+        // dd($validasiData['biografi']);
+
+        $dataBio = AlumniModel::find($request->id);
+        AlumniModel::where('id', $dataBio->id)->update($validasiDataBiografi);
+        return redirect('/alumni')->with('success', 'Biografi berhasil diubah');
     }
 
     /**

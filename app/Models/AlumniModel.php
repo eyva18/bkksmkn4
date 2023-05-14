@@ -12,6 +12,10 @@ class AlumniModel extends Model
     protected $table = 'alumni';
     protected $guarded = ['id'];
 
+    public function User() {
+        return $this->belongsTo(User::class);
+    }
+
     public function jurusan()
     {
         return $this->belongsTo(JurusanModel::class, 'kode_jurusanId', 'id');
