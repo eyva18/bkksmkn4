@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('nama_instansi')->nullable();
             $table->foreignId('jenis_pendidikan')->nullable();
             $table->float('nilai_rata_rata')->nullable();
-            $table->date('awal')->nullable();
-            $table->date('akhir')->nullable();
+            $table->date('awal_pendidiakan')->nullable();
+            $table->date('akhir_pendidiakan')->nullable();
             $table->timestamps();
         });
     }

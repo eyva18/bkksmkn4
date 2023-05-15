@@ -417,25 +417,14 @@ class AdminController extends Controller
         return redirect('/alumni')->with('success', 'Alumni telah ditambahkan!');
     }
 
-    public function storeAlumniAccount(Request $request) {
-
-        // $request['username'] = AlumniModel
-        $validasiData = $request->validate([
-            'username' => '',
-            'email' => '',
-            'password' => ''
-        ]);
-
-    }
-
     public function storeRiwayatPendidikan(Request $request) {
         $validasiDataRiwayatPendidikan = $request->validate([
-            'nama_instansi' => '',
-            'jenis_pendidikan' => 'required|in:1, 2, 3, 4, 5',
+            'nama_instansi' => 'string',
+            'jenis_pendidikan' => 'in:1, 2, 3, 4, 5',
             'nilai_rata_rata' => 'numeric|decimal:0,100.00',
         ]);
 
-        // $dataRiwayat = RiwayatAlumniModel::find($request->id);
+        $dataRiwayat = RiwayatAlumniModel::find($request->id);
         RiwayatPendidikanModel::create($validasiDataRiwayatPendidikan);
         return back()->with('success', 'Riwayat pendidikan berhasil ditambahkan');
     }
