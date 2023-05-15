@@ -11,8 +11,8 @@ class RiwayatPendidikanModel extends Model
     protected $table = 'riwayat_pendidikan';
     protected $guarded = ['id'];
 
-    public function JenisPendidikan() {
-        return $this->belongsTo(JenisPendidikanModel::class);
+    public function Pendidikan() {
+        return $this->belongsTo(JenisPendidikanModel::class, 'jenis_pendidikan', 'id');
     }
 
     public function Alumni() {

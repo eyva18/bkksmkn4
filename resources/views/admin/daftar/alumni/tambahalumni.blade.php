@@ -32,7 +32,7 @@
                         </div>
                     </div>
                     <form action="/alumni/store" method="post" enctype="multipart/form-data">
-                    @method('post')
+                    @method('get')
                     @csrf
                     <div class="row pdt-20">
                         <div class="col-md-4">

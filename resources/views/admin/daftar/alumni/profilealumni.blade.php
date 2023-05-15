@@ -82,13 +82,138 @@
                             <div class="card border-dark">
                                 <div class="card-header bg-dark">
                                     <h4 class="mb-0 text-white">Riwayat Pendidikan <button class="icon-button-modal" data-bs-toggle="modal" data-bs-target="#addriwayatpendidikan"><i class="fas fa-plus text-white mrl-10"></i></button></h4>
-                                    </h4>
                                 </div>
-                                @foreach ($dataPendidikan as $item)
+                                @foreach ($dataPendidikan as $riwayat)
                                     <div class="card-body">
-                                        <h3 class="card-text text-black">{{ $item->nama_instansi }} <button class="icon-button-modal" data-bs-toggle="modal" data-bs-target="#editRPendidikanexample"><i class="fas fa-pencil-alt text-black mrl-10"></i></button></h3>
-                                        <p>{{ $item->jenis_pendidikan }} - Skor {{ $item->nilai_rata_rata }} <br>Lulus Tahun : 2022</p>
+                                        <h3 class="card-text text-black">{{ $riwayat->nama_instansi }} <button class="icon-button-modal" data-bs-toggle="modal" data-bs-target="#editpendidikan{{ $riwayat->id }}"><i class="fas fa-pencil-alt text-black mrl-10"></i></button></h3>
+                                        <p>{{ $riwayat->Pendidikan->jenis_pendidikan }} - Nilai Rata-Rata : {{ $riwayat->nilai_rata_rata }} <br>Lulus Tahun : {{ $riwayat->tahun_akhir_pendidikan }}</p>
+                                        <h3>
+                                            <button type="button" class="icon-button-modal" data-bs-toggle="modal" data-bs-target="#deletemodal{{ $riwayat->id ??'-' }}">
+                                                <i class="fas fa-trash-alt text-red mrl-20"></i>
+                                            </button>
+                                        </h3>
                                         <hr>
+                                    </div>
+                                    {{-- Modal Delete Start --}}
+                                    <div id="deletemodal{{ $riwayat->id ??'-' }}" class="modal fade" tabindex="-1" role="dialog"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog modal-sm">
+                                            <div class="modal-content modal-filled bg-danger">
+                                                <div class="modal-body p-4">
+                                                    <div class="text-center">
+                                                        <i class="dripicons-wrong h1"></i>
+                                                        <h4 class="mt-2">Peringatan!</h4>
+                                                        <p class="mt-3">Apakan Ingin Melanjutkan Menghapus data</p>
+                                                        <form action="/alumni/pendidikan/destroy" method="post">
+                                                            @method('post')
+                                                            @csrf
+                                                            <input type="hidden" name="id" id="newsletter-id" class="form-control form-control-lg" value="{{ $riwayat->id }}">
+                                                            <button type="submit" class="btn btn-light my-2">Delete</button>
+                                                        </form>
+                                                        <button type="button" class="btn btn-success" data-bs-dismiss="modal">Cancel</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{-- Modal Delete End --}}
+
+                                    {{-- Modal Edit Riwayat Pendidikan --}}        
+                                    <div class="modal fade" id="editpendidikan{{ $riwayat->id }}" tabindex="-1" role="dialog"
+                                        aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title" id="myLargeModalLabel">Formulir Riwayat Pendidikan</h4>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                                                </div>
+                                                <form action="/alumni/pendidikan/update" method="post">
+                                                    @method('post')
+                                                    @csrf
+                                                    <input type="hidden" name="id" value="{{ $riwayat->id }}">
+                                                    <input type="hidden" name="nisn" value="{{ $dataAlumni->nisn }}">
+                                                    <div class="modal-body">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label for="newsletter-kategori" class="content-hidden">Nama Instansi <span class="text-red"> *</span></label>
+                                                                    {{-- @dd($dataPendidikan->nama_instansi) --}}
+                                                                    <input type="text" id="example-input-large" name="nama_instansi" class="form-control @error('nama_instansi') is-invalid @enderror" value="{{ old('nama_instansi', $riwayat->nama_instansi) }}">
+                                                                    @error('nama_instansi')
+                                                                        <div class="invalid-feedback">
+                                                                            {{ $message }}
+                                                                        </div>
+                                                                    @enderror
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label for="newsletter-kategori" class="content-hidden">Jenis Pendidikan <span class="text-red"> *</span></label>
+                                                                    <select class="form-select full-size-width @error('jenis_pendidikan') is-invalid @enderror" name="jenis_pendidikan" id="jenis_pendidikan">
+                                                                        <option selected>Jenis Pendidikan</option>
+                                                                        @foreach ($dataJenisPendidikan as $item)
+                                                                            @if (old('jenis_pendidikan', $riwayat->jenis_pendidikan) == $item->id)
+                                                                                <option value="{{ $item->id }}" selected>{{ $item->jenis_pendidikan }}</option>
+                                                                            @else
+                                                                                <option value="{{ $item->id }}">{{ $item->jenis_pendidikan }}</option>
+                                                                            @endif
+                                                                        @endforeach
+                                                                    </select>
+                                                                    @error('jenis_pendidikan')
+                                                                        <div class="invalid-feedback">
+                                                                            {{ $message }}
+                                                                        </div>
+                                                                    @enderror
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label for="newsletter-kategori" class="content-hidden">Nilai Rata - Rata <span class="text-red"> *</span></label>
+                                                                    <input type="text" id="example-input-large" name="nilai_rata_rata" class="form-control @error('nilai_rata_rata') is-invalid @enderror" value="{{ old('nilai_rata_rata', $riwayat->nilai_rata_rata) }}">
+                                                                    @error('nilai_rata_rata')
+                                                                        <div class="invalid-feedback">
+                                                                            {{ $message }}
+                                                                        </div>
+                                                                    @enderror
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="content-hidden">Tahun Dimulai <span class="text-red"> *</span></label>
+                                                                    <input type="date" id="example-input-large" name="tahun_awal_pendidikan" class="form-control @error('tahun_awal_pendidikan') is-invalid @enderror">
+                                                                    <p class="card-description fw-medium">
+                                                                        Data Sebelumnya: {{ $riwayat->tahun_awal_pendidikan }}.
+                                                                    </p>
+                                                                    @error('tahun_awal_pendidikan')
+                                                                        <div class="invalid-feedback">
+                                                                            {{ $message }}
+                                                                        </div>
+                                                                    @enderror
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="content-hidden">Tahun Berakhir <span class="text-red"> *</span></label>
+                                                                    <input type="date" id="example-input-large" name="tahun_akhir_pendidikan" class="form-control @error('tahun_akhir_pendidikan', $riwayat->tahun_akhir_pendidikan) is-invalid @enderror">
+                                                                    <p class="card-description fw-medium">
+                                                                        Data Sebelumnya: {{ $riwayat->tahun_akhir_pendidikan }}.
+                                                                    </p>
+                                                                    @error('tahun_akhir_pendidikan')
+                                                                        <div class="invalid-feedback">
+                                                                            {{ $message }}
+                                                                        </div>
+                                                                    @enderror
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="reset" class="btn btn-danger" data-dismiss="modal">Batalkan</button>
+                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
                                 @endforeach
                             </div>
@@ -100,15 +225,110 @@
                                             data-bs-toggle="modal" data-bs-target="#pengalamankerja"><i
                                                 class="fas fa-plus text-white mrl-10"></i></i></a></h4>
                                 </div>
-                                {{-- @foreach ($dataRiwayat as $item)
+                                @foreach ($dataPekerjaan as $data)
                                     <div class="card-body">
-                                        <h3 class="card-text text-black">{{ $item-> }} <button class="icon-button-modal"
-                                            data-bs-toggle="modal" data-bs-target="#pengalamankerja"><i
-                                                class="fas fa-pencil-alt text-black mrl-10"></i></button></h3>
-                                        <p>Tradisi kopi - Paruh Waktu <br>July 2022 - Saat Ini</p>
+                                        <h3 class="card-text text-black">{{ $data->bidang }} <button class="icon-button-modal" data-bs-toggle="modal" data-bs-target="#editpekerjaan{{ $data->id }}"><i class="fas fa-pencil-alt text-black mrl-10"></i></button></h3>
+                                        <p>{{ $data->nama_perusahaan }} - {{ $data->Pekerjaan->jenis_pekerjaan }} <br>{{ $data->tahun_awal_pekerjaan }} - {{ $data->tahun_akhir_pekerjaan }}</p>
                                         <hr>
                                     </div>
-                                @endforeach --}}
+
+                                    {{-- Modal Update Pengalaman Kerja --}}
+                                    <div class="modal fade" id="editpekerjaan{{ $data->id }}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="myLargeModalLabel">Folmulir Riwayat Pekerjaan</h4>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                                            </div>
+                                            <form action="/alumni/pekerjaan/update" method="post">
+                                                @method('post')
+                                                @csrf
+                                                <input type="hidden" name="id" value="{{ $data->id }}">
+                                                <input type="hidden" name="nisn" value="{{ $dataAlumni->nisn }}">
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label for="newsletter-kategori" class="content-hidden">Nama Perusahaan <span class="text-red"> *</span></label>
+                                                                <input type="text" id="example-input-large" name="nama_perusahaan" class="form-control @error('nama_perusahaan') is-invalid @enderror" value="{{ old('nama_perusahaan', $data->nama_perusahaan) }}">
+                                                                    @error('nama_perusahaan')
+                                                                        <div class="invalid-feedback">
+                                                                            {{ $message }}
+                                                                        </div>
+                                                                    @enderror
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="newsletter-kategori" class="content-hidden">Jenis Kepegawaian <span class="text-red"> *</span></label>
+                                                                <select class="form-select full-size-width  @error('jenis_pekerjaan') is-invalid @enderror" id="inputGroupSelect01" name="jenis_pekerjaan">
+                                                                    <option selected>Jenis Kepegawaian</option>
+                                                                    @foreach ($dataJenisPekerjaan as $item)
+                                                                        @if (old('jenis_pekerjaan', $data->jenis_pekerjaan) == $item->id)
+                                                                            <option value="{{ $item->id }}" selected>{{ $item->jenis_pekerjaan }}</option>
+                                                                        @else
+                                                                            <option value="{{ $item->id }}">{{ $item->jenis_pekerjaan }}</option>
+                                                                        @endif
+                                                                    @endforeach
+                                                                </select>
+                                                                @error('jenis_pekerjaan')
+                                                                    <div class="invalid-feedback">
+                                                                        {{ $message }}
+                                                                    </div>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="newsletter-kategori" class="content-hidden">Bidang <span class="text-red"> *</span></label>
+                                                                <input type="text" id="example-input-large" name="bidang" class="form-control @error('bidang') is-invalid @enderror" value="{{ old('bidang', $data->bidang) }}">
+                                                                @error('bidang')
+                                                                    <div class="invalid-feedback">
+                                                                        {{ $message }}
+                                                                    </div>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="content-hidden">Tahun Dimulai <span class="text-red"> *</span></label>
+                                                                <input type="date" id="example-input-large" name="tahun_awal_pekerjaan" class="form-control @error('tahun_awal_pekerjaan') is-invalid @enderror">
+                                                                <p class="card-description fw-medium">
+                                                                    Data Sebelumnya: {{ $data->tahun_awal_pekerjaan }}.
+                                                                </p>
+                                                                @error('tahun_awal_pekerjaan')
+                                                                    <div class="invalid-feedback">
+                                                                        {{ $message }}
+                                                                    </div>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="content-hidden">Tahun Berakhir <span class="text-red"> *</span></label>
+                                                                <input type="date" id="example-input-large" name="tahun_akhir_pekerjaan" class="form-control @error('tahun_akhir_pekerjaan') is-invalid @enderror">
+                                                                <p class="card-description fw-medium">
+                                                                    Data Sebelumnya: {{ $data->tahun_akhir_pekerjaan }}.
+                                                                </p>
+                                                                @error('tahun_akhir_pekerjaan')
+                                                                    <div class="invalid-feedback">
+                                                                        {{ $message }}
+                                                                    </div>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="reset" class="btn btn-danger" data-dismiss="modal">Batalkan</button>
+                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -136,7 +356,7 @@
                         <h4 class="modal-title" id="myLargeModalLabel">Edit Biografi</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                     </div>
-                    <form action="#" method="post">
+                    <form action="/alumni/biografi/update" method="post">
                         @method('post')
                         @csrf
                         <input type="hidden" name="id" value="{{ $dataAlumni->id }}">
@@ -168,9 +388,11 @@
                         <h4 class="modal-title" id="myLargeModalLabel">Formulir Riwayat Pendidikan</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                     </div>
-                    <form action="#addriwayatpendidikan" method="post">
-                        {{-- @method('put') --}}
+                    <form action="/alumni/pendidikan/store" method="post">
+                        @method('post')
                         @csrf
+                        <input type="hidden" name="id" value="{{ $dataAlumni->id }}">
+                        <input type="hidden" name="nisn" value="{{ $dataAlumni->nisn }}">
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
@@ -215,6 +437,28 @@
                                         @enderror
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="content-hidden">Tahun Dimulai <span class="text-red"> *</span></label>
+                                        <input type="date" id="example-input-large" name="tahun_awal_pendidikan" class="form-control @error('tahun_awal_pendidikan') is-invalid @enderror" value="{{ old('tahun_awal_pendidikan') }}">
+                                        @error('tahun_awal_pendidikan')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="content-hidden">Tahun Berakhir <span class="text-red"> *</span></label>
+                                        <input type="date" id="example-input-large" name="tahun_akhir_pendidikan" class="form-control @error('tahun_akhir_pendidikan') is-invalid @enderror" value="{{ old('tahun_akhir_pendidikan') }}">
+                                        @error('tahun_akhir_pendidikan')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -225,58 +469,7 @@
                 </div>
             </div>
         </div>
-        {{-- Modal Edit Riwayat Pendidikan --}}
-        <div class="modal fade" id="editRPendidikanexample" tabindex="-1" role="dialog"
-            aria-labelledby="myLargeModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="myLargeModalLabel">Formulir Riwayat Pendidikan</h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
-                    </div>
-                    <form action="#addriwayatpendidikan" method="post">
-                        @csrf
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="newsletter-kategori" class="content-hidden">Nama Instansi <span class="text-red"> *</span></label>
-                                        <input type="text" id="example-input-large" name="nama_instansi" class="form-control" value="{{ old('nama_instansi') }}">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="newsletter-kategori" class="content-hidden">Jenis Pendidikan <span
-                                                class="text-red"> *</span></label>
-                                        <select class="form-select full-size-width" id="inputGroupSelect01"
-                                            name="idtahunlulus">
-                                            <option selected="">Jenis Pendidikan</option>
-                                            <option value="Kuliah">Kuliah</option>
-                                            <option value="SMKA / SMK" selected>SMKA / SMK</option>
-                                            <option value="SMP">SMP</option>
-                                            <option value="SD">SD</option>
-                                            <option value="Kursus">Kursus</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="newsletter-kategori" class="content-hidden">Nilai Rata - Rata <span
-                                                class="text-red"> *</span></label>
-                                        <input type="text" id="example-input-large" name="nama_instansi"
-                                            class="form-control" value="88">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Batalkan</button>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+
         {{-- Modal Tambah Pengalaman Kerja --}}
         {{-- Ali kena yang buat edit riwayat nya kena copy dari sini aja nah kepanjangan wkwkwk --}}
         <div class="modal fade" id="pengalamankerja" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
@@ -287,165 +480,81 @@
                         <h4 class="modal-title" id="myLargeModalLabel">Folmulir Riwayat Pekerjaan</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                     </div>
-                    <form action="#addriwayatpendidikan" method="post">
+                    <form action="/alumni/pekerjaan/store" method="post">
+                        @method('post')
                         @csrf
+                        <input type="hidden" name="id" value="{{ $dataAlumni->id }}">
+                        <input type="hidden" name="nisn" value="{{ $dataAlumni->nisn }}">
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="newsletter-kategori" class="content-hidden">Nama Perusahaan <span
-                                                class="text-red"> *</span></label>
-                                        <input type="text" id="example-input-large" name="nama_perusahaan"
-                                            class="form-control">
+                                        <label for="newsletter-kategori" class="content-hidden">Nama Perusahaan <span class="text-red"> *</span></label>
+                                        <input type="text" id="example-input-large" name="nama_perusahaan" class="form-control @error('nama_perusahaan') is-invalid @enderror" value="{{ old('nama_perusahaan') }}">
+                                            @error('nama_perusahaan')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="newsletter-kategori" class="content-hidden">Jenis Kepegawaian <span
-                                                class="text-red"> *</span></label>
-                                        <select class="form-select full-size-width" id="inputGroupSelect01"
-                                            name="jenispekerjaan">
-                                            <option selected="">Jenis Kepegawaian</option>
-                                            <option value="Musiman">Musiman</option>
-                                            <option value="Magang">Magang</option>
-                                            <option value="Kontrak">Kontrak</option>
-                                            <option value="Pekerja Lepas">Pekerja Lepas</option>
-                                            <option value="Wiraswasta">Wiraswasta</option>
-                                            <option value="Paruh Waktu">Paruh Waktu</option>
-                                            <option value="Purna Waktu">Purna Waktu</option>
+                                        <label for="newsletter-kategori" class="content-hidden">Jenis Kepegawaian <span class="text-red"> *</span></label>
+                                        <select class="form-select full-size-width  @error('jenis_pekerjaan') is-invalid @enderror" id="inputGroupSelect01" name="jenis_pekerjaan">
+                                            <option selected>Jenis Kepegawaian</option>
+                                            @foreach ($dataJenisPekerjaan as $item)
+                                                @if (old('jenis_pekerjaan') == $item->id)
+                                                    <option value="{{ $item->id }}" selected>{{ $item->jenis_pekerjaan }}</option>
+                                                @else
+                                                    <option value="{{ $item->id }}">{{ $item->jenis_pekerjaan }}</option>
+                                                @endif
+                                            @endforeach
                                         </select>
+                                        @error('jenis_pekerjaan')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="newsletter-kategori" class="content-hidden">Bidang <span
-                                                class="text-red"> *</span></label>
-                                        <input type="text" id="example-input-large" name="nama_instansi"
-                                            class="form-control">
+                                        <label for="newsletter-kategori" class="content-hidden">Bidang <span class="text-red"> *</span></label>
+                                        <input type="text" id="example-input-large" name="bidang" class="form-control @error('bidang') is-invalid @enderror" value="{{ old('bidang') }}">
+                                        @error('bidang')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="newsletter-kategori" class="content-hidden">Tanggal Mulai<span
-                                                class="text-red"> *</span></label>
-                                        <select class="form-select full-size-width" id="inputGroupSelect01"
-                                            name="bulanmulai">
-                                            <option selected="">Pilih Bulan</option>
-                                            <option value="">month</option>
-                                            <option value="01">Januari</option>
-                                            <option value="02">Februari</option>
-                                            <option value="03">Maret</option>
-                                            <option value="04">April</option>
-                                            <option value="05">Mungkin</option>
-                                            <option value="06">Juni</option>
-                                            <option value="07">Juli</option>
-                                            <option value="08">Agustus</option>
-                                            <option value="09">September</option>
-                                            <option value="10">Oktober</option>
-                                            <option value="11">November</option>
-                                            <option value="12">Desember</option>
-                                        </select>
+                                        <label class="content-hidden">Tahun Dimulai <span class="text-red"> *</span></label>
+                                        <input type="date" id="example-input-large" name="tahun_awal_pekerjaan" class="form-control @error('tahun_awal_pekerjaan') is-invalid @enderror" value="{{ old('tahun_awal_pekerjaan') }}">
+                                        @error('tahun_awal_pekerjaan')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="newsletter-kategori" class="content-hidden"><span class="text-red">
-                                                *</span></label>
-                                        <select class="form-select full-size-width" id="inputGroupSelect01"
-                                            name="tahunmulai">
-                                            <option selected="">Pilih Tahun</option>
-                                            <option value="2000">2000</option>
-                                            <option value="2001">2001</option>
-                                            <option value="2002">2002</option>
-                                            <option value="2003">2003</option>
-                                            <option value="2004">2004</option>
-                                            <option value="2005">2005</option>
-                                            <option value="2006">2006</option>
-                                            <option value="2007">2007</option>
-                                            <option value="2008">2008</option>
-                                            <option value="2009">2009</option>
-                                            <option value="2010">2010</option>
-                                            <option value="2011">2011</option>
-                                            <option value="2012">2012</option>
-                                            <option value="2013">2013</option>
-                                            <option value="2014">2014</option>
-                                            <option value="2015">2015</option>
-                                            <option value="2016">2016</option>
-                                            <option value="2017">2017</option>
-                                            <option value="2018">2018</option>
-                                            <option value="2019">2019</option>
-                                            <option value="2020">2020</option>
-                                            <option value="2021">2021</option>
-                                            <option value="2022">2022</option>
-                                            <option value="2023">2023</option>
-                                            <option value="2024">2024</option>
-                                            <option value="2025">2025</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="newsletter-kategori" class="content-hidden">Tanggal Berakhir<span
-                                                class="text-red"> *</span></label>
-                                        <select class="form-select full-size-width" id="inputGroupSelect01"
-                                            name="bulanberakhir">
-                                            <option selected="">Pilih Bulan</option>
-                                            <option value="">month</option>
-                                            <option value="01">Januari</option>
-                                            <option value="02">Februari</option>
-                                            <option value="03">Maret</option>
-                                            <option value="04">April</option>
-                                            <option value="05">Mungkin</option>
-                                            <option value="06">Juni</option>
-                                            <option value="07">Juli</option>
-                                            <option value="08">Agustus</option>
-                                            <option value="09">September</option>
-                                            <option value="10">Oktober</option>
-                                            <option value="11">November</option>
-                                            <option value="12">Desember</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="newsletter-kategori" class="content-hidden"><span class="text-red">
-                                                *</span></label>
-                                        <select class="form-select full-size-width" id="inputGroupSelect01"
-                                            name="tahunberakhir">
-                                            <option selected="">Pilih Tahun</option>
-                                            <option value="2000">2000</option>
-                                            <option value="2001">2001</option>
-                                            <option value="2002">2002</option>
-                                            <option value="2003">2003</option>
-                                            <option value="2004">2004</option>
-                                            <option value="2005">2005</option>
-                                            <option value="2006">2006</option>
-                                            <option value="2007">2007</option>
-                                            <option value="2008">2008</option>
-                                            <option value="2009">2009</option>
-                                            <option value="2010">2010</option>
-                                            <option value="2011">2011</option>
-                                            <option value="2012">2012</option>
-                                            <option value="2013">2013</option>
-                                            <option value="2014">2014</option>
-                                            <option value="2015">2015</option>
-                                            <option value="2016">2016</option>
-                                            <option value="2017">2017</option>
-                                            <option value="2018">2018</option>
-                                            <option value="2019">2019</option>
-                                            <option value="2020">2020</option>
-                                            <option value="2021">2021</option>
-                                            <option value="2022">2022</option>
-                                            <option value="2023">2023</option>
-                                            <option value="2024">2024</option>
-                                            <option value="2025">2025</option>
-                                        </select>
+                                        <label class="content-hidden">Tahun Berakhir <span class="text-red"> *</span></label>
+                                        <input type="date" id="example-input-large" name="tahun_akhir_pekerjaan" class="form-control @error('tahun_akhir_pekerjaan') is-invalid @enderror" value="{{ old('tahun_akhir_pekerjaan') }}">
+                                        @error('tahun_akhir_pekerjaan')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Batalkan</button>
+                            <button type="reset" class="btn btn-danger" data-dismiss="modal">Batalkan</button>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </form>

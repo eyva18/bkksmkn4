@@ -113,8 +113,8 @@
                                     </li>
                                 </ul>
                             </div>
-                            <form action="/alumni/{{ $alumni->nama }}/show" method="post">
-                                @method('post')
+                            <form action="/alumni/{{ $alumni->nama }}/show" method="get">
+                                @method('get')
                                 @csrf
                                 <input type="hidden" name="id" class="form-control form-control-lg" value="{{ $alumni->id }}">
                                 <button class="btn btn-primary full-size-width">Profile Alumni</button>
