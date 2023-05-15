@@ -137,7 +137,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                     </div>
                     <form action="#" method="post">
-                        @method('put')
+                        @method('post')
                         @csrf
                         <input type="hidden" name="id" value="{{ $dataAlumni->id }}">
                         <div class="modal-body">

@@ -111,8 +111,11 @@ Route::middleware(['auth', 'role:admin'])->group(function() {
     Route::get('/alumni/', [AdminAlumniController::class, 'index']);
     Route::get('/alumni/create', [AdminAlumniController::class, 'create']);
     Route::post('/alumni/store', [AdminAlumniController::class, 'store']);
-    // Route::get('/alumni/buat-akun/', [AdminController::class, 'storeAlumniAccount']);
     Route::post('/alumni/{alumniModel:nama}/show', [AdminAlumniController::class, 'show']);
+    Route::post('/alumni/{alumniModel:nama}/store-pendidikan', [AdminController::class, '']);
+    Route::post('/alumni/{alumniModel:nama}/store-pekerjaan', [AdminController::class, '']);
+    Route::get('/alumni/{alumniModel:nama}/update-pendidikan', [AdminController::class, '']);
+    Route::get('/alumni/{alumniModel:nama}/update-pekerjaan', [AdminController::class, '']);
     Route::get('/alumni/{alumniModel:nama}/edit', [AdminAlumniController::class, 'edit']);
     Route::put('/alumni/{alumniModel:nama}/update', [AdminAlumniController::class, 'update']);
     Route::post('/alumni/{alumniModel:nama}/destroy', [AdminAlumniController::class, 'destroy']);

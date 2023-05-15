@@ -236,13 +236,15 @@
                                         kerja.
                                     </span>
 
-                                    <div class="quote-item-footer">
-                                        <img loading="lazy" class="testimonial-thumb"
-                                            src="{{ URL::asset('images/homepage/testimonial/syafruddin-noor.jpeg') }}"
-                                            alt="testimonial">
-                                        <div class="quote-item-info">
-                                            <h3 class="quote-author">Drs Syafruddin Noor, M.Pd</h3>
-                                            <span class="quote-subtext">Kepala SMKN 4 Banjarmasin</span>
+                                    <div class="quote-item-footer d-flex justify-content-center">
+                                        <div class="testimonials d-flex flex-column">
+                                            <img loading="lazy" class="testimonial-thumb"
+                                                src="{{ URL::asset('images/homepage/testimonial/syafruddin-noor.jpeg') }}"
+                                                alt="testimonial" style="max-width: 310px;">
+                                            <div class="quote-item-info">
+                                                <h3 class="quote-author">Drs Syafruddin Noor, M.Pd</h3>
+                                                <span class="quote-subtext">KEPALA SMK NEGERI 4 BANJARMASIN</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div><!-- Quote item end -->
@@ -259,13 +261,15 @@
                                         nisi aliquip consequat.
                                     </span>
 
-                                    <div class="quote-item-footer">
-                                        <img loading="lazy" class="testimonial-thumb"
+                                    <div class="quote-item-footerd d-flex justify-content-center">
+                                        <div class="testimonials d-flex flex-column">
+                                            <img loading="lazy" class="testimonial-thumb"
                                             src="{{ URL::asset('images/homepage/clients/testimonial2.png') }}"
-                                            alt="testimonial">
-                                        <div class="quote-item-info">
-                                            <h3 class="quote-author">Weldon Cash</h3>
-                                            <span class="quote-subtext">CFO, First Choice</span>
+                                            alt="testimonial" style="max-width: 310px;">
+                                            <div class="quote-item-info">
+                                                <h3 class="quote-author">Weldon Cash</h3>
+                                                <span class="quote-subtext">CFO, First Choice</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div><!-- Quote item end -->
@@ -282,13 +286,15 @@
                                         nisi ut commodo consequat.
                                     </span>
 
-                                    <div class="quote-item-footer">
-                                        <img loading="lazy" class="testimonial-thumb"
-                                            src="{{ URL::asset('images/homepage/clients/testimonial3.png') }}"
-                                            alt="testimonial">
-                                        <div class="quote-item-info">
-                                            <h3 class="quote-author">Minter Puchan</h3>
-                                            <span class="quote-subtext">Director, AKT</span>
+                                    <div class="quote-item-footer d-flex justify-content-center">
+                                        <div class="testimonials d-flex flex-column">
+                                            <img loading="lazy" class="testimonial-thumb"
+                                            src="{{ URL::asset('images/homepage/clients/testimonial3.jpg') }}"
+                                            alt="testimonial" style="min-width: 310px;">
+                                            <div class="quote-item-info">
+                                                <h3 class="quote-author">Minter Puchan</h3>
+                                                <span class="quote-subtext">Director, AKT</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div><!-- Quote item end -->
