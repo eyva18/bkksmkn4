@@ -354,7 +354,7 @@
                                 <i class="fa fa-users icon-count" aria-hidden="true"></i>
                             </div>
                             <div class="ts-facts-content">
-                                <h2 class="ts-facts-num"><span class="counterUp" data-count="824">0</span></h2>
+                                <h2 class="ts-facts-num"><span class="counterUp" data-count="{{$totalAlumni}}">0</span></h2>
                                 <h3 class="ts-facts-title">Alumni</h3>
                             </div>
                         </div><!-- Col end -->
@@ -364,7 +364,7 @@
                                 <i class="fa fa-building icon-count" aria-hidden="true"></i>
                             </div>
                             <div class="ts-facts-content">
-                                <h2 class="ts-facts-num"><span class="counterUp" data-count="10">0</span></h2>
+                                <h2 class="ts-facts-num"><span class="counterUp" data-count="{{$totalperusahaan}}">0</span></h2>
                                 <h3 class="ts-facts-title">Perusahaan</h3>
                             </div>
                         </div><!-- Col end -->
@@ -374,7 +374,7 @@
                                 <i class="fa fa-newspaper icon-count" aria-hidden="true"></i>
                             </div>
                             <div class="ts-facts-content">
-                                <h2 class="ts-facts-num"><span class="counterUp" data-count="7">0</span></h2>
+                                <h2 class="ts-facts-num"><span class="counterUp" data-count="{{ $totallowongan }}">0</span></h2>
                                 <h3 class="ts-facts-title">Lowongan</h3>
                             </div>
                         </div><!-- Col end -->

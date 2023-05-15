@@ -8,8 +8,9 @@ use App\Http\Controllers\ControllersAdmin\AdminAlumniController;
 use App\Http\Controllers\ControllersAdmin\AdminLowonganController;
 use App\Http\Controllers\ControllersAlumni\ProfileAlumniController;
 use App\Http\Controllers\ControllersAdmin\AdminLaporanTahunKelulusanController;
-
-
+use App\Models\AlumniModel;
+use App\Models\DudiModel;
+use App\Models\LowonganModel;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +37,11 @@ Route::get('/', function () {
         return back();
     }
     elseif (Auth::user() == null) {
-        return view('homepage.homepage');
+        return view('homepage.homepage', [
+            'totalAlumni' => AlumniModel::count(),
+            'totalperusahaan' => DudiModel::count(),
+            'totallowongan' => LowonganModel::count(),
+        ]);
     }
 });
 Auth::routes();
@@ -123,6 +128,12 @@ Route::middleware(['auth', 'role:admin'])->group(function() {
 
 Route::middleware(['auth', 'role:admin|alumni'])->group(function() {
     Route::resource('/alumni/profile', ProfileAlumniController::class);
+    Route::get('/lowongan-kerja', [ProfileAlumniController::class, 'daftarLowongan']);
+    Route::get('/lowongan-kerja/search+', [ProfileAlumniController::class, 'daftarLowongansearch']);
+    Route::get('/lowongan-kerja/detail/{lowongan:nama}', [ProfileAlumniController::class, 'detaillowongan']);
+    Route::get('/daftar-perusahaan', [ProfileAlumniController::class, 'daftarPerusahaan']);
+    Route::get('/daftar-perusahaan/search+', [ProfileAlumniController::class, 'perusahaansearch']);
+    Route::get('/perusahaan/profile/{dudi:nama}', [ProfileAlumniController::class, 'profileperusahaan']);
 });
 
 

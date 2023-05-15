@@ -263,6 +263,13 @@ class AdminController extends Controller
             $logo = "$logoimage";
         } else {
         }
+        $userdudi = User::create([
+            'name' => $request->username,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'photo_profile' => $logo
+        ]);
+        $userdudi->assignRole('dudi');
         DudiModel::create([
             'id' => $fixidcreate,
             'nama' => $request->nama,
@@ -271,15 +278,8 @@ class AdminController extends Controller
             'deskripsi' => $request->deskripsi,
             'alamat' => $request->alamat,
             'logo' => $logo,
+            'user_id' => $userdudi->id,
         ]);
-        $userdudi = User::create([
-            'name' => $request->username,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'kode_owner' => $fixidcreate,
-            'photo_profile' => $logo
-        ]);
-        $userdudi->assignRole('dudi');
         return redirect()->route('admin@master_company');
     }
     public function dudi_delete(Request $request)
@@ -288,8 +288,8 @@ class AdminController extends Controller
         $imagename = $data->logo;
         $image1 = $imagename;
         File::delete(public_path("images/profileimg/$image1"));
+        User::find($data->user_id)->delete();
         DudiModel::find($request->id)->delete();
-        User::where('kode_owner', $request->id)->delete();
         return back();
     }
     public function dudi_search(Request $request)
@@ -424,7 +424,6 @@ class AdminController extends Controller
             'nilai_rata_rata' => 'numeric|decimal:0,100.00',
         ]);
 
-        $dataRiwayat = RiwayatAlumniModel::find($request->id);
         RiwayatPendidikanModel::create($validasiDataRiwayatPendidikan);
         return back()->with('success', 'Riwayat pendidikan berhasil ditambahkan');
     }
