@@ -37,14 +37,14 @@
                             <ul class="list-unstyled">
                                 <li><i class="	fas fa-birthday-cake color-23"></i> <span
                                         class="mrl-5 text-black">{{ $dataAlumni->tempatTanggalLahir }}</span></li>
-                                <li><i class="fas fa-heart color-23"></i> <span class="mrl-5 text-black">{{ $dataAlumni->Agama->agama }}</span></li>
-                                <li><i class="fas fa-user color-23"></i> <span class="mrl-5 text-black">{{ $dataAlumni->Jenis_Kelamin->jenis_kelamin }}</span>
+                                <li><i class="fas fa-heart color-23"></i> <span class="mrl-5 text-black">{{ $dataAlumni->Agama->agama ?? null }}</span></li>
+                                <li><i class="fas fa-user color-23"></i> <span class="mrl-5 text-black">{{ $dataAlumni->Jenis_Kelamin->jenis_kelamin ?? null }}</span>
                                 </li>
                             </ul>
                             <h3>Contact</h3>
                             <ul class="list-unstyled">
                                 <li><i class="fas fa-at color-23"></i> <span
-                                        class="mrl-5 text-black">{{ Auth()->user()->email }}</span></li>
+                                        class="mrl-5 text-black">{{ $dataUser->email }}</span></li>
                                 <li><i class="fas fa-phone color-23"></i> <span
                                         class="mrl-5 text-black">{{ $dataAlumni->no_hp }}</span></li>
                             </ul>

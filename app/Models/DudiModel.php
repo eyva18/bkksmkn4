@@ -9,5 +9,10 @@ class DudiModel extends Model
 {
     use HasFactory;
     protected $table = 'dudi';
-    protected $fillable = ['id','nama', 'bidang', 'no_telp', 'deskripsi', 'alamat', 'logo'];
+    protected $fillable = ['id','nama', 'bidang', 'no_telp', 'deskripsi', 'alamat', 'logo', 'user_id'];
+    public function userdata()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+
+    }
 }

@@ -114,7 +114,7 @@
                             <div class="input-group mb-3">
                                 <label class="input-group-text" for="agamaId">Pilih</label>
                                 <select class="form-select @error('agamaId') is-invalid @enderror" id="agamaId" name="agamaId" >
-                                    <option selected>Agama</option>
+                                    <option selected value="">Agama</option>
                                     @foreach ($dataAgama as $item)
                                     @if (old('agamaId') == $item->id)
                                         <option value="{{ $item->id }}" selected>{{ $item->agama }}</option>
@@ -140,7 +140,7 @@
                             <div class="input-group mb-3">
                                 <label class="input-group-text" for="jenis_kelaminId">Pilih</label>
                                 <select class="form-select @error('jenis_kelaminId') is-invalid @enderror" id="jenis_kelaminId" name="jenis_kelaminId">
-                                    <option selected>Jenis Kelamin</option>
+                                    <option selected value="">Jenis Kelamin</option>
                                     @foreach ($dataJenisKelamin as $item)
                                         @if (old('jenis_kelaminId') == $item->id)
                                             <option value="{{ $item->id }}" selected>{{ $item->jenis_kelamin }}</option>
@@ -234,7 +234,7 @@
                             <div class="input-group mb-3">
                                 <label class="input-group-text" for="kode_jurusanId">Pilih</label>
                                 <select class="form-select @error('kode_jurusanId') is-invalid @enderror" id="kode_jurusanId" name="kode_jurusanId">
-                                    <option selected="">Jurusan</option>
+                                    <option selected value="">Jurusan</option>
                                     @foreach ($dataJurusan as $item)
                                         @if (old('kode_jurusanId') == $item->id)
                                             <option value="{{ $item->id }}" selected>{{ $item->jurusan }}</option>
@@ -261,7 +261,7 @@
                             <div class="input-group mb-3">
                                 <label class="input-group-text" for="kode_lulusId">Pilih</label>
                                 <select class="form-select @error('kode_lulusId') is-invalid @enderror" id="kode_lulusId" name="kode_lulusId">
-                                    <option selected>Tahun Kelulusan</option>
+                                    <option selected value="">Tahun Kelulusan</option>
                                     @foreach ($dataTahunLulus as $item)
                                         @if (old('kode_lulusId') == $item->id)
                                             <option value="{{ $item->id }}" selected>{{ $item->tahun_lulus }}</option>

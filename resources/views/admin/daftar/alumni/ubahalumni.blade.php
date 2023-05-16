@@ -37,6 +37,7 @@
                         @method('put')
                         @csrf
                         <input type="hidden" name="id" value="{{ $alumni->id }}">
+                        {{-- <input type="hidden" name="id" value="{{ user()->id }}"> --}}
                     <div class="row pdt-20">
                         <div class="col-md-4">
                             <h4 class="text-black m-0">NISN<span class="text-red"> *</span></h4>
@@ -239,7 +240,7 @@
                             <div class="input-group mb-3">
                                 <label class="input-group-text" for="kode_jurusanId">Pilih</label>
                                 <select class="form-select @error('kode_jurusanId') is-invalid @enderror" id="kode_jurusanId" name="kode_jurusanId">
-                                    <option selected="">Jurusan</option>
+                                    <option selected value="">Jurusan</option>
                                     @foreach ($dataJurusan as $item)
                                         @if (old('kode_jurusanId', $alumni->kode_jurusanId) == $item->id)
                                             <option value="{{ $item->id }}" selected>{{ $item->jurusan }}</option>
@@ -299,7 +300,7 @@
                                 <p class="text-muted mt-0 text-sm">Username Perusahaan</p>
                             </div>
                             <div class="col-md-8 pdt-6">
-                                <input type="text" class="form-control font-weight-normal @error('username') is-invalid @enderror" placeholder="Username Perusahaan..." name="username" value="{{ old('username', Auth()->User()->name) }}">
+                                <input type="text" class="form-control font-weight-normal @error('username') is-invalid @enderror" placeholder="Username Perusahaan..." name="username" value="{{ old('username', $dataUser->name) }}">
                                 @error('username')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -313,7 +314,7 @@
                                 <p class="text-muted mt-0 text-sm">E-Mail Perusahaan</p>
                             </div>
                             <div class="col-md-8 pdt-6">
-                                <input type="email" class="form-control font-weight-normal @error('email') is-invalid @enderror" placeholder="E-Mail Perusahaan..." name="email" value="{{ old('email', Auth()->User()->email) }}">
+                                <input type="email" class="form-control font-weight-normal @error('email') is-invalid @enderror" placeholder="E-Mail Perusahaan..." name="email" value="{{ old('email', $dataUser->email) }}">
                                 @error('email')
                                     <div class="invalid-feedback">
                                         {{ $message }}

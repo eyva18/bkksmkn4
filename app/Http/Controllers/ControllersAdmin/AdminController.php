@@ -20,7 +20,6 @@ use App\Models\JenisPendidikanModel;
 use Illuminate\Support\Facades\File;
 use App\Models\RiwayatPekerjaanModel;
 use App\Models\RiwayatPendidikanModel;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
@@ -266,6 +265,13 @@ class AdminController extends Controller
             $logo = "$logoimage";
         } else {
         }
+        $userdudi = User::create([
+            'name' => $request->username,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'photo_profile' => $logo
+        ]);
+        $userdudi->assignRole('dudi');
         DudiModel::create([
             'id' => $fixidcreate,
             'nama' => $request->nama,
@@ -274,15 +280,8 @@ class AdminController extends Controller
             'deskripsi' => $request->deskripsi,
             'alamat' => $request->alamat,
             'logo' => $logo,
+            'user_id' => $userdudi->id,
         ]);
-        $userdudi = User::create([
-            'name' => $request->username,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'kode_owner' => $fixidcreate,
-            'photo_profile' => $logo
-        ]);
-        $userdudi->assignRole('dudi');
         return redirect()->route('admin@master_company');
     }
     public function dudi_delete(Request $request)
@@ -291,8 +290,8 @@ class AdminController extends Controller
         $imagename = $data->logo;
         $image1 = $imagename;
         File::delete(public_path("images/profileimg/$image1"));
+        User::find($data->user_id)->delete();
         DudiModel::find($request->id)->delete();
-        User::where('kode_owner', $request->id)->delete();
         return back();
     }
     public function dudi_search(Request $request)
@@ -363,33 +362,6 @@ class AdminController extends Controller
             "datatahunlulus" => TahunLulusModel::all()
         ]);
     }
-    
-    // public function alumni_search(Request $request, AlumniModel $Alumni)
-    // {
-    //     //Jurusan Database Function
-    //     if($request->idjurusan == null and $request->idtahunlulus == null and $request->nama_alumni == null){
-    //         $dataalumni = AlumniModel::with('jurusan')->with('tahunlulus')->latest()->paginate(25);
-    //     }  
-    //     elseif($request->idjurusan != "Jurusan" and $request->idtahunlulus != "Tahun Lulus"){
-    //         $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->where('kode_jurusanId', $request->idjurusan)->where('kode_lulusId', $request->idtahunlulus)->latest()->paginate(25);
-    //     }
-    //     elseif($request->idjurusan != "Jurusan" and $request->idtahunlulus == "Tahun Lulus"){
-    //         $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->where('kode_jurusanId', $request->idjurusan)->latest()->paginate(25);
-    //     }
-    //     elseif($request->idtahunlulus != "Tahun Lulus" and $request->idjurusan == "Jurusan" ){
-    //         $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->where('kode_lulusId', $request->idtahunlulus)->latest()->paginate(25);
-    //     }
-    //     elseif($request->idjurusan == "Jurusan" and $request->idtahunlulus == "Tahun Lulus"){
-    //         $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->latest()->paginate(25);
-    //     }
-
-    //     return view('admin.daftar.alumni.alumni', [
-    //         'Alumni' => $Alumni,
-    //         "dataalumni" => $dataalumni,
-    //         "datajurusan" => JurusanModel::all(),
-    //         "datatahunlulus" => TahunLulusModel::all()
-    //     ]);
-    // }
 
     public function alumni_create() {
         return view('admin.daftar.alumni.tambahalumni', [
@@ -432,21 +404,22 @@ class AdminController extends Controller
             $validasiData['transkrip_nilai'] = $request->file('transkrip_nilai')->getClientOriginalName();
             $validasiData['transkrip_nilai'] = $request->file('transkrip_nilai')->storeAs('Transkrip_Nilai_Alumni', $validasiData['transkrip_nilai']);
         }
-
-        $validasiData['user_id'] = auth()->user()->id;
-
-        AlumniModel::create($validasiData);
+        
         $useralumnicreate = User::create([
             'name' => $validasiDataUser['username'],
             'email' => $validasiDataUser['email'],
             'password' => bcrypt($validasiData['nisn']),
             'photo_profile' => $validasiData['photo_profile'] ?? null,
-        ]);
-        $useralumnicreate->assignRole('alumni');
+        ])->assignRole('alumni');
+
+        $validasiData['user_id'] = $useralumnicreate->id;
+
+        AlumniModel::create($validasiData);
         return redirect('/alumni')->with('success', 'Alumni telah ditambahkan!');
     }
 
     public function riwayatpendidikan_store(Request $request) {
+        $dataAlumni = AlumniModel::findOrFail($request->id);
         $validasiData = $request->validate([
             'nisn' => 'numeric',
             'nama_instansi' => 'string',
@@ -463,13 +436,15 @@ class AdminController extends Controller
         $validasiData['tahun_akhir_pendidikan'] = date('d/m/Y', strtotime($tanggalAkhir));
         $validasiData['tahun_akhir_pendidikan'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_akhir_pendidikan'])->format('l, j F Y');
 
-        $validasiData['user_id'] = Auth()->user()->id;
+        $findUser = User::findOrFail($dataAlumni->user_id);
+        $validasiData['user_id'] = $findUser->id;
 
         RiwayatPendidikanModel::create($validasiData);
         return back()->with('success', 'Riwayat pendidikan berhasil ditambahkan');
     }
 
     public function riwayatpekerjaan_store(Request $request) {
+        $dataAlumni = AlumniModel::findOrFail($request->id);
         $validasiData = $request->validate([
             'nisn' => 'numeric',
             'nama_perusahaan' => 'string',
@@ -488,7 +463,8 @@ class AdminController extends Controller
         $validasiData['tahun_akhir_pekerjaan'] = date('d/m/Y', strtotime($tanggalAkhir));
         $validasiData['tahun_akhir_pekerjaan'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_akhir_pekerjaan'])->format('l, j F Y');
 
-        $validasiData['user_id'] = Auth()->user()->id;
+        $findUser = User::findOrFail($dataAlumni->user_id);
+        $validasiData['user_id'] = $findUser->id;
         
         // dd($validasiData);
         RiwayatPekerjaanModel::create($validasiData);
@@ -497,20 +473,24 @@ class AdminController extends Controller
 
     public function alumni_show(Request $request, AlumniModel $alumniModel) {
         $findSiswaProfile = $alumniModel->findOrFail($request->id);
+        $dataUser = User::findOrFail($findSiswaProfile->user_id);
         // dd($alumniModel);
         return view('admin.daftar.alumni.profilealumni', [
             'dataAlumni' => $findSiswaProfile,
+            'dataUser' => $dataUser,
             'dataJenisPendidikan' => JenisPendidikanModel::all(),
             'dataJenisPekerjaan' => JenisPekerjaanModel::all(),
-            'dataPendidikan' => RiwayatPendidikanModel::where('user_id', auth()->user()->id)->latest()->get(),
-            'dataPekerjaan' => RiwayatPekerjaanModel::where('user_id', auth()->user()->id)->latest()->get(),
+            'dataPendidikan' => RiwayatPendidikanModel::where('user_id', $findSiswaProfile->user_id)->latest()->get(),
+            'dataPekerjaan' => RiwayatPekerjaanModel::where('user_id', $findSiswaProfile->user_id)->latest()->get(),
         ]);
     }
 
     public function alumni_edit(Request $request, AlumniModel $alumniModel) {
-        $dataAlumni = $alumniModel->find($request->id);
+        $dataAlumni = $alumniModel->findOrFail($request->id);
+        $dataUser = User::findOrFail($dataAlumni->user_id);
         return view('admin.daftar.alumni.ubahalumni', [
             "alumni" => $dataAlumni,
+            "dataUser" => $dataUser,
             'dataAgama' => AgamaModel::all(),
             'dataJenisKelamin' => JenisKelaminModel::all(),
             'dataJurusan' => JurusanModel::all(),
@@ -519,6 +499,8 @@ class AdminController extends Controller
     }
 
     public function alumni_update(Request $request) {
+        $alumnidata = AlumniModel::find($request->id);
+
         $validasiData = $request->validate([
             'nisn' => '',
             'nis' => '',
@@ -556,17 +538,17 @@ class AdminController extends Controller
             $validasiData['transkrip_nilai'] = $request->file('transkrip_nilai')->getClientOriginalName();
             $validasiData['transkrip_nilai'] = $request->file('transkrip_nilai')->storeAs('Transkrip_Nilai_Alumni', $validasiData['transkrip_nilai']);
         }
+
+        $useralumnidata = User::find($alumnidata->user_id);
+        $validasiData['user_id'] = $useralumnidata->id;
         
-        $validasiData['user_id'] = auth()->user()->id; 
-        
-        dd(AlumniModel::findOrFail($request->id));
         AlumniModel::where('id', $request->id)->update($validasiData);
-        $useralumnicreate = User::findOrFail($request->id)->update([
+        $useralumnicreate = User::findOrFail($validasiData['user_id'])->update([
             'name' => $validasiDataUser['username'],
             'email' => $validasiDataUser['email'],
-            'password' => bcrypt($validasiDataUser['password']) ?? $validasiDataUser['password'] = auth()->user()->password,
+            'password' => bcrypt($validasiDataUser['password']) ?? null,
             'photo_profile' => $validasiData['photo_profile'] ?? null,
-        ])->assignRole('alumni');
+        ]);
         return redirect('/alumni')->with('success', 'Data Alumni Telah Berhasi Diubah!'); // tampilkan ke funtion show 
     }
 
@@ -628,6 +610,7 @@ class AdminController extends Controller
     public function alumni_destroy(Request $request, AlumniModel $alumniModel) 
     {
         $data = $alumniModel->findOrFail($request->id);
+        $dataUser = User::find($data->user_id);
         if($data->photo_profile) {
             Storage::delete($data->photo_profile);
         }
@@ -636,6 +619,7 @@ class AdminController extends Controller
         }
 
         AlumniModel::destroy($request->id);
+        User::destroy($dataUser->id);
         return back();
     }
 

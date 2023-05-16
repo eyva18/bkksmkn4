@@ -7,7 +7,7 @@
         <div class="col-sm-6 mb-4 mb-xl-0">
             <div class="d-lg-flex align-items-center">
                 <div>
-                    <h3 class="text-dark font-weight-bold mb-2">Selamat Datang {{ Auth::user()->name }}</h3>
+                    <h3 class="text-dark font-weight-bold mb-2">Selamat Datang <u>{{ Auth::user()->name }}</u></h3>
                     <h6 class="font-weight-normal mb-2">Di Bursa Kerja Khusus SMKN 4 Banjarmasin </h6>
                 </div>
             </div>
@@ -15,17 +15,17 @@
         <div class="col-sm-6">
             <div class="d-flex align-items-center justify-content-md-end">
                 <div class="pe-1 mb-3 mb-xl-0">
-                    <a href="#" class="btn btn-outline-inverse-info btn-icon-text">
+                    <a href="/lowongan-kerja" class="btn btn-outline-inverse-info btn-icon-text">
                         Daftar Lowongan
                     </a>
                 </div>
                 <div class="pe-1 mb-3 mb-xl-0">
-                    <a href="#" class="btn btn-outline-inverse-info btn-icon-text">
+                    <a href="/daftar-perusahaan" class="btn btn-outline-inverse-info btn-icon-text">
                         Daftar Perusahaan
                     </a>
                 </div>
                 <div class="pe-1 mb-3 mb-xl-0">
-                    <a href="#" class="btn btn-outline-inverse-info btn-icon-text">
+                    <a href="/profile" class="btn btn-outline-inverse-info btn-icon-text">
                         Profile Saya
                     </a>
                 </div>
@@ -188,7 +188,7 @@
                     <div class="col-md-12 p-4">
                         <h4 class="card-title">Test Lowongan Kerja</h4>
                         <ul class="list-unstyled">
-                            <li class="media d-flex align-items-start">
+                            <li class="media d-flex align-items-start company-show">
                                 <img class="d-flex me-3 logo-company" src="/images/profileimg/ph.png" alt="Logo Test" width="100">
                                 <div class="media-body">
                                     <ul class="list-unstyled">
@@ -209,7 +209,7 @@
                     <div class="col-md-12 p-4">
                         <h4 class="card-title">Test Lowongan Kerja</h4>
                         <ul class="list-unstyled">
-                            <li class="media d-flex align-items-start">
+                            <li class="media d-flex align-items-start company-show">
                                 <img class="d-flex me-3 logo-company" src="/images/profileimg/ph.png" alt="Logo Test" width="100">
                                 <div class="media-body">
                                     <ul class="list-unstyled">
@@ -230,7 +230,7 @@
                     <div class="col-md-12 p-4">
                         <h4 class="card-title">Test Lowongan Kerja</h4>
                         <ul class="list-unstyled">
-                            <li class="media d-flex align-items-start">
+                            <li class="media d-flex align-items-start company-show">
                                 <img class="d-flex me-3 logo-company" src="/images/profileimg/ph.png" alt="Logo Test" width="100">
                                 <div class="media-body">
                                     <ul class="list-unstyled">
@@ -262,7 +262,7 @@
                     <div class="col-md-12 p-4">
                         <h4 class="card-title">Hotel Rattan Inn</h4>
                         <ul class="list-unstyled">
-                            <li class="media d-flex align-items-start">
+                            <li class="media d-flex align-items-start company-show">
                                 <img class="d-flex me-3 logo-company" src="/images/profileimg/ph.png" alt="Logo Test" width="100">
                                 <div class="media-body">
                                     <ul class="list-unstyled">
@@ -283,7 +283,7 @@
                     <div class="col-md-12 p-4">
                         <h4 class="card-title">Hotel Rattan Inn</h4>
                         <ul class="list-unstyled">
-                            <li class="media d-flex align-items-start">
+                            <li class="media d-flex align-items-start company-show">
                                 <img class="d-flex me-3 logo-company" src="/images/profileimg/ph.png" alt="Logo Test" width="100">
                                 <div class="media-body">
                                     <ul class="list-unstyled">
@@ -304,7 +304,7 @@
                     <div class="col-md-12 p-4">
                         <h4 class="card-title">Hotel Rattan Inn</h4>
                         <ul class="list-unstyled">
-                            <li class="media d-flex align-items-start">
+                            <li class="media d-flex align-items-start company-show">
                                 <img class="d-flex me-3 logo-company" src="/images/profileimg/ph.png" alt="Logo Test" width="100">
                                 <div class="media-body">
                                     <ul class="list-unstyled">

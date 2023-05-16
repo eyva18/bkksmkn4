@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('deskripsi');
             $table->text('alamat');
             $table->text('logo');
+            $table->foreignId('user_id')->nullable();
             $table->timestamps();
         });
     }

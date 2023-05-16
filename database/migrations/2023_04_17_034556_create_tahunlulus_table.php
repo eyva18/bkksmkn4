@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('tahun_lulus', function (Blueprint $table) {
             $table->id();
             $table->year('tahun_lulus');
-            // $table->bigInteger('id_jurusan')->nullable()->unsigned();
             $table->timestamps();
         });
     }
