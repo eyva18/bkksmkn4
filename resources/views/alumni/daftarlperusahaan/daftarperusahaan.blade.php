@@ -43,47 +43,68 @@
                             </div>
                         </div>
                         <form action="/daftar-perusahaan/search+" method="get">
-                        @csrf
-                        <div class="row pdt-20">
-                            <div class="col-md-8">
-                                    <input type="text" id="" name="nama_perusahaan" class="form-control" placeholder="Nama Perusahaan..." style="height: 40px">
+                            @csrf
+                            <div class="row pdt-20">
+                                <div class="col-md-8">
+                                    <input type="text" id="" name="nama_perusahaan" class="form-control"
+                                        placeholder="Nama Perusahaan..." style="height: 40px">
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="submit" class="btn btn-primary full-size-width">Cari
+                                        Perusahaan</button>
+
+                                </div>
                             </div>
-                            <div class="col-md-4">
-                                <button type="submit" class="btn btn-primary full-size-width">Cari
-                                    Perusahaan</button>
-                                
-                            </div>
-                        </div>
-                    </form>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row mt-4 mrl-5">
-        @foreach ($perusahaan as $dataperusahaan)            
-            <div class="col-md-4">
-                <div class="card border-top-black-300 mt-5">
-                    <div class="col-md-12 p-4">
-                        <h4 class="card-title">{{ $dataperusahaan->nama }}</h4>
-                        <ul class="list-unstyled">
-                            <li class="media d-flex align-items-start company-show">
-                                <img class="d-flex me-3 logo-company" src="/images/profileimg/{{ $dataperusahaan->logo }}" alt="Logo Test" width="100">
-                                <div class="media-body">
-                                    <ul class="list-unstyled">
-                                        <li><i class="mdi mdi-newspaper color-23"></i> <span class="mrl-5 text-black">{{ $countlowongan[$dataperusahaan->id] }} Lowongan Aktif</span></li>
-                                        <li><i class="mdi mdi-clipboard-text color-23"></i> <span class="mrl-5 text-black">{{ $dataperusahaan->bidang }}</span></li>
-                                        <li><i class="mdi mdi-phone color-23"></i> <span class="mrl-5 text-black">{{ $dataperusahaan->no_telp }}</span></li>
-                                        <li><i class="mdi mdi-map-marker color-23"></i> <span class="mrl-5 text-black">{{ $dataperusahaan->alamat }}</span></li>
-                                    </ul>
+            @if ($perusahaan[0] == null)
+                <div class="col-sm-12 mr">
+                    <div class="card">
+                        <div class="card-body collapse show">
+                            <div class="row">
+                                <div class="col-md-12 text-center mt-3">
+                                    <h4 class="card-title">Perusahaan / Dudi Tidak Tersedia</h4>
                                 </div>
-                            </li>
-                        </ul>
+                            </div>
+                        </div>
                     </div>
-                    <a href="/perusahaan/profile/{{ $dataperusahaan->nama }}" class="btn btn-primary">Profile Perusahaan</a>
                 </div>
-            </div>
-        @endforeach
-        <div class="pagination">{{ $perusahaan->links() }}</div>
+            @endif
+            @foreach ($perusahaan as $dataperusahaan)
+                <div class="col-md-4">
+                    <div class="card border-top-black-300 mt-5">
+                        <div class="col-md-12 p-4">
+                            <h4 class="card-title">{{ $dataperusahaan->nama }}</h4>
+                            <ul class="list-unstyled">
+                                <li class="media d-flex align-items-start company-show">
+                                    <img class="d-flex me-3 logo-company"
+                                        src="/images/profileimg/{{ $dataperusahaan->logo }}" alt="Logo Test" width="100">
+                                    <div class="media-body">
+                                        <ul class="list-unstyled">
+                                            <li><i class="mdi mdi-newspaper color-23"></i> <span
+                                                    class="mrl-5 text-black">{{ $countlowongan[$dataperusahaan->id] }}
+                                                    Lowongan Aktif</span></li>
+                                            <li><i class="mdi mdi-clipboard-text color-23"></i> <span
+                                                    class="mrl-5 text-black">{{ $dataperusahaan->bidang }}</span></li>
+                                            <li><i class="mdi mdi-phone color-23"></i> <span
+                                                    class="mrl-5 text-black">{{ $dataperusahaan->no_telp }}</span></li>
+                                            <li><i class="mdi mdi-map-marker color-23"></i> <span
+                                                    class="mrl-5 text-black">{{ $dataperusahaan->alamat }}</span></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <a href="/perusahaan/profile/{{ $dataperusahaan->nama }}" class="btn btn-primary">Profile
+                            Perusahaan</a>
+                    </div>
+                </div>
+            @endforeach
+            <div class="pagination">{{ $perusahaan->links() }}</div>
         </div>
         <div class="row mt-4 mrl-5 mt-5">
             <div class="col-sm-6 mb-4 mb-xl-0">
@@ -95,30 +116,50 @@
             </div>
         </div>
         <div class="row mt-4 mrl-5">
-            @foreach ($lowongan as $datalowongan)            
+            @if ($lowongan[0] == null)
+                <div class="col-sm-12 mr">
+                    <div class="card">
+                        <div class="card-body collapse show">
+                            <div class="row">
+                                <div class="col-md-12 text-center mt-3">
+                                    <h4 class="card-title">Lowongan Tidak Tersedia</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+            @foreach ($lowongan as $datalowongan)
                 <div class="col-md-4">
                     <div class="card border-top-black-300 mt-5">
                         <div class="col-md-12 p-4">
                             <h4 class="card-title">{{ $datalowongan->nama }}</h4>
                             <ul class="list-unstyled">
                                 <li class="media d-flex align-items-start company-show">
-                                    <img class="d-flex me-3 logo-company" src="/images/profileimg/{{ $datalowongan->dudi->logo }}" alt="Logo Test" width="100">
+                                    <img class="d-flex me-3 logo-company"
+                                        src="/images/profileimg/{{ $datalowongan->dudi->logo }}" alt="Logo Test"
+                                        width="100">
                                     <div class="media-body">
                                         <ul class="list-unstyled">
-                                            <li><i class="mdi mdi-hospital-building color-23"></i> <span class="mrl-5 text-black">{{ $datalowongan->dudi->nama }}</span></li>
-                                            <li><i class="mdi mdi-clipboard-outline color-23"></i> <span class="mrl-5 text-black">{{ $datalowongan->dudi->bidang }}</span></li>
-                                            <li><i class="mdi mdi-calendar color-23"></i> <span class="mrl-5 text-black">{{ $datalowongan->tgl_upload }}</span></li>
-                                            <li><i class="mdi mdi-map-marker color-23"></i> <span class="mrl-5 text-black">{{ $datalowongan->lokasi }}</span></li>
+                                            <li><i class="mdi mdi-hospital-building color-23"></i> <span
+                                                    class="mrl-5 text-black">{{ $datalowongan->dudi->nama }}</span></li>
+                                            <li><i class="mdi mdi-clipboard-outline color-23"></i> <span
+                                                    class="mrl-5 text-black">{{ $datalowongan->dudi->bidang }}</span></li>
+                                            <li><i class="mdi mdi-calendar color-23"></i> <span
+                                                    class="mrl-5 text-black">{{ $datalowongan->tgl_upload }}</span></li>
+                                            <li><i class="mdi mdi-map-marker color-23"></i> <span
+                                                    class="mrl-5 text-black">{{ $datalowongan->lokasi }}</span></li>
                                         </ul>
                                     </div>
                                 </li>
                             </ul>
                         </div>
-                        <a href="/lowongan-kerja/detail/{{ $datalowongan->nama }}" class="btn btn-primary">Detail Lowongan</a>
+                        <a href="/lowongan-kerja/detail/{{ $datalowongan->nama }}" class="btn btn-primary">Detail
+                            Lowongan</a>
                     </div>
                 </div>
             @endforeach
-            </div>
+        </div>
     @endsection
     @section('js-tambahan')
     @endsection
