@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('riwayat_pendidikan', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('nisn')->nullable();
-            $table->string('nama_instansi')->nullable();
-            $table->foreignId('jenis_pendidikan')->nullable();
-            $table->float('nilai_rata_rata')->nullable();
-            $table->date('awal_pendidiakan')->nullable();
-            $table->date('akhir_pendidiakan')->nullable();
+            $table->bigInteger('nisn');
+            $table->string('nama_instansi');
+            $table->foreignId('jenis_pendidikan');
+            $table->float('nilai_rata_rata');
+            $table->string('tahun_awal_pendidikan');
+            $table->string('tahun_akhir_pendidikan');
+            $table->foreignId('user_id');
             $table->timestamps();
         });
     }

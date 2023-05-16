@@ -2,6 +2,7 @@
 
 namespace app\Http\Controllers\ControllersAdmin;;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\DudiModel;
 use App\Models\AgamaModel;
@@ -13,11 +14,13 @@ use App\Models\LowonganModel;
 use App\Models\TahunLulusModel;
 use App\Models\JenisKelaminModel;
 use App\Models\StatusAlumniModel;
+use App\Models\JenisPekerjaanModel;
 use App\Http\Controllers\Controller;
 use App\Models\JenisPendidikanModel;
 use Illuminate\Support\Facades\File;
 use App\Models\RiwayatPekerjaanModel;
 use App\Models\RiwayatPendidikanModel;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
@@ -334,18 +337,7 @@ class AdminController extends Controller
     }
 
     //Alumni Function Here ------------------------------
-    public function alumni_index()
-    {
-        //Jurusan Database Function
-        $dataalumni = AlumniModel::with('jurusan')->with('tahunlulus')->paginate(10);
-        return view('admin.daftar.alumni.alumni', [
-            "dataalumni" => $dataalumni,
-            "datajurusan" => JurusanModel::all(),
-            "datatahunlulus" => TahunLulusModel::all()
-        ]);
-    }
-    
-    public function alumni_search(Request $request, AlumniModel $Alumni)
+    public function alumni_index(Request $request, AlumniModel $Alumni)
     {
         //Jurusan Database Function
         if($request->idjurusan == null and $request->idtahunlulus == null and $request->nama_alumni == null){
@@ -371,6 +363,33 @@ class AdminController extends Controller
             "datatahunlulus" => TahunLulusModel::all()
         ]);
     }
+    
+    // public function alumni_search(Request $request, AlumniModel $Alumni)
+    // {
+    //     //Jurusan Database Function
+    //     if($request->idjurusan == null and $request->idtahunlulus == null and $request->nama_alumni == null){
+    //         $dataalumni = AlumniModel::with('jurusan')->with('tahunlulus')->latest()->paginate(25);
+    //     }  
+    //     elseif($request->idjurusan != "Jurusan" and $request->idtahunlulus != "Tahun Lulus"){
+    //         $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->where('kode_jurusanId', $request->idjurusan)->where('kode_lulusId', $request->idtahunlulus)->latest()->paginate(25);
+    //     }
+    //     elseif($request->idjurusan != "Jurusan" and $request->idtahunlulus == "Tahun Lulus"){
+    //         $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->where('kode_jurusanId', $request->idjurusan)->latest()->paginate(25);
+    //     }
+    //     elseif($request->idtahunlulus != "Tahun Lulus" and $request->idjurusan == "Jurusan" ){
+    //         $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->where('kode_lulusId', $request->idtahunlulus)->latest()->paginate(25);
+    //     }
+    //     elseif($request->idjurusan == "Jurusan" and $request->idtahunlulus == "Tahun Lulus"){
+    //         $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->latest()->paginate(25);
+    //     }
+
+    //     return view('admin.daftar.alumni.alumni', [
+    //         'Alumni' => $Alumni,
+    //         "dataalumni" => $dataalumni,
+    //         "datajurusan" => JurusanModel::all(),
+    //         "datatahunlulus" => TahunLulusModel::all()
+    //     ]);
+    // }
 
     public function alumni_create() {
         return view('admin.daftar.alumni.tambahalumni', [
@@ -383,21 +402,24 @@ class AdminController extends Controller
 
     public function alumni_store(Request $request) {
         $validasiData = $request->validate([
-            'nisn' => 'required|digits_between:1,15|numeric|unique:alumni',
-            'nis' => 'required|digits_between:1,15|numeric|unique:alumni',
+            'nisn' => 'required',
+            'nis' => 'required',
             'nama' => 'required|max:225',
-            'no_hp' => 'required|digits_between:1,15|numeric',
-            'biografi' => 'required',
-            'agamaId' => 'required|in:1,2,3,4,5',
-            'jenis_kelaminId' => 'required|in:1,2',
-            'alamat' => 'required',
-            'tempatTanggalLahir' => 'required',
-            'photo_profile' => 'required|file|min:10|max:1024|image|mimes:jpeg,jpg',
-            'transkrip_nilai' => 'required|file|min:10|max:4096|mimes:doc,pdf,docx,jpg,jpeg',
-            'kode_jurusanId' => 'required|in:1, 2, 3, 4, 5, 6, 7',
-            'kode_lulusId' => 'required|in:1,2,3',
+            'no_hp' => '',
+            'biografi' => '',
+            'agamaId' => '',
+            'jenis_kelaminId' => '',
+            'alamat' => '',
+            'tempatTanggalLahir' => '',
+            'photo_profile' => '',
+            'transkrip_nilai' => '',
+            'kode_jurusanId' => '',
+            'kode_lulusId' => '',
         ]);
-        
+        $validasiDataUser = $request->validate([
+            'username' => 'required|max:225',
+            'email' => '',
+        ]);
 
         // $validasiData['biografi'] = strip_tags($request->biografi);
         // dd($validasiData);
@@ -414,16 +436,27 @@ class AdminController extends Controller
         $validasiData['user_id'] = auth()->user()->id;
 
         AlumniModel::create($validasiData);
+        $useralumnicreate = User::create([
+            'name' => $validasiDataUser['username'],
+            'email' => $validasiDataUser['email'],
+            'password' => bcrypt($validasiData['nisn']),
+            'photo_profile' => $validasiData['photo_profile'] ?? null,
+        ]);
+        $useralumnicreate->assignRole('alumni');
         return redirect('/alumni')->with('success', 'Alumni telah ditambahkan!');
     }
 
-    public function storeRiwayatPendidikan(Request $request) {
-        $validasiDataRiwayatPendidikan = $request->validate([
+    public function riwayatpendidikan_store(Request $request) {
+        $validasiData = $request->validate([
+            'nisn' => 'numeric',
             'nama_instansi' => 'string',
             'jenis_pendidikan' => 'in:1, 2, 3, 4, 5',
             'nilai_rata_rata' => 'numeric|decimal:0,100.00',
+            'tahun_awal_pendidikan' => 'date',
+            'tahun_akhir_pendidikan' => 'date',
         ]);
 
+        $dataRiwayat = RiwayatAlumniModel::find($request->id);
         RiwayatPendidikanModel::create($validasiDataRiwayatPendidikan);
         return back()->with('success', 'Riwayat pendidikan berhasil ditambahkan');
     }
@@ -449,8 +482,9 @@ class AdminController extends Controller
         return view('admin.daftar.alumni.profilealumni', [
             'dataAlumni' => $findSiswaProfile,
             'dataJenisPendidikan' => JenisPendidikanModel::all(),
-            'dataPendidikan' => RiwayatPendidikanModel::all(),
-            'dataPekerjaan' => RiwayatPendidikanModel::all(),
+            'dataJenisPekerjaan' => JenisPekerjaanModel::all(),
+            'dataPendidikan' => RiwayatPendidikanModel::where('user_id', auth()->user()->id)->latest()->get(),
+            'dataPekerjaan' => RiwayatPekerjaanModel::where('user_id', auth()->user()->id)->latest()->get(),
         ]);
     }
 
@@ -465,21 +499,26 @@ class AdminController extends Controller
         ]);
     }
 
-    public function alumni_update(Request $request, AlumniModel $alumniModel) {
+    public function alumni_update(Request $request) {
         $validasiData = $request->validate([
-            'nisn' => 'digits_between:1,15|numeric',
-            'nis' => 'digits_between:1,15|numeric',
+            'nisn' => '',
+            'nis' => '',
             'nama' => 'max:225',
-            'no_hp' => 'digits_between:1,15|numeric',
+            'no_hp' => '',
             'biografi' => '',
-            'agamaId' => 'in:1,2,3,4,5',
-            'jenis_kelaminId' => 'in:1,2',
+            'agamaId' => '',
+            'jenis_kelaminId' => '',
             'alamat' => '',
             'tempatTanggalLahir' => '',
-            'photo_profile' => 'file|min:10|max:1024|image|mimes:jpeg,jpg',
-            'transkrip_nilai' => 'file|min:10|max:4096|mimes:doc,pdf,docx,jpg,jpeg',
-            'kode_jurusanId' => 'in:1, 2, 3, 4, 5, 6, 7',      
-            'kode_lulusId' => 'in:1,2,3',
+            'photo_profile' => '',
+            'transkrip_nilai' => '',
+            'kode_jurusanId' => '',      
+            'kode_lulusId' => '',
+        ]);
+        $validasiDataUser = $request->validate([
+            'username' => 'required|max:225',
+            'email' => '',
+            'password' => ''
         ]);
         // $validasiData['biografi'] = strip_tags($request->biografi);
         
@@ -499,12 +538,17 @@ class AdminController extends Controller
             $validasiData['transkrip_nilai'] = $request->file('transkrip_nilai')->storeAs('Transkrip_Nilai_Alumni', $validasiData['transkrip_nilai']);
         }
         
-        $validasiData['user_id'] = auth()->user()->id;
-        // dd($request->input('id'));
+        $validasiData['user_id'] = auth()->user()->id; 
         
+        dd(AlumniModel::findOrFail($request->id));
         AlumniModel::where('id', $request->id)->update($validasiData);
-        $dataRequest = $alumniModel->findOrFail($request->id);
-        // return redirect('')->with('success', 'Data Alumni Telah Berhasi Diubah!'); // tampilkan ke funtion show 
+        $useralumnicreate = User::findOrFail($request->id)->update([
+            'name' => $validasiDataUser['username'],
+            'email' => $validasiDataUser['email'],
+            'password' => bcrypt($validasiDataUser['password']) ?? $validasiDataUser['password'] = auth()->user()->password,
+            'photo_profile' => $validasiData['photo_profile'] ?? null,
+        ])->assignRole('alumni');
+        return redirect('/alumni')->with('success', 'Data Alumni Telah Berhasi Diubah!'); // tampilkan ke funtion show 
     }
 
     public function update_biografi(Request $request) {
@@ -512,11 +556,54 @@ class AdminController extends Controller
             'biografi' => '',
         ]);
         // $validasiData['biografi'] = strip_tags($request->biografi);
-        // dd($validasiData['biografi']);
+        // dd($validasiDataBiografi['biografi']);
 
         $dataBio = AlumniModel::find($request->id);
         AlumniModel::where('id', $dataBio->id)->update($validasiDataBiografi);
         return back()->with('success', 'Biografi berhasil diubah');
+    }
+
+    public function riwayatpendidikan_update(Request $request, RiwayatPendidikanModel $riwayatPendidikanModel) {
+        $validasiData = $request->validate([
+            'nisn' => 'numeric',
+            'nama_instansi' => 'string',
+            'jenis_pendidikan' => 'in:1, 2, 3, 4, 5',
+            'nilai_rata_rata' => 'numeric|decimal:0,100.00',
+            'tahun_awal_pendidikan' => 'date',
+            'tahun_akhir_pendidikan' => 'date',
+        ]);
+        $tanggalAwal = $validasiData['tahun_awal_pendidikan'];
+        $validasiData['tahun_awal_pendidikan'] = date('d/m/Y', strtotime($tanggalAwal));
+        $validasiData['tahun_awal_pendidikan'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_awal_pendidikan'])->format('l, j F Y');
+        
+        $tanggalAkhir = $validasiData['tahun_akhir_pendidikan'];
+        $validasiData['tahun_akhir_pendidikan'] = date('d/m/Y', strtotime($tanggalAkhir));
+        $validasiData['tahun_akhir_pendidikan'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_akhir_pendidikan'])->format('l, j F Y');
+
+        RiwayatPendidikanModel::findOrFail($request->id)->update($validasiData);
+        return back()->with('success', 'Riwayat pendidikan berhasil ditambahkan');
+    }
+
+    public function riwayatpekerjaan_update(Request $request) {
+        $validasiData = $request->validate([
+            'nisn' => 'numeric',
+            'nama_perusahaan' => 'string',
+            'jenis_pekerjaan' => 'in:1, 2, 3, 4, 5',
+            'bidang' => 'string',
+            'tahun_awal_pekerjaan' => 'date',
+            'tahun_akhir_pekerjaan' => 'date',
+        ]);
+        $tanggalAwal = $validasiData['tahun_awal_pekerjaan'];
+        $validasiData['tahun_awal_pekerjaan'] = date('d/m/Y', strtotime($tanggalAwal));
+        $validasiData['tahun_awal_pekerjaan'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_awal_pekerjaan'])->format('l, j F Y');
+        
+        $tanggalAkhir = $validasiData['tahun_akhir_pekerjaan'];
+        $validasiData['tahun_akhir_pekerjaan'] = date('d/m/Y', strtotime($tanggalAkhir));
+        $validasiData['tahun_akhir_pekerjaan'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_akhir_pekerjaan'])->format('l, j F Y');
+        
+        // dd($validasiData);
+        RiwayatPekerjaanModel::findOrFail($request->id)->update($validasiData);
+        return back()->with('success', 'Riwayat pekerjaan berhasil ditambahkan');
     }
 
     public function alumni_destroy(Request $request, AlumniModel $alumniModel) 
@@ -531,5 +618,15 @@ class AdminController extends Controller
 
         AlumniModel::destroy($request->id);
         return back();
+    }
+
+    public function riwayatpendidikan_destroy(Request $request) {
+        RiwayatPendidikanModel::destroy($request->id);
+        return back()->with('success', 'Data Riwayat Pendidikan Berhasil Dihapus');
+    }
+
+    public function riwayatpekerjaan_destroy(Request $request) {
+        RiwayatPekerjaanModel::destroy($request->id);
+        return back()->with('success', 'Data Riwayat Pekerjaan Berhasil Dihapus');
     }
 }

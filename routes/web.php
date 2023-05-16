@@ -113,17 +113,21 @@ Route::middleware('role:admin')->get('/admin/administrator/master/company/edit/{
 // Route::middleware('role:admin')->post('/admin/administrator/master/alumni/profile/{dudi}',  [AdminController::class, 'alumni_profile']);
 Route::middleware(['auth', 'role:admin'])->group(function() {
     // Route::resource('/alumni', AdminAlumniController::class);
-    Route::get('/alumni/', [AdminAlumniController::class, 'index']);
-    Route::get('/alumni/create', [AdminAlumniController::class, 'create']);
-    Route::post('/alumni/store', [AdminAlumniController::class, 'store']);
-    Route::post('/alumni/{alumniModel:nama}/show', [AdminAlumniController::class, 'show']);
-    Route::post('/alumni/{alumniModel:nama}/store-pendidikan', [AdminController::class, '']);
-    Route::post('/alumni/{alumniModel:nama}/store-pekerjaan', [AdminController::class, '']);
-    Route::get('/alumni/{alumniModel:nama}/update-pendidikan', [AdminController::class, '']);
-    Route::get('/alumni/{alumniModel:nama}/update-pekerjaan', [AdminController::class, '']);
-    Route::get('/alumni/{alumniModel:nama}/edit', [AdminAlumniController::class, 'edit']);
-    Route::put('/alumni/{alumniModel:nama}/update', [AdminAlumniController::class, 'update']);
-    Route::post('/alumni/{alumniModel:nama}/destroy', [AdminAlumniController::class, 'destroy']);
+    Route::get('/alumni/', [AdminController::class, 'alumni_index']);
+    Route::get('/alumni/create', [AdminController::class, 'alumni_create']);
+    Route::get('/alumni/store', [AdminController::class, 'alumni_store']);
+    Route::post('/alumni/pendidikan/store', [AdminController::class, 'riwayatpendidikan_store']);
+    Route::post('/alumni/pekerjaan/store', [AdminController::class, 'riwayatpekerjaan_store']);
+    Route::get('/alumni/{alumniModel:nama}/show', [AdminController::class, 'alumni_show']);
+    Route::get('/alumni/{alumniModel:nama}/edit', [AdminController::class, 'alumni_edit']);
+    Route::put('/alumni/{alumniModel:nama}/update', [AdminController::class, 'alumni_update']);
+    Route::post('/alumni/biografi/update', [AdminController::class, 'update_biografi']);
+    Route::post('/alumni/pendidikan/update', [AdminController::class, 'riwayatpendidikan_update']);
+    Route::post('/alumni/pekerjaan/update', [AdminController::class, 'riwayatpekerjaan_update']);
+    Route::post('/alumni/{alumniModel:nama}/destroy', [AdminController::class, 'alumni_destroy']);
+
+    Route::post('/alumni/pendidikan/delete', [AdminController::class, 'riwayatpendidikan_destroy']);
+    Route::post('/alumni/pekerjaan/delete', [AdminController::class, 'riwayatpekerjaan_destroy']);
 });
 
 Route::middleware(['auth', 'role:admin|alumni'])->group(function() {

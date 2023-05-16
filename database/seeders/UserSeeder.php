@@ -46,17 +46,17 @@ class UserSeeder extends Seeder
         ]);
         $dudi->assignRole('dudi');
 
-        $nomor = 25;   
-        $iduser = 5;    
-        for($z=0; $z<=$nomor; $z++) {
-            $useralumni[$z] = User::create([
-                'id' => $iduser,
-                'name' => 'alumni '.$z,
-                'email' => 'alumni@web'.$z,
-                'password' => bcrypt('alumni123#'.$z)
-            ]);
-            $useralumni[$z]->assignRole('alumni');
-            $iduser++;
-        }
+        // $nomor = 25;   
+        // $iduser = 5;    
+        // for($z=0; $z<=$nomor; $z++) {
+        //     $useralumni[$z] = User::create([
+        //         'id' => $iduser,
+        //         'name' => 'alumni '.$z,
+        //         'email' => 'alumni@web'.$z,
+        //         'password' => bcrypt('alumni123#'.$z)
+        //     ]);
+        //     $useralumni[$z]->assignRole('alumni');
+        //     $iduser++;
+        // }
     }
 }

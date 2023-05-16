@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('riwayat_pekerjaan', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('nisn')->nullable();
-            $table->string('nama_perusahaan')->nullable();
-            $table->foreignId('jenis_pekerjaan')->nullable();
-            $table->string('bidang')->nullable();
-            $table->string('awal_bekerja')->nullable();
-            $table->string('akhir_bekerja')->nullable();
+            $table->bigInteger('nisn');
+            $table->string('nama_perusahaan');
+            $table->foreignId('jenis_pekerjaan');
+            $table->string('bidang');
+            $table->string('tahun_awal_pekerjaan');
+            $table->string('tahun_akhir_pekerjaan');
+            $table->foreignId('user_id');
             $table->timestamps();
         });
     }

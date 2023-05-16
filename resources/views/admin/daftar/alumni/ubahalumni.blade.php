@@ -43,7 +43,7 @@
                             <p class="text-muted mt-0 text-sm">Nomor Induk Siswa Nasional</p>
                         </div>
                         <div class="col-md-8 pdt-6">
-                            <input type="text" name="nisn" class="form-control font-weight-normal  @error('nisn') is-invalid @enderror" required autofocus value="{{ old('nisn', $alumni->nisn) }}">
+                            <input type="text" name="nisn" class="form-control font-weight-normal  @error('nisn') is-invalid @enderror" autofocus value="{{ old('nisn', $alumni->nisn) }}">
                             @error('nisn')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -57,7 +57,7 @@
                             <p class="text-muted mt-0 text-sm">Nomor Induk Siswa Sekolah</p>
                         </div>
                         <div class="col-md-8 pdt-6">
-                            <input type="text" name="nis" class="form-control font-weight-normal @error('nis') is-invalid @enderror" required value="{{ old('nis', $alumni->nis) }}">
+                            <input type="text" name="nis" class="form-control font-weight-normal @error('nis') is-invalid @enderror" value="{{ old('nis', $alumni->nis) }}">
                             @error('nis')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -71,7 +71,7 @@
                             <p class="text-muted mt-0 text-sm">Nama Siswa Sesuai Akta Kelahiran</p>
                         </div>
                         <div class="col-md-8 pdt-6">
-                            <input type="text" name="nama" class="form-control font-weight-normal @error('nama') is-invalid @enderror" required value="{{ old('nama', $alumni->nama) }}">
+                            <input type="text" name="nama" class="form-control font-weight-normal @error('nama') is-invalid @enderror" value="{{ old('nama', $alumni->nama) }}">
                             @error('nama')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -85,7 +85,7 @@
                             <p class="text-muted mt-0 text-sm">Nomor Handphone / Telepon / Whatsapp</p>
                         </div>
                         <div class="col-md-8 pdt-6">
-                            <input type="text" name="no_hp" class="form-control font-weight-normal @error('no_hp') is-invalid @enderror"  required value="{{ old('no_hp', $alumni->no_hp) }}">
+                            <input type="text" name="no_hp" class="form-control font-weight-normal @error('no_hp') is-invalid @enderror"  value="{{ old('no_hp', $alumni->no_hp) }}">
                             @error('no_hp')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -99,7 +99,7 @@
                             <p class="text-muted mt-0 text-sm">Biografi Anda</p>
                         </div>
                         <div class="col-md-8">
-                            <input id="biografi" placeholder="Tentang diri anda" class="form-control font-weight-normal @error('biografi') is-invalid @enderror" type="hidden" name="biografi" value="{{ old('biografi', $alumni->biografi) }}" required>
+                            <input id="biografi" placeholder="Tentang diri anda" class="form-control font-weight-normal @error('biografi') is-invalid @enderror" type="hidden" name="biografi" value="{{ old('biografi', $alumni->biografi) }}">
                             <trix-editor input="biografi"></trix-editor>
                             @error('biografi')
                                 <div class="invalid-feedback">
@@ -167,7 +167,7 @@
                         </div>
                         <div class="col-md-8 pdt-6">
                             <div class="form-group">
-                                <textarea class="form-control @error('alamat') is-invalid @enderror" name="alamat" rows="7" placeholder="Alamat Rumah..." required>{{ old('alamat', $alumni->alamat) }}</textarea>
+                                <textarea class="form-control @error('alamat') is-invalid @enderror" name="alamat" rows="7" placeholder="Alamat Rumah...">{{ old('alamat', $alumni->alamat) }}</textarea>
                                 @error('alamat')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -182,7 +182,7 @@
                             <p class="text-muted mt-0 text-sm">Tempat Lahir, Tanggal Lahir</p>
                         </div>
                         <div class="col-md-8 pdt-6">
-                            <input type="text" name="tempatTanggalLahir" class="form-control font-weight-normal @error('tempatTanggalLahir') is-invalid @enderror" placeholder="Example: Banjarmasin, 1 Januari 2000" required value="{{ old('tempatTanggalLahir', $alumni->tempatTanggalLahir) }}">
+                            <input type="text" name="tempatTanggalLahir" class="form-control font-weight-normal @error('tempatTanggalLahir') is-invalid @enderror" placeholder="Example: Banjarmasin, 1 Januari 2000" value="{{ old('tempatTanggalLahir', $alumni->tempatTanggalLahir) }}">
                             @error('tempatTanggalLahir')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -283,20 +283,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row mrt-6">
-                        <div class="col-md-12 pdt-6" style="text-align: right">
-                            <button class="btn btn-primary" type="">Simpan</button>
-                            <button class="btn btn-danger" type="reset">Batal</button>
-                        </div>
-                    </div>
-                </form>
                 </div>
             </div>
             <div class="card">
                 <div class="card-body collapse show">
-                    <form action="#" method="post" enctype="multipart/form-data">
-                        @method('put')
-                        @csrf
                         <div class="row">
                             <div class="col-md-9">
                                 <h3 class="card-title">Pengguna</h3>

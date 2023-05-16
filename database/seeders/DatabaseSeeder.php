@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AgamaSeeder::class);
         $this->call(TahunLulusSeeder::class);
         $this->call(JenisPendidikanSeeder::class);
+        $this->call(JenisPekerjaanSeeder::class);
         AlumniModel::factory(25)->create();
         DudiModel::factory(10)->create();
         $this->call(RoleSeeder::class);
