@@ -88,14 +88,14 @@
                                         <h3 class="card-text text-black">{{ $riwayat->nama_instansi }} <button class="icon-button-modal" data-bs-toggle="modal" data-bs-target="#editpendidikan{{ $riwayat->id }}"><i class="fas fa-pencil-alt text-black mrl-10"></i></button></h3>
                                         <p>{{ $riwayat->Pendidikan->jenis_pendidikan }} - Nilai Rata-Rata : {{ $riwayat->nilai_rata_rata }} <br>Lulus Tahun : {{ $riwayat->tahun_akhir_pendidikan }}</p>
                                         <h3>
-                                            <button type="button" class="icon-button-modal" data-bs-toggle="modal" data-bs-target="#deletemodal{{ $riwayat->id ??'-' }}">
+                                            <button type="button" class="icon-button-modal" data-bs-toggle="modal" data-bs-target="#deletePendidikanmodal{{ $riwayat->id ??'-' }}">
                                                 <i class="fas fa-trash-alt text-red mrl-20"></i>
                                             </button>
                                         </h3>
                                         <hr>
                                     </div>
                                     {{-- Modal Delete Start --}}
-                                    <div id="deletemodal{{ $riwayat->id ??'-' }}" class="modal fade" tabindex="-1" role="dialog"
+                                    <div id="deletePendidikanmodal{{ $riwayat->id ??'-' }}" class="modal fade" tabindex="-1" role="dialog"
                                         aria-hidden="true">
                                         <div class="modal-dialog modal-sm">
                                             <div class="modal-content modal-filled bg-danger">
@@ -103,8 +103,8 @@
                                                     <div class="text-center">
                                                         <i class="dripicons-wrong h1"></i>
                                                         <h4 class="mt-2">Peringatan!</h4>
-                                                        <p class="mt-3">Apakan Ingin Melanjutkan Menghapus data</p>
-                                                        <form action="/alumni/pendidikan/destroy" method="post">
+                                                        <p class="mt-3">Apakan Ingin Melanjutkan Menghapus Data Pendidikan</p>
+                                                        <form action="/alumni/pendidikan/delete" method="post">
                                                             @method('post')
                                                             @csrf
                                                             <input type="hidden" name="id" id="newsletter-id" class="form-control form-control-lg" value="{{ $riwayat->id }}">
@@ -229,8 +229,35 @@
                                     <div class="card-body">
                                         <h3 class="card-text text-black">{{ $data->bidang }} <button class="icon-button-modal" data-bs-toggle="modal" data-bs-target="#editpekerjaan{{ $data->id }}"><i class="fas fa-pencil-alt text-black mrl-10"></i></button></h3>
                                         <p>{{ $data->nama_perusahaan }} - {{ $data->Pekerjaan->jenis_pekerjaan }} <br>{{ $data->tahun_awal_pekerjaan }} - {{ $data->tahun_akhir_pekerjaan }}</p>
+                                        <h3>
+                                            <button type="button" class="icon-button-modal" data-bs-toggle="modal" data-bs-target="#deletePekerjaanModal{{ $data->id ??'-' }}"><i class="fas fa-trash-alt text-red mrl-20"></i>
+                                            </button>
+                                        </h3>
                                         <hr>
                                     </div>
+                                    {{-- Modal Delete Start --}}
+                                    <div id="deletePekerjaanModal{{ $data->id ??'-' }}" class="modal fade" tabindex="-1" role="dialog"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog modal-sm">
+                                            <div class="modal-content modal-filled bg-danger">
+                                                <div class="modal-body p-4">
+                                                    <div class="text-center">
+                                                        <i class="dripicons-wrong h1"></i>
+                                                        <h4 class="mt-2">Peringatan!</h4>
+                                                        <p class="mt-3">Apakan Ingin Melanjutkan Menghapus Data Pekerjaan</p>
+                                                        <form action="/alumni/pekerjaan/delete" method="post">
+                                                            @method('post')
+                                                            @csrf
+                                                            <input type="hidden" name="id" id="newsletter-id" class="form-control form-control-lg" value="{{ $data->id }}">
+                                                            <button type="submit" class="btn btn-light my-2">Delete</button>
+                                                        </form>
+                                                        <button type="button" class="btn btn-success" data-bs-dismiss="modal">Cancel</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{-- Modal Delete End --}}
 
                                     {{-- Modal Update Pengalaman Kerja --}}
                                     <div class="modal fade" id="editpekerjaan{{ $data->id }}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"

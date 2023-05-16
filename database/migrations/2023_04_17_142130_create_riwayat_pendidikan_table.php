@@ -19,6 +19,7 @@ return new class extends Migration
             $table->float('nilai_rata_rata');
             $table->string('tahun_awal_pendidikan');
             $table->string('tahun_akhir_pendidikan');
+            $table->foreignId('user_id');
             $table->timestamps();
         });
     }

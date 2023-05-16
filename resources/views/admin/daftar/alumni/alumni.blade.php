@@ -33,11 +33,11 @@
                             <a href="/alumni/create" class="btn btn-secondary full-size-width" style="border-radius:8px ">Tambah Alumni</a>
                         </div>
                     </div>
-                    <div class="row pdt-20">
-                        <div class="col-md-3">
-                            <form action="/alumni" method="GET">
-                                @method('get')
-                                @csrf
+                <form action="/alumni" method="GET">
+                    @method('get')
+                    @csrf
+                    <div class="row pdt-20 mb-4">
+                        <div class="col-md-3 mb-2">
                             <select class="form-select full-size-width" id="idjurusan" name="idjurusan" value="{{ request('idjurusan') }}">
                                 <option selected>Jurusan</option>
                                 @foreach ($datajurusan as $item)
@@ -49,7 +49,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3 mb-2">
                             <select class="form-select full-size-width" id="idtahunlulus" name="idtahunlulus" value="{{ request('idtahunlulus') }}">
                                 <option selected>Tahun Lulus</option>
                                 @foreach ($datatahunlulus as $item)
@@ -61,18 +61,14 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-md-3">
-                                <input type="text" id="nama_alumni" name="nama_alumni"
-                                    class="form-control" placeholder="Nama Alumni" value="{{ request('nama_alumni') }}">
+                        <div class="col-md-3 mb-2">
+                            <input type="text" id="nama_alumni" name="nama_alumni" class="form-control" placeholder="Nama Alumni" value="{{ request('nama_alumni') }}">
                         </div>
                         <div class="col-md-3">
-                            <button type="submit" class="btn btn-primary full-size-width" style="border-radius: 8px">Cari
-                                Alumni</button>
-                            </form>
+                            <button type="submit" class="btn btn-primary full-size-width" style="border-radius: 8px">Cari Alumni</button>
                         </div>
                     </div>
-                </div>
-            </div>
+                </form>
             <div class="row">
                 <div class="col-md-12">
                     @if (session()->has('success'))

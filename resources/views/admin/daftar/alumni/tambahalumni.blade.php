@@ -40,7 +40,7 @@
                             <p class="text-muted mt-0 text-sm">Nomor Induk Siswa Nasional</p>
                         </div>
                         <div class="col-md-8 pdt-6">
-                            <input type="text" name="nisn" class="form-control font-weight-normal  @error('nisn') is-invalid @enderror" required value="{{ old('nisn') }}" autofocus>
+                            <input type="text" name="nisn" class="form-control font-weight-normal  @error('nisn') is-invalid @enderror"  value="{{ old('nisn') }}" autofocus>
                             @error('nisn')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -54,7 +54,7 @@
                             <p class="text-muted mt-0 text-sm">Nomor Induk Siswa Sekolah</p>
                         </div>
                         <div class="col-md-8 pdt-6">
-                            <input type="text" name="nis" class="form-control font-weight-normal @error('nis') is-invalid @enderror" required value="{{ old('nis') }}">
+                            <input type="text" name="nis" class="form-control font-weight-normal @error('nis') is-invalid @enderror"  value="{{ old('nis') }}">
                             @error('nis')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -68,7 +68,7 @@
                             <p class="text-muted mt-0 text-sm">Nama Siswa Sesuai Akta Kelahiran</p>
                         </div>
                         <div class="col-md-8 pdt-6">
-                            <input type="text" name="nama" class="form-control font-weight-normal @error('nama') is-invalid @enderror" required value="{{ old('nama') }}">
+                            <input type="text" name="nama" class="form-control font-weight-normal @error('nama') is-invalid @enderror"  value="{{ old('nama') }}">
                             @error('nama')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -82,7 +82,7 @@
                             <p class="text-muted mt-0 text-sm">Nomor Handphone / Telepon / Whatsapp</p>
                         </div>
                         <div class="col-md-8 pdt-6">
-                            <input type="text" name="no_hp" class="form-control font-weight-normal @error('no_hp') is-invalid @enderror"  required value="{{ old('no_hp') }}">
+                            <input type="text" name="no_hp" class="form-control font-weight-normal @error('no_hp') is-invalid @enderror"   value="{{ old('no_hp') }}">
                             @error('no_hp')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -96,7 +96,7 @@
                             <p class="text-muted mt-0 text-sm">Biografi Anda</p>
                         </div>
                         <div class="col-md-8">
-                            <input id="biografi" placeholder="Tentang diri anda" class="form-control font-weight-normal @error('biografi') is-invalid @enderror" type="hidden" name="biografi" value="{{ old('biografi') }}" required>
+                            <input id="biografi" placeholder="Tentang diri anda" class="form-control font-weight-normal @error('biografi') is-invalid @enderror" type="hidden" name="biografi" value="{{ old('biografi') }}" >
                             <trix-editor input="biografi"></trix-editor>
                             @error('biografi')
                                 <div class="invalid-feedback">
@@ -164,7 +164,7 @@
                         </div>
                         <div class="col-md-8 pdt-6">
                             <div class="form-group">
-                                <textarea class="form-control @error('alamat') is-invalid @enderror" name="alamat" rows="7" placeholder="Alamat Rumah..." required>{{ old('alamat') }}</textarea>
+                                <textarea class="form-control @error('alamat') is-invalid @enderror" name="alamat" rows="7" placeholder="Alamat Rumah..." >{{ old('alamat') }}</textarea>
                                 @error('alamat')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -179,7 +179,7 @@
                             <p class="text-muted mt-0 text-sm">Tempat Lahir, Tanggal Lahir</p>
                         </div>
                         <div class="col-md-8 pdt-6">
-                            <input type="text" name="tempatTanggalLahir" class="form-control font-weight-normal @error('tempatTanggalLahir') is-invalid @enderror" placeholder="Example: Banjarmasin, 1 Januari 2000" required value="{{ old('tempatTanggalLahir') }}">
+                            <input type="text" name="tempatTanggalLahir" class="form-control font-weight-normal @error('tempatTanggalLahir') is-invalid @enderror" placeholder="Example: Banjarmasin, 1 Januari 2000"  value="{{ old('tempatTanggalLahir') }}">
                             @error('tempatTanggalLahir')
                                 <div class="invalid-feedback">
                                     {{ $message }}
