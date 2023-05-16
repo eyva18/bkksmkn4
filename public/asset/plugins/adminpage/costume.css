@@ -54,6 +54,12 @@ span.text-logo {
 .card-text{
     white-space: pre-wrap;
 }
+.text-center{
+    text-align: center;
+}
+.display-none{
+    display: none;
+}
 .icon-button-modal {
     background: 0;
     border: 0;

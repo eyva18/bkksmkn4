@@ -196,7 +196,6 @@ class AdminController extends Controller
     }
     public function dudi_create()
     {
-
         return view('admin.daftar.dudi.tambahdudi', ['bidangdata' => CategoryModel::all()]);
     }
     public function dudi_update(Request $request)
@@ -428,13 +427,6 @@ class AdminController extends Controller
             'tahun_awal_pendidikan' => 'date',
             'tahun_akhir_pendidikan' => 'date',
         ]);
-        $tanggalAwal = $validasiData['tahun_awal_pendidikan'];
-        $validasiData['tahun_awal_pendidikan'] = date('d/m/Y', strtotime($tanggalAwal));
-        $validasiData['tahun_awal_pendidikan'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_awal_pendidikan'])->format('l, j F Y');
-        
-        $tanggalAkhir = $validasiData['tahun_akhir_pendidikan'];
-        $validasiData['tahun_akhir_pendidikan'] = date('d/m/Y', strtotime($tanggalAkhir));
-        $validasiData['tahun_akhir_pendidikan'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_akhir_pendidikan'])->format('l, j F Y');
 
         $findUser = User::findOrFail($dataAlumni->user_id);
         $validasiData['user_id'] = $findUser->id;
@@ -543,12 +535,20 @@ class AdminController extends Controller
         $validasiData['user_id'] = $useralumnidata->id;
         
         AlumniModel::where('id', $request->id)->update($validasiData);
-        $useralumnicreate = User::findOrFail($validasiData['user_id'])->update([
-            'name' => $validasiDataUser['username'],
-            'email' => $validasiDataUser['email'],
-            'password' => bcrypt($validasiDataUser['password']) ?? null,
-            'photo_profile' => $validasiData['photo_profile'] ?? null,
-        ]);
+        if($request->password != null){
+            User::findOrFail($validasiData['user_id'])->update([
+                'name' => $validasiDataUser['username'],
+                'email' => $validasiDataUser['email'],
+                'password' => bcrypt($validasiDataUser['password']),
+                'photo_profile' => $validasiData['photo_profile'] ?? null,
+            ]);
+        } elseif($request->password == null){
+            User::findOrFail($validasiData['user_id'])->update([
+                'name' => $validasiDataUser['username'],
+                'email' => $validasiDataUser['email'],
+                'photo_profile' => $validasiData['photo_profile'] ?? null,
+            ]);
+        }
         return redirect('/alumni')->with('success', 'Data Alumni Telah Berhasi Diubah!'); // tampilkan ke funtion show 
     }
 

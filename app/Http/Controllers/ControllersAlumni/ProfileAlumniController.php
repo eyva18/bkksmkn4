@@ -2,29 +2,50 @@
 
 namespace App\Http\Controllers\ControllersAlumni;
 
+use App\Models\DudiModel;
 use App\Models\AlumniModel;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\LowonganModel;
 use App\Models\ProfileAlumni;
 use App\Models\RiwayatAlumniModel;
 use App\Http\Controllers\Controller;
-use App\Models\DudiModel;
-use App\Models\LowonganModel;
+use Illuminate\Support\Facades\Auth;
+use App\Models\RiwayatPekerjaanModel;
 use Illuminate\Auth\Events\Validated;
 use App\Models\RiwayatPendidikanModel;
-use Illuminate\Support\Facades\Auth;
 
 class ProfileAlumniController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $findSiswaProfile = Auth::user()->id;
-        return view('alumni.dashboard', [
-            'dataAlumni' => $findSiswaProfile
-        ]);
+    public function index() {
+        // Data Alumni
+        $dataUser = AlumniModel::where('user_id', Auth()->user()->id)->get();
+        foreach ($dataUser as $data) {
+            $dataAlumni = AlumniModel::find($data->id);
+        }
+        $dataPendidikan = RiwayatPendidikanModel::where('user_id', Auth()->user()->id)->get();
+        $dataPekerjaan = RiwayatPekerjaanModel::where('user_id', Auth()->user()->id)->get();
+
+        //Count Lowongan Kerja
+        $datadudi = DudiModel::paginate(3);
+        $lowongan = [];
+        foreach ($datadudi as $data) {
+            $yz = LowonganModel::where('id_dudi', $data->id)->count();
+            $lowongan[$data->id] = $yz;
+        }
+        if (Auth::user()->hasRole('alumni')) {
+            return view('alumni.dashboard', [
+                'dataAlumni' => $dataAlumni,
+                'dataPendidikan' => $dataPendidikan,
+                'dataPekerjaan' => $dataPekerjaan,
+                'lowongan' => LowonganModel::with('dudi')->paginate(10),
+                "datadudi" => $datadudi,
+                "countlowongan" => $lowongan
+            ]);
+        }
     }
 
     public function daftarLowongan()
@@ -44,7 +65,7 @@ class ProfileAlumniController extends Controller
             ]);
         }
     }
-    
+
     public function daftarLowongansearch(Request $request)
     {
         $datadudi = DudiModel::paginate(3);

@@ -41,7 +41,7 @@
                                 <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
                                     id="profileDropdown">
                                     <span class="nav-profile-name">{{ Auth()->user()->name }}</span>
-                                    <img src="{{ URL::asset('images/profileimg/' . Auth::user()->photo_profile) }}"
+                                    <img src="{{ URL::asset('storage/' . Auth::user()->photo_profile) }}"
                                         alt="profile" />
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown"
@@ -98,7 +98,7 @@
         <!-- partial -->
         <div class="container-fluid page-body-wrapper">
             <div class="main-panel">
-                <div class="content-wrapper">
+                <div class="content-wrapper p-md-4 mt-4">
                     @yield('page-wrapper')
                 </div>
                 <!-- content-wrapper ends -->
