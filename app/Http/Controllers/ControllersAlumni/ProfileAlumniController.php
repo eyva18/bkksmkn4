@@ -21,10 +21,20 @@ class ProfileAlumniController extends Controller
      */
     public function index()
     {
-        $findSiswaProfile = Auth::user()->id;
-        return view('alumni.dashboard', [
-            'dataAlumni' => $findSiswaProfile
-        ]);
+        $datadudi = DudiModel::paginate(3);
+        //Count Lowongan Kerja
+        $lowongan = [];
+        foreach ($datadudi as $data) {
+            $yz = LowonganModel::where('id_dudi', $data->id)->count();
+            $lowongan[$data->id] = $yz;
+        }
+        if (Auth::user()->hasRole('alumni')) {
+            return view('alumni.dashboard', [
+                'lowongan' => LowonganModel::with('dudi')->paginate(10),
+                "datadudi" => $datadudi,
+                "countlowongan" => $lowongan
+            ]);
+        }
     }
     public function daftarLowongan()
     {

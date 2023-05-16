@@ -197,7 +197,6 @@ class AdminController extends Controller
     }
     public function dudi_create()
     {
-
         return view('admin.daftar.dudi.tambahdudi', ['bidangdata' => CategoryModel::all()]);
     }
     public function dudi_update(Request $request)
@@ -537,10 +536,10 @@ class AdminController extends Controller
             $validasiData['transkrip_nilai'] = $request->file('transkrip_nilai')->getClientOriginalName();
             $validasiData['transkrip_nilai'] = $request->file('transkrip_nilai')->storeAs('Transkrip_Nilai_Alumni', $validasiData['transkrip_nilai']);
         }
+        $alumnidata = AlumniModel::find($request->id);
+        $useralumnidata = User::find($alumnidata->user_id);
+        $validasiData['user_id'] = $useralumnidata->id; 
         
-        $validasiData['user_id'] = auth()->user()->id; 
-        
-        dd(AlumniModel::findOrFail($request->id));
         AlumniModel::where('id', $request->id)->update($validasiData);
         $useralumnicreate = User::findOrFail($request->id)->update([
             'name' => $validasiDataUser['username'],
