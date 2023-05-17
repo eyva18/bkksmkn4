@@ -6,8 +6,9 @@ namespace Database\Seeders;
 
 use App\Models\AlumniModel;
 use App\Models\DudiModel;
+use App\Models\StatusAlumniModel;
 use Illuminate\Database\Seeder;
-
+use Illuminate\Database\Eloquent\Factories\Factory;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -21,7 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TahunLulusSeeder::class);
         $this->call(JenisPendidikanSeeder::class);
         $this->call(JenisPekerjaanSeeder::class);
-        AlumniModel::factory(25)->create();
+        StatusAlumniModel::factory(25)->create();
         DudiModel::factory(10)->create();
         $this->call(RoleSeeder::class);
         $this->call(UserSeeder::class);

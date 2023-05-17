@@ -212,7 +212,7 @@ class AdminController extends Controller
         } else {
             $logo = $olddata->logo;
         }
-        DudiModel::find($request->id)->update([
+         DudiModel::find($request->id)->update([
             'nama' => $request->nama,
             'bidang' => $request->bidang,
             'no_telp' => $request->no_telp,
@@ -222,7 +222,7 @@ class AdminController extends Controller
         ]);
         $pw = null;
         if($request->password != null){
-            User::where('kode_owner', $request->id)->update([
+            User::where('id', $olddata->user_id)->update([
                 'name' => $request->username,
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
@@ -230,13 +230,14 @@ class AdminController extends Controller
         ]);
         }
         elseif($request->password == null){
-            User::where('kode_owner', $request->id)->update([
+            User::where('id', $olddata->user_id)->update([
                 'name' => $request->username,
                 'email' => $request->email,
                 'photo_profile' => $logo
         ]);
         }
-        return redirect()->route('admin@master_company');
+        $dudiafterupdate = DudiModel::find($request->id);
+        return redirect('/admin/administrator/master/company/profile/'.$dudiafterupdate->nama);
     }
     public function dudi_add(Request $request)
     {
@@ -271,7 +272,7 @@ class AdminController extends Controller
             'photo_profile' => $logo
         ]);
         $userdudi->assignRole('dudi');
-        DudiModel::create([
+        $dudidata = DudiModel::create([
             'id' => $fixidcreate,
             'nama' => $request->nama,
             'bidang' => $request->bidang,
@@ -281,7 +282,7 @@ class AdminController extends Controller
             'logo' => $logo,
             'user_id' => $userdudi->id,
         ]);
-        return redirect()->route('admin@master_company');
+        return redirect('/admin/administrator/master/company/profile/'.$dudidata->nama);
     }
     public function dudi_delete(Request $request)
     {
@@ -312,9 +313,9 @@ class AdminController extends Controller
     {
         //Jurusan Database Function
         $datadudi = $dudi;
-        $userdudi = User::where('kode_owner', $dudi->id)->first();
+        $userdudi = User::where('id', $dudi->user_id)->first();
         //Count Lowongan Kerja
-        $lowongan = LowonganModel::where('id_dudi', $dudi->id)->with('dudi')->with('kategori')->get();
+        $lowongan = LowonganModel::where('id_dudi', $dudi->id)->with('dudi')->with('kategori')->paginate(10);
         return view('admin.daftar.dudi.profiledudi', [
             "datadudi" => $datadudi,
             "lowongan" => $lowongan,
@@ -325,7 +326,7 @@ class AdminController extends Controller
     {
         //Jurusan Database Function
         $datadudi = $dudi;
-        $akundudi = User::where('kode_owner', $dudi->id)->first();
+        $akundudi = User::where('id', $dudi->user_id)->first();
         //Count Lowongan Kerja
         return view('admin.daftar.dudi.ubahdudi', [
             "datadudi" => $datadudi,
@@ -457,7 +458,7 @@ class AdminController extends Controller
 
         $findUser = User::findOrFail($dataAlumni->user_id);
         $validasiData['user_id'] = $findUser->id;
-        
+        dd($validasiData);
         // dd($validasiData);
         RiwayatPekerjaanModel::create($validasiData);
         return back()->with('success', 'Riwayat pekerjaan berhasil ditambahkan');

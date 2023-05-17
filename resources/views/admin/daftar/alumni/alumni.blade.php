@@ -79,6 +79,19 @@
                 </div>
             </div>
             <div class="row">
+                @if ($dataalumni[0] == null)
+                <div class="col-sm-12 mr">
+                    <div class="card">
+                        <div class="card-body collapse show">
+                            <div class="row">
+                                <div class="col-md-12 text-center mt-3">
+                                    <h4 class="card-title">Lowongan Tidak Tersedia</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endif
                 @foreach ($dataalumni as $alumni)
                     <div class="col-md-6">
                         <div class="card border-top-300">
