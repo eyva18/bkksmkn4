@@ -12,8 +12,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-6">
-            <div class="d-flex align-items-center justify-content-md-end">
+        <div class="col-sm-12">
+            <div class="d-flex align-items-center justify-content-evenly">
                 <div class="pe-1 mb-3 mb-xl-0">
                     <a href="/lowongan-kerja" class="btn btn-outline-inverse-info btn-icon-text">
                         Daftar Lowongan
@@ -32,8 +32,8 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="row mt-4 mrl-5">
+    <div class="row-12">
+        <div class="row mt-4">
             <div class="col-sm-12 mr">
                 <div class="card">
                     <div class="card-body collapse show">
@@ -45,7 +45,7 @@
                         <form action="/daftar-perusahaan/search+" method="get">
                             @csrf
                             <div class="row pdt-20">
-                                <div class="col-md-8">
+                                <div class="col-md-8 mb-3">
                                     <input type="text" id="" name="nama_perusahaan" class="form-control"
                                         placeholder="Nama Perusahaan..." style="height: 40px">
                                 </div>
@@ -60,7 +60,7 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-4 mrl-5">
+        <div class="row mt-4 d-flex justify-content-evenly">
             @if ($perusahaan[0] == null)
                 <div class="col-sm-12 mr">
                     <div class="card">
@@ -75,7 +75,7 @@
                 </div>
             @endif
             @foreach ($perusahaan as $dataperusahaan)
-                <div class="col-md-4">
+                <div class="col-md-6 col-lg-4">
                     <div class="card border-top-black-300 mt-5">
                         <div class="col-md-12 p-4">
                             <h4 class="card-title">{{ $dataperusahaan->nama }}</h4>
@@ -106,16 +106,14 @@
             @endforeach
             <div class="pagination">{{ $perusahaan->links() }}</div>
         </div>
-        <div class="row mt-4 mrl-5 mt-5">
-            <div class="col-sm-6 mb-4 mb-xl-0">
-                <div class="d-lg-flex align-items-center">
-                    <div>
-                        <h2 class="text-dark mb-2">Sekilas Lowongan</h2>
-                    </div>
+        <div class="row-12 my-4">
+            <div class="col">
+                <div class="d-flex justify-content-center bg-primary rounded">
+                    <h2 class="text-light p-3">Sekilas Perusahaan</h2>
                 </div>
             </div>
         </div>
-        <div class="row mt-4 mrl-5">
+        <div class="row">
             @if ($lowongan[0] == null)
                 <div class="col-sm-12 mr">
                     <div class="card">
@@ -130,8 +128,8 @@
                 </div>
             @endif
             @foreach ($lowongan as $datalowongan)
-                <div class="col-md-4">
-                    <div class="card border-top-black-300 mt-5">
+                <div class="col-lg-4 col-md-6">
+                    <div class="card border-top-black-300 mb-3">
                         <div class="col-md-12 p-4">
                             <h4 class="card-title">{{ $datalowongan->nama }}</h4>
                             <ul class="list-unstyled">

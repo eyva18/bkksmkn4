@@ -414,7 +414,7 @@
                                     <img class="img-fluid"
                                         src="{{ URL::asset('images/homepage/kegiatan/kegiatan1.jpeg') }}"
                                         alt="project-img">
-                                    <span class="gallery-icon"><i class="fa fa-plus"></i></span>
+                                    <span class="gallery-icon"><i class="fa fa-eye"></i></span>
                                 </a>
                             </div>
                         </div><!-- shuffle item 1 end -->
@@ -427,7 +427,7 @@
                                     <img class="img-fluid"
                                         src="{{ URL::asset('images/homepage/kegiatan/kegiatan2.jpg') }}"
                                         alt="project-img">
-                                    <span class="gallery-icon"><i class="fa fa-plus"></i></span>
+                                    <span class="gallery-icon"><i class="fa fa-eye"></i></span>
                                 </a>
                             </div>
                         </div><!-- shuffle item 2 end -->
@@ -441,7 +441,7 @@
                                     <img class="img-fluid"
                                         src="{{ URL::asset('images/homepage/kegiatan/kegiatan3.jpeg') }}"
                                         alt="project-img">
-                                    <span class="gallery-icon"><i class="fa fa-plus"></i></span>
+                                    <span class="gallery-icon"><i class="fa fa-eye"></i></span>
                                 </a>
                             </div>
                         </div><!-- shuffle item 3 end -->
@@ -455,7 +455,7 @@
                                     <img class="img-fluid"
                                         src="{{ URL::asset('images/homepage/kegiatan/kegiatan4.jpg') }}"
                                         alt="project-img">
-                                    <span class="gallery-icon"><i class="fa fa-plus"></i></span>
+                                    <span class="gallery-icon"><i class="fa fa-eye"></i></span>
                                 </a>
                             </div>
                         </div><!-- shuffle item 4 end -->
@@ -469,7 +469,7 @@
                                     <img class="img-fluid"
                                         src="{{ URL::asset('images/homepage/kegiatan/kegiatan5.jpeg') }}"
                                         alt="project-img">
-                                    <span class="gallery-icon"><i class="fa fa-plus"></i></span>
+                                    <span class="gallery-icon"><i class="fa fa-eye"></i></span>
                                 </a>
                             </div>
                         </div><!-- shuffle item 5 end -->
@@ -482,7 +482,7 @@
                                     <img class="img-fluid"
                                         src="{{ URL::asset('images/homepage/kegiatan/kegiatan6.jpeg') }}"
                                         alt="project-img">
-                                    <span class="gallery-icon"><i class="fa fa-plus"></i></span>
+                                    <span class="gallery-icon"><i class="fa fa-eye"></i></span>
                                 </a>
                             </div>
                         </div><!-- shuffle item 6 end -->

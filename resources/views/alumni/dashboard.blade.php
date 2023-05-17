@@ -72,7 +72,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-6 grid-margin d-flex stretch-card">
+                <div class="col-sm-12 col-md-6 grid-margin d-flex stretch-card">
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between top-card">
@@ -90,7 +90,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6 grid-margin d-flex stretch-card">
+                <div class="col-sm-12 col-md-6 grid-margin d-flex stretch-card">
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between top-card">
@@ -110,7 +110,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6 grid-margin d-flex stretch-card">
+                <div class="col-sm-12 col-md-6 grid-margin d-flex stretch-card">
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between top-card">
@@ -127,7 +127,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6 grid-margin d-flex stretch-card">
+                <div class="col-sm-12 col-md-6 grid-margin d-flex stretch-card">
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between top-card">
@@ -158,16 +158,16 @@
                             </div>
                             <form action="/lowongan-kerja/search+" method="get">
                             @csrf
-                            <div class="row pdt-20">
-                                <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
                                     <select class="form-select full-size-width" id="inputGroupSelect01" name="category">
                                         <option selected="">Spesialis Pekerjaan</option>
-                                                                        <option value="1">Category Pekerjaan 1</option>
-                                                                        <option value="2">Category Pekerjaan 2</option>
-                                                                        <option value="3">Category Pekerjaan 3</option>
-                                                                    </select>
+                                        <option value="1">Category Pekerjaan 1</option>
+                                        <option value="2">Category Pekerjaan 2</option>
+                                        <option value="3">Category Pekerjaan 3</option>
+                                    </select>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 mb-3">
                                         <input type="text" id="" name="nama_lowongan" class="form-control" placeholder="Kata Kunci Lowongan" style="height: 40px">
                                 </div>
                                 <div class="col-md-4">
@@ -181,9 +181,9 @@
                     </div>
                 </div>
             </div>
-            <div class="row mt-4 mrl-5">
+            <div class="row mt-4">
                 @foreach ($lowongan as $datalowongan)            
-                    <div class="col-md-4">
+                    <div class="col-lg-4 col-md-6">
                         <div class="card border-top-black-300 mt-5">
                             <div class="col-md-12 p-4">
                                 <h4 class="card-title">{{ $datalowongan->nama }}</h4>
@@ -207,17 +207,17 @@
                 @endforeach
                 <div class="pagination">{{ $lowongan->links() }}</div>
             </div>
-            <div class="row mt-3">
+            <div class="row my-4">
                 <div class="col">
-                    <div class="d-flex justify-content-center">
-                        <h2 class="card border-top-black-300 p-3 text-dark mb-2">Sekilas Perusahaan</h2>
+                    <div class="d-flex justify-content-center bg-primary rounded">
+                        <h2 class="text-light p-3">Sekilas Perusahaan</h2>
                     </div>
                 </div>
             </div>
-            <div class="row mt-2 mrl-5 d-flex justify-content-evenly">
+            <div class="row d-flex justify-content-evenly">
                 @foreach ($datadudi as $item)
-                <div class="col-md-6 d-flex justify-content-center">
-                    <div class="card border-top-blue-300 mt-5">
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-top-blue-300 mb-3">
                         <div class="col-md-12 p-4">
                             <h4 class="card-title">{{ $item->nama }}</h4>
                             <ul class="list-unstyled">
