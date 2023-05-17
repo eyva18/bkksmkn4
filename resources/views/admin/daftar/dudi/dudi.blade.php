@@ -50,6 +50,28 @@
                 </div>
             </div>
             <div class="row">
+                <div class="col-md-12">
+                    @if (session()->has('success'))
+                        <div class="alert alert-info" role="alert">
+                            <strong>Info!</strong> {{ session('success') }}
+                        </div>
+                    @endif
+                </div>
+            </div>
+            <div class="row">
+                @if ($datadudi[0] == null)
+                <div class="col-sm-12 mr">
+                    <div class="card">
+                        <div class="card-body collapse show">
+                            <div class="row">
+                                <div class="col-md-12 text-center mt-3">
+                                    <h4 class="card-title">Perusahaan / Dudi Tidak Tersedia</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endif
                 @foreach ($datadudi as $dudi)                    
                 <div class="col-md-6">
                     <div class="card border-top-300">

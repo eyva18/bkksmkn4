@@ -68,6 +68,19 @@
                 </div>
             </div>
             <div class="row mt-4">
+                @if ($lowongan[0] == null)
+                <div class="col-sm-12 mr">
+                    <div class="card">
+                        <div class="card-body collapse show">
+                            <div class="row">
+                                <div class="col-md-12 text-center mt-3">
+                                    <h4 class="card-title">Lowongan Tidak Tersedia</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endif
                 @foreach ($lowongan as $data)
                 <div class="col-md-6">
                     <div class="card border-top-black-300">
@@ -97,6 +110,7 @@
                     </div>
                 </div>
                 @endforeach
+            <div class="pagination">{{ $lowongan->links() }}</div>
             </div>
         </div>
         <!-- ============================================================== -->

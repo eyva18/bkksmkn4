@@ -51,15 +51,19 @@ span.text-logo {
 .text-white {
     color: white;
 }
-.card-text{
+
+.card-text {
     white-space: pre-wrap;
 }
-.text-center{
+
+.text-center {
     text-align: center;
 }
-.display-none{
+
+.display-none {
     display: none;
 }
+
 .icon-button-modal {
     background: 0;
     border: 0;
@@ -141,5 +145,25 @@ span.text-logo {
         width: 70%;
         margin-bottom: 15px;
         margin-left: 39px;
+    }
+}
+
+@media (max-width: 986px) {
+    .horizontal-menu .bottom-navbar.header-toggled {
+        display: block;
+    }
+
+    .horizontal-menu .bottom-navbar {
+        display: none;
+    }
+
+    .mt-rs-4 {
+        margin-top: 50px;
+    }
+}
+
+@media (max-width: 764px) {
+    .mt-rs-4 {
+        margin-top: 0px;
     }
 }
