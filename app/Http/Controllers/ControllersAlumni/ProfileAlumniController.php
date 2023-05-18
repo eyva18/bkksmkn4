@@ -10,6 +10,7 @@ use App\Models\LowonganModel;
 use App\Models\ProfileAlumni;
 use App\Models\RiwayatAlumniModel;
 use App\Http\Controllers\Controller;
+use App\Models\CategoryModel;
 use Illuminate\Support\Facades\Auth;
 use App\Models\RiwayatPekerjaanModel;
 use Illuminate\Auth\Events\Validated;
@@ -61,7 +62,8 @@ class ProfileAlumniController extends Controller
             return view('alumni.daftarlowongan.daftarLowongan', [
                 'lowongan' => LowonganModel::with('dudi')->paginate(10),
                 "datadudi" => $datadudi,
-                "countlowongan" => $lowongan
+                "countlowongan" => $lowongan,
+                'category' => CategoryModel::all(),
             ]);
         }
     }
