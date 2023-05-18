@@ -25,7 +25,7 @@
                     </a>
                 </div>
                 <div class="pe-1 mb-3 mb-xl-0">
-                    <a href="/profile" class="btn btn-outline-inverse-info btn-icon-text">
+                    <a href="/profile/{{ $dataAlumni->nama }}" class="btn btn-outline-inverse-info btn-icon-text">
                         Profile Saya
                     </a>
                 </div>
@@ -109,7 +109,7 @@
         <div class="row-12 my-4">
             <div class="col">
                 <div class="d-flex justify-content-center bg-primary rounded">
-                    <h2 class="text-light p-3">Sekilas Perusahaan</h2>
+                    <h2 class="text-light p-3">Sekilas Lowongan</h2>
                 </div>
             </div>
         </div>

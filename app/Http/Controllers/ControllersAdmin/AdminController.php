@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\File;
 use App\Models\RiwayatPekerjaanModel;
 use App\Models\RiwayatPendidikanModel;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -550,7 +551,13 @@ class AdminController extends Controller
                 'photo_profile' => $validasiData['photo_profile'] ?? null,
             ]);
         }
-        return redirect('/alumni')->with('success', 'Data Alumni Telah Berhasi Diubah!'); // tampilkan ke funtion show 
+        if (Auth::user()->hasRole('admin')) {
+            return redirect('/alumni')->with('success', 'Data Alumni Telah Berhasi Diubah!');
+        } 
+        if (Auth::user()->hasRole('alumni')) {
+            return redirect('/dashboard')->with('success', 'Data Alumni Telah Berhasi Diubah!');
+        }
+        // tampilkan ke funtion show 
     }
 
     public function update_biografi(Request $request) {

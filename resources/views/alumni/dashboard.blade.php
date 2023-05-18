@@ -25,11 +25,20 @@
                     </a>
                 </div>
                 <div class="pe-1 mb-3 mb-xl-0">
-                    <a href="/profile" class="btn btn-outline-inverse-info btn-icon-text">
+                    <a href="/profile/{{ $dataAlumni->nama }}" class="btn btn-outline-inverse-info btn-icon-text">
                         Profile Saya
                     </a>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            @if (session()->has('success'))
+                <div class="alert alert-info" role="alert">
+                    <strong>Info!</strong> {{ session('success') }}
+                </div>
+            @endif
         </div>
     </div>
     <div class="row d-flex">
@@ -161,9 +170,9 @@
                                 <div class="col-md-4 mb-3">
                                     <select class="form-select full-size-width" id="inputGroupSelect01" name="category">
                                         <option selected="">Spesialis Pekerjaan</option>
-                                        <option value="1">Category Pekerjaan 1</option>
-                                        <option value="2">Category Pekerjaan 2</option>
-                                        <option value="3">Category Pekerjaan 3</option>
+                                        @foreach ($category as $item)
+                                        <option value="{{ $item->id }}">{{ $item->nama_kategori }}</option>                                            
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-4 mb-3">

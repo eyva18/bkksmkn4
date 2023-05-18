@@ -19,6 +19,8 @@
 
     <!-- endinject -->
     <link rel="icon" type="image/png" href="{{ URL::asset('images/homepage/logo.png') }}">
+    {{-- Trix --}}
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
 </head>
 
 <body>
@@ -41,21 +43,22 @@
                                 <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
                                     id="profileDropdown">
                                     <span class="nav-profile-name">{{ Auth()->user()->name }}</span>
-                                    <img src="{{ URL::asset('storage/' . Auth::user()->photo_profile) }}"
-                                        alt="profile" />
+                                    <img src="{{ URL::asset('storage/' . Auth::user()->photo_profile) }}" alt="profile"
+                                        style="object-fit: cover;" />
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown"
                                     aria-labelledby="profileDropdown">
-                                    <a class="dropdown-item">
+                                    <a class="dropdown-item" href="/profile/{{ $dataAlumni->nama }}">
                                         <i class="mdi mdi-settings text-primary"></i>
-                                        Pengaturan
+                                        Profile
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();"><i
                                             class="mdi mdi-logout text-primary"></i>
                                         Logout</a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                        class="d-none">
                                         @csrf
                                     </form>
                                 </div>
@@ -138,7 +141,10 @@
     <script src="{{ URL::asset('asset/plugins/alumnipage/vendors/justgage/justgage.js') }}"></script>
     <!-- Custom js for this page-->
     <script src="{{ URL::asset('asset/plugins/alumnipage/js/dashboard.js') }}"></script>
+    {{-- Trix --}}
+    <script type="text/javascript" src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
     <!-- End custom js for this page-->
+
     @yield('js-tambahan')
 </body>
 
