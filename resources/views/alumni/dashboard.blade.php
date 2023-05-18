@@ -36,17 +36,17 @@
         <div class="col-sm-4 flex-column d-flex stretch-card">
             <div class="row flex-grow">
                 <div class="col-sm-12 grid-margin stretch-card">
-                    <div class="card">
+                    <div class="card bg-dark text-light">
                         <img class="card-img-top img-fluid"
                             src="{{ URL::asset('storage' . '/' . $dataAlumni->photo_profile) }}"
                             alt="Card image cap">
                         <div class="card-body">
-                            <h4 class="card-title">{{ $dataAlumni->nama }}</h4>
-                            <p class="card-text"><i class="mdi mdi-calendar-clock  text-black"></i> <span class="status-alumni">Lulus - {{ $dataAlumni->tahunlulus->tahun_lulus }}</span></p>
-                            <p class="card-text"><i class="mdi mdi-school text-black"></i> <span class="status-alumni">{{ $dataAlumni->jurusan->jurusan }}</span></p>
-                            <p class="card-text"><i class="mdi mdi-cake-layered  text-black"></i> <span class="status-alumni">{{ $dataAlumni->tempatTanggalLahir }}</span></p>
-                            <p class="card-text"><i class=" mdi mdi-account text-black"></i> <span class="status-alumni">{{ $dataAlumni->Jenis_Kelamin->jenis_kelamin }}</span></p>
-                            <p class="card-text"><i class="mdi mdi-phone text-black"></i> <span class="status-alumni">{{ $dataAlumni->no_hp }}</span></p>
+                            <h4 class="card-title text-light fs-4">{{ $dataAlumni->nama }}</h4>
+                            <p class="card-text"><i class="mdi mdi-calendar-clock  text-light"></i> <span class="status-alumni">Lulus - {{ $dataAlumni->tahunlulus->tahun_lulus }}</span></p>
+                            <p class="card-text"><i class="mdi mdi-school text-light"></i> <span class="status-alumni">{{ $dataAlumni->jurusan->jurusan }}</span></p>
+                            <p class="card-text"><i class="mdi mdi-cake-layered  text-light"></i> <span class="status-alumni">{{ $dataAlumni->tempatTanggalLahir }}</span></p>
+                            <p class="card-text"><i class=" mdi mdi-account text-light"></i> <span class="status-alumni">{{ $dataAlumni->Jenis_Kelamin->jenis_kelamin }}</span></p>
+                            <p class="card-text"><i class="mdi mdi-phone text-light"></i> <span class="status-alumni">{{ $dataAlumni->no_hp }}</span></p>
                         </div>
                     </div>
                 </div>
@@ -55,16 +55,16 @@
         <div class="col-sm-8 flex-column d-flex stretch-card">
             <div class="row">
                 <div class="col-sm-12 grid-margin d-flex stretch-card">
-                    <div class="card">
+                    <div class="card bg-dark text-light" style="border-top: 15px solid white; border-left: 15px solid white;">
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between top-card">
-                                <h4 class="card-title mb-2">Biografi</h4>
+                                <h4 class="card-title mb-2 text-light">Biografi</h4>
                                 <div class="dropdown">
                                     <a href="#" class="text-success btn btn-link  px-1"><i
                                             class="mdi mdi-grease-pencil text-primary"></i></a>
                                 </div>
                             </div>
-                            {!! $dataAlumni->biografi !!}
+                            <p>{!! $dataAlumni->biografi !!}</p>
                             <div>
                             </div>
                         </div>
@@ -73,17 +73,17 @@
             </div>
             <div class="row">
                 <div class="col-sm-12 col-md-6 grid-margin d-flex stretch-card">
-                    <div class="card">
+                    <div class="card bg-dark text-light" style="border-left: 15px solid white">
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between top-card">
-                                <h4 class="card-title mb-2">Riwayat Pendidikan</h4>
+                                <h4 class="card-title mb-2 text-light">Riwayat Pendidikan</h4>
                                 <div class="dropdown">
                                     <a href="#" class="text-success btn btn-link  px-1"><i class="mdi mdi-plus text-primary"></i></a>
                                 </div>
                             </div>
                             @foreach ($dataPendidikan as $data)
                                 <div>
-                                    <h3 class="card-text fw-bolder text-black">{{ $data->nama_instansi }}</h3>
+                                    <h3 class="card-text fw-bolder">{{ $data->nama_instansi }}</h3>
                                     <p>{{ $data->Pendidikan->jenis_pendidikan }} - Skor : {{ $data->nilai_rata_rata }} <br>Lulus Tahun : {{ $data->tahun_akhir_pendidikan }}</p>
                                 </div>
                             @endforeach
@@ -91,18 +91,17 @@
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-6 grid-margin d-flex stretch-card">
-                    <div class="card">
+                    <div class="card bg-dark text-light" style="border-left: 15px solid white">
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between top-card">
-                                <h4 class="card-title mb-2">Pengalaman Kerja</h4>
+                                <h4 class="card-title mb-2 text-light">Pengalaman Kerja</h4>
                                 <div class="dropdown">
-                                    <a href="#" class="text-success btn btn-link  px-1"><i
-                                            class="mdi mdi-plus text-primary"></i></a>
+                                    <a href="#" class="text-success btn btn-link  px-1"><i class="mdi mdi-plus text-primary"></i></a>
                                 </div>
                             </div>
                             @foreach ($dataPekerjaan as $data)
                                 <div>
-                                    <h3 class="card-text fw-bold text-black">{{ $data->bidang }}</h3>
+                                    <h3 class="card-text fw-bold">{{ $data->bidang }}</h3>
                                     <p class="fw-bold">{{ $data->nama_perusahaan }} - {{ $data->Pekerjaan->jenis_pekerjaan }}</p>
                                     <p>{{ $data->tahun_awal_pekerjaan }} - {{ $data->tahun_akhir_pekerjaan }}</p>
                                 </div>
