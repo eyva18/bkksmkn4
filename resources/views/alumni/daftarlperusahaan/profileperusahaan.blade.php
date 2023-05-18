@@ -11,8 +11,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-6">
-            <div class="d-flex align-items-center justify-content-md-end">
+        <div class="col-sm-12">
+            <div class="d-flex align-items-center justify-content-evenly">
                 <div class="pe-1 mb-3 mb-xl-0">
                     <a href="/lowongan-kerja" class="btn btn-outline-inverse-info btn-icon-text">
                         Daftar Lowongan
@@ -32,7 +32,7 @@
         </div>
     </div>
     <div class="row mt-4">
-        <div class="col-sm-3 flex-column d-flex stretch-card">
+        <div class="col-sm-4 flex-column d-flex stretch-card">
             <div class="row flex-grow">
                 <div class="col-sm-12 grid-margin stretch-card">
                     <div class="card">
@@ -53,7 +53,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-9 flex-column d-flex stretch-card">
+        <div class="col-sm-8 flex-column d-flex stretch-card">
             <div class="row">
                 <div class="col-sm-12 grid-margin d-flex stretch-card">
                     <div class="card">
@@ -77,9 +77,9 @@
                         <hr>
                     </div>
                 </div>
-                <div class="row mt-2">
+                <div class="row d-flex justify-content-between mt-2">
                     @foreach ($lowongan as $item)
-                        <div class="col-md-6">
+                        <div class="col-md-12 col-lg-6 mb-3">
                             <div class="card border-top-black-300">
                                 <div class="col-md-12 p-4">
                                     <h4 class="card-title">{{ $item->nama }}</h4>

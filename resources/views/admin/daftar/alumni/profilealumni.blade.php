@@ -476,10 +476,19 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-group">
+                                    <div class="form-group mb-2">
                                         <label class="content-hidden">Tahun Berakhir <span class="text-red"> *</span></label>
                                         <input type="date" id="example-input-large" name="tahun_akhir_pendidikan" class="form-control @error('tahun_akhir_pendidikan') is-invalid @enderror" value="{{ old('tahun_akhir_pendidikan') }}">
                                         @error('tahun_akhir_pendidikan')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="checkbox" id="checkstatus" name="checkstatus" class="@error('') is-invalid @enderror" value="">
+                                        <label for="checkstatus">Masih Bersekolah Sampai Sekarang</label>
+                                        @error('')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>

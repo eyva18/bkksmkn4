@@ -4,7 +4,7 @@
 @endsection
 @section('page-wrapper')
     <div class="row">
-        <div class="col-sm-6 mb-4 mb-xl-0">
+        <div class="col-sm-12 mb-4 mb-xl-0">
             <div class="d-lg-flex align-items-center">
                 <div>
                     <h3 class="text-dark font-weight-bold mb-2">Daftar Lowongan Kerja Yang Tersedia</h3>
@@ -12,8 +12,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-6">
-            <div class="d-flex align-items-center justify-content-md-end">
+        <div class="col-sm-12">
+            <div class="d-flex align-items-center justify-content-evenly">
                 <div class="pe-1 mb-3 mb-xl-0">
                     <a href="/lowongan-kerja" class="btn btn-outline-inverse-info btn-icon-text">
                         Daftar Lowongan
@@ -32,8 +32,8 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="row mt-4 mrl-5">
+    <div class="row-12">
+        <div class="row mt-4">
             <div class="col-sm-12 mr">
                 <div class="card">
                     <div class="card-body collapse show">
@@ -44,8 +44,8 @@
                         </div>
                         <form action="/lowongan-kerja/search+" method="get">
                             @csrf
-                            <div class="row pdt-20">
-                                <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
                                     <select class="form-select full-size-width" id="inputGroupSelect01" name="category">
                                         <option selected="">Spesialis Pekerjaan</option>
                                         @foreach ($category as $item)
@@ -53,7 +53,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 mb-3">
                                     <input type="text" id="" name="nama_lowongan" class="form-control"
                                         placeholder="Kata Kunci Lowongan" style="height: 40px">
                                 </div>
@@ -68,7 +68,7 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-4 mrl-5">
+        <div class="row mt-4">
                 @if ($lowongan[0] == null)
                 <div class="col-sm-12 mr">
                     <div class="card">
@@ -83,7 +83,7 @@
                 </div>
                 @endif
                 @foreach ($lowongan as $datalowongan)
-                    <div class="col-md-4">
+                    <div class="col-lg-4 col-md-6">
                         <div class="card border-top-black-300 mt-5">
                             <div class="col-md-12 p-4">
                                 <h4 class="card-title">{{ $datalowongan->nama }}</h4>
@@ -115,37 +115,35 @@
                 @endforeach
                 <div class="pagination">{{ $lowongan->links() }}</div>
         </div>
-        <div class="row mt-4 mrl-5 mt-5">
-            <div class="col-sm-6 mb-4 mb-xl-0">
-                <div class="d-lg-flex align-items-center">
-                    <div>
-                        <h2 class="text-dark mb-2">Sekilas Perusahaan</h2>
-                    </div>
+        <div class="row my-4">
+            <div class="col">
+                <div class="d-flex justify-content-center bg-primary rounded">
+                    <h2 class="text-light p-3">Sekilas Perusahaan</h2>
                 </div>
             </div>
         </div>
-        <div class="row mt-4 mrl-5">
+        <div class="row d-flex justify-content-evenly">
             @if ($datadudi[0] == null)
-            <div class="col-sm-12 mr">
-                <div class="card">
-                    <div class="card-body collapse show">
-                        <div class="row">
-                            <div class="col-md-12 text-center mt-3">
-                                <h4 class="card-title">Perusahaan / Dudi Tidak Tersedia</h4>
+                <div class="col-sm-12 mr">
+                    <div class="card">
+                        <div class="card-body collapse show">
+                            <div class="row">
+                                <div class="col-md-12 text-center mt-3">
+                                    <h4 class="card-title">Perusahaan / Dudi Tidak Tersedia</h4>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
             @endif
             @foreach ($datadudi as $item)
-                <div class="col-md-4">
-                    <div class="card border-top-blue-300 mt-5">
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-top-blue-300 mb-3">
                         <div class="col-md-12 p-4">
                             <h4 class="card-title">{{ $item->nama }}</h4>
                             <ul class="list-unstyled">
                                 <li class="media d-flex align-items-start company-show">
-                                    <img class="d-flex me-3 logo-company" src="/images/profileimg/ph.png" alt="Logo Test"
+                                    <img class="d-flex me-3 logo-company" src="{{ URL::asset('/images/profileimg' . '/' . $item->logo) }}" alt="Logo Test"
                                         width="100">
                                     <div class="media-body">
                                         <ul class="list-unstyled">
@@ -168,6 +166,7 @@
                 </div>
             @endforeach
         </div>
+    </div>
     @endsection
     @section('js-tambahan')
     @endsection

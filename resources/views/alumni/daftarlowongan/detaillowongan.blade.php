@@ -11,8 +11,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-6">
-            <div class="d-flex align-items-center justify-content-md-end">
+        <div class="col-sm-12">
+            <div class="d-flex align-items-center justify-content-evenly">
                 <div class="pe-1 mb-3 mb-xl-0">
                     <a href="/lowongan-kerja" class="btn btn-outline-inverse-info btn-icon-text">
                         Daftar Lowongan
@@ -32,7 +32,7 @@
         </div>
     </div>
     <div class="row mt-4">
-        <div class="col-sm-3 flex-column d-flex stretch-card">
+        <div class="col-sm-4 flex-column d-flex stretch-card">
             <div class="row flex-grow">
                 <div class="col-sm-12 grid-margin stretch-card">
                     <div class="card">
@@ -51,9 +51,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-9 flex-column d-flex stretch-card">
+        <div class="col-sm-8 flex-column d-flex stretch-card">
             <div class="row">
-                <div class="col-sm-12 grid-margin d-flex stretch-card">
+                <div class="col-sm-12 col-lg-6 grid-margin d-flex stretch-card">
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between top-card">
@@ -65,7 +65,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6 grid-margin d-flex stretch-card">
+                <div class="col-sm-12 col-lg-6 grid-margin d-flex stretch-card">
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between top-card">
@@ -77,7 +77,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-12 col-lg-6 mb-3">
                     <div class="card border-top-blue-300">
                         <div class="col-md-12 p-4">
                             <h4 class="card-title">{{ $datalowongan->dudi->nama ?? '-'}}</h4>
@@ -99,19 +99,17 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-4 mrl-5">
-            <div class="col-sm-12 mb-4 mb-xl-0">
-                <div class="d-lg-flex align-items-center">
-                    <div>
-                        <h2 class="text-dark mb-2">Sekilas Lowongan Lainnya</h2>
-                    </div>
+        <div class="row-12 my-4">
+            <div class="col">
+                <div class="d-flex justify-content-center bg-primary rounded">
+                    <h2 class="text-light p-3">Sekilas Perusahaan</h2>
                 </div>
             </div>
         </div>
-        <div class="row mt-4 mrl-5">
+        <div class="row d-flex justify-content-between">
             @foreach ($lowongansekilas as $item)
-            <div class="col-md-4">
-                <div class="card border-top-black-300 mt-5">
+            <div class="col-md-6 col-lg-4">
+                <div class="card border-top-black-300 mb-3">
                     <div class="col-md-12 p-4">
                         <h4 class="card-title">{{ $item->nama }}</h4>
                         <ul class="list-unstyled">
@@ -133,7 +131,7 @@
             </div>
             @endforeach
         </div>
-        </div>
+    </div>
     @endsection
     @section('js-tambahan')
     @endsection
