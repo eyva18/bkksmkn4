@@ -136,6 +136,8 @@ Route::middleware(['auth', 'role:admin|alumni'])->group(function() {
     Route::get('/daftar-perusahaan', [ProfileAlumniController::class, 'daftarPerusahaan']);
     Route::get('/daftar-perusahaan/search+', [ProfileAlumniController::class, 'perusahaansearch']);
     Route::get('/perusahaan/profile/{dudi:nama}', [ProfileAlumniController::class, 'profileperusahaan']);
+    Route::get('/profile/{alumni:nama}', [ProfileAlumniController::class, 'alumniprofil']);
+    Route::put('/profile/{alumniModel:nama}/update', [AdminController::class, 'alumni_update']);
 });
 
 

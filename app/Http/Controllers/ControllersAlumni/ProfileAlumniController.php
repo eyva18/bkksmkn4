@@ -10,18 +10,24 @@ use App\Models\LowonganModel;
 use App\Models\ProfileAlumni;
 use App\Models\RiwayatAlumniModel;
 use App\Http\Controllers\Controller;
+use App\Models\AgamaModel;
 use App\Models\CategoryModel;
+use App\Models\JenisKelaminModel;
+use App\Models\JurusanModel;
 use Illuminate\Support\Facades\Auth;
 use App\Models\RiwayatPekerjaanModel;
 use Illuminate\Auth\Events\Validated;
 use App\Models\RiwayatPendidikanModel;
+use App\Models\TahunLulusModel;
+use App\Models\User;
 
 class ProfileAlumniController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index() {
+    public function index()
+    {
         // Data Alumni
         $dataUser = AlumniModel::where('user_id', Auth()->user()->id)->get();
         foreach ($dataUser as $data) {
@@ -44,13 +50,18 @@ class ProfileAlumniController extends Controller
                 'dataPekerjaan' => $dataPekerjaan,
                 'lowongan' => LowonganModel::with('dudi')->paginate(10),
                 "datadudi" => $datadudi,
-                "countlowongan" => $lowongan
+                "countlowongan" => $lowongan,
+                'category' => CategoryModel::all()
             ]);
         }
     }
 
     public function daftarLowongan()
     {
+        $dataUser = AlumniModel::where('user_id', Auth()->user()->id)->get();
+        foreach ($dataUser as $data) {
+            $dataAlumni = AlumniModel::find($data->id);
+        }
         $datadudi = DudiModel::paginate(3);
         //Count Lowongan Kerja
         $lowongan = [];
@@ -64,12 +75,17 @@ class ProfileAlumniController extends Controller
                 "datadudi" => $datadudi,
                 "countlowongan" => $lowongan,
                 'category' => CategoryModel::all(),
+                'dataAlumni' => $dataAlumni,
             ]);
         }
     }
 
     public function daftarLowongansearch(Request $request)
     {
+        $dataUser = AlumniModel::where('user_id', Auth()->user()->id)->get();
+        foreach ($dataUser as $data) {
+            $dataAlumni = AlumniModel::find($data->id);
+        }
         $datadudi = DudiModel::paginate(3);
         //Count Lowongan Kerja
         $lowongan = [];
@@ -81,25 +97,37 @@ class ProfileAlumniController extends Controller
             return view('alumni.daftarlowongan.daftarLowongan', [
                 'lowongan' => LowonganModel::with('dudi')->paginate(10),
                 "datadudi" => $datadudi,
-                "countlowongan" => $lowongan
+                "countlowongan" => $lowongan,
+                'category' => CategoryModel::all(),
+                'dataAlumni' => $dataAlumni,
+
             ]);
         } elseif ($request->nama_lowongan != null and $request->category == "Spesialis Pekerjaan") {
             return view('alumni.daftarlowongan.daftarLowongan', [
                 'lowongan' => LowonganModel::where('nama', 'like', "%" . $request->nama_lowongan . "%")->paginate(10),
                 "datadudi" => $datadudi,
-                "countlowongan" => $lowongan
+                "countlowongan" => $lowongan,
+                'category' => CategoryModel::all(),
+                'dataAlumni' => $dataAlumni,
+
             ]);
         } elseif ($request->nama_lowongan != null and $request->category != "Spesialis Pekerjaan") {
             return view('alumni.daftarlowongan.daftarLowongan', [
                 'lowongan' => LowonganModel::where('nama', 'like', "%" . $request->nama_lowongan . "%")->where('id_kategoti_pekerjaan', $request->category)->paginate(10),
                 "datadudi" => $datadudi,
-                "countlowongan" => $lowongan
+                "countlowongan" => $lowongan,
+                'category' => CategoryModel::all(),
+                'dataAlumni' => $dataAlumni,
+
             ]);
         } elseif ($request->nama_lowongan == null and $request->category != "Spesialis Pekerjaan") {
             return view('alumni.daftarlowongan.daftarLowongan', [
                 'lowongan' => LowonganModel::where('id_kategoti_pekerjaan', $request->category)->paginate(10),
                 "datadudi" => $datadudi,
-                "countlowongan" => $lowongan
+                "countlowongan" => $lowongan,
+                'category' => CategoryModel::all(),
+                'dataAlumni' => $dataAlumni,
+
             ]);
         }
     }
@@ -181,16 +209,25 @@ class ProfileAlumniController extends Controller
     }
     public function detaillowongan(LowonganModel $lowongan)
     {
+        $dataUser = AlumniModel::where('user_id', Auth()->user()->id)->get();
+        foreach ($dataUser as $data) {
+            $dataAlumni = AlumniModel::find($data->id);
+        }
         $datalowongan = LowonganModel::with('dudi')->with('kategori')->find($lowongan->id);
         if (Auth::user()->hasRole('alumni')) {
             return view('alumni.daftarlowongan.detaillowongan', [
                 'datalowongan' => $datalowongan,
                 'lowongansekilas' => LowonganModel::with('dudi')->with('kategori')->where('id', '!=', $lowongan->id)->paginate(3),
+                'dataAlumni' => $dataAlumni,
             ]);
         }
     }
     public function daftarPerusahaan()
     {
+        $dataUser = AlumniModel::where('user_id', Auth()->user()->id)->get();
+        foreach ($dataUser as $data) {
+            $dataAlumni = AlumniModel::find($data->id);
+        }
         $lowongandata = LowonganModel::paginate(3);
         $dudidata = DudiModel::paginate(10);
         //Count Lowongan Kerja
@@ -202,13 +239,18 @@ class ProfileAlumniController extends Controller
         if (Auth::user()->hasRole('alumni')) {
             return view('alumni.daftarlperusahaan.daftarperusahaan', [
                 "lowongan" => $lowongandata,
-                "perusahaan"=> $dudidata,
-                "countlowongan" => $lowongan
+                "perusahaan" => $dudidata,
+                "countlowongan" => $lowongan,
+                'dataAlumni' => $dataAlumni,
             ]);
         }
     }
     public function perusahaansearch(Request $request)
     {
+        $dataUser = AlumniModel::where('user_id', Auth()->user()->id)->get();
+        foreach ($dataUser as $data) {
+            $dataAlumni = AlumniModel::find($data->id);
+        }
         $lowongandata = LowonganModel::paginate(3);
         $dudidata = DudiModel::where('nama', 'like', "%" . $request->nama_perusahaan . "%")->paginate(10);
         //Count Lowongan Kerja
@@ -220,19 +262,40 @@ class ProfileAlumniController extends Controller
         if (Auth::user()->hasRole('alumni')) {
             return view('alumni.daftarlperusahaan.daftarperusahaan', [
                 "lowongan" => $lowongandata,
-                "perusahaan"=> $dudidata,
-                "countlowongan" => $lowongan
+                "perusahaan" => $dudidata,
+                "countlowongan" => $lowongan,
+                'dataAlumni' => $dataAlumni,
             ]);
         }
-        
     }
     public function profileperusahaan(DudiModel $dudi)
     {
+        $dataUser = AlumniModel::where('user_id', Auth()->user()->id)->get();
+        foreach ($dataUser as $data) {
+            $dataAlumni = AlumniModel::find($data->id);
+        }
         $dataperusahaan = DudiModel::with('userdata')->find($dudi->id);
         if (Auth::user()->hasRole('alumni')) {
             return view('alumni.daftarlperusahaan.profileperusahaan', [
                 'dataperusahaan' => $dataperusahaan,
-                'lowongan' => LowonganModel::where('id_dudi', $dudi->id)->with('kategori')->get()
+                'lowongan' => LowonganModel::where('id_dudi', $dudi->id)->with('kategori')->paginate(4),
+                'dataAlumni' => $dataAlumni,
+            ]);
+        }
+    }
+    public function alumniprofil(AlumniModel $alumni)
+    {
+        $dataAlumni = AlumniModel::find($alumni->id);
+        $dataUser = User::findOrFail($dataAlumni->user_id);
+        if (Auth::user()->hasRole('alumni')) {
+            return view('alumni.profile', [
+                'alumni' => $dataAlumni,
+                'dataAlumni' => $dataAlumni,
+                "dataUser" => $dataUser,
+                'dataAgama' => AgamaModel::all(),
+                'dataJenisKelamin' => JenisKelaminModel::all(),
+                'dataJurusan' => JurusanModel::all(),
+                'dataTahunLulus' => TahunLulusModel::all(),
             ]);
         }
     }
