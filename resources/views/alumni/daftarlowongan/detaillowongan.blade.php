@@ -59,7 +59,7 @@
                             <div class="d-flex align-items-center justify-content-between top-card">
                                 <h4 class="card-title mb-2">Deskripsi Pekerjaan</h4>
                             </div>
-                            {{ $datalowongan->deskripsi_pekerjaan ?? '-'}}
+                            {!! $datalowongan->deskripsi_pekerjaan ?? '-' !!}
                             <div>
                             </div>
                         </div>
@@ -71,7 +71,7 @@
                             <div class="d-flex align-items-center justify-content-between top-card">
                                 <h4 class="card-title mb-2">Deskripsi Perusahaan</h4>
                             </div>
-                            {{ $datalowongan->deskripsi_perusahaan ?? '-'}}
+                             {!! $datalowongan->deskripsi_perusahaan ?? '-' !!}
                             <div>
                             </div>
                         </div>

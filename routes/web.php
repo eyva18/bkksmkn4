@@ -8,6 +8,7 @@ use App\Http\Controllers\ControllersAdmin\AdminAlumniController;
 use App\Http\Controllers\ControllersAdmin\AdminLowonganController;
 use App\Http\Controllers\ControllersAlumni\ProfileAlumniController;
 use App\Http\Controllers\ControllersAdmin\AdminLaporanTahunKelulusanController;
+use App\Http\Controllers\ControllersDudi\DudiController;
 use App\Models\AlumniModel;
 use App\Models\DudiModel;
 use App\Models\LowonganModel;
@@ -138,6 +139,10 @@ Route::middleware(['auth', 'role:admin|alumni'])->group(function() {
     Route::get('/perusahaan/profile/{dudi:nama}', [ProfileAlumniController::class, 'profileperusahaan']);
     Route::get('/profile/{alumni:nama}', [ProfileAlumniController::class, 'alumniprofil']);
     Route::put('/profile/{alumniModel:nama}/update', [AdminController::class, 'alumni_update']);
+});
+
+Route::middleware(['auth', 'role:dudi'])->group(function() {
+    Route::get('/company/dashboard', [DudiController::class, 'index'])->name('dudi@dashboard');
 });
 
 

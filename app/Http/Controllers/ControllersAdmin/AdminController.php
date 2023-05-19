@@ -183,7 +183,7 @@ class AdminController extends Controller
     public function dudi()
     {
         //Jurusan Database Function
-        $datadudi = DudiModel::paginate(10);
+        $datadudi = DudiModel::latest()->paginate(10);
         //Count Lowongan Kerja
         $lowongan = [];
         foreach ($datadudi as $data) {
@@ -516,6 +516,7 @@ class AdminController extends Controller
             'password' => ''
         ]);
         // $validasiData['biografi'] = strip_tags($request->biografi);
+        $validasiData['photo_profile'] = $request->oldPhotoProfile;
         
         if($request->file('photo_profile')) {
             if($request->oldPhotoProfile) {
@@ -535,20 +536,19 @@ class AdminController extends Controller
 
         $useralumnidata = User::find($alumnidata->user_id);
         $validasiData['user_id'] = $useralumnidata->id;
-        
         AlumniModel::where('id', $request->id)->update($validasiData);
         if($request->password != null){
             User::findOrFail($validasiData['user_id'])->update([
                 'name' => $validasiDataUser['username'],
                 'email' => $validasiDataUser['email'],
                 'password' => bcrypt($validasiDataUser['password']),
-                'photo_profile' => $validasiData['photo_profile'] ?? null,
+                'photo_profile' => $validasiData['photo_profile'],
             ]);
         } elseif($request->password == null){
             User::findOrFail($validasiData['user_id'])->update([
                 'name' => $validasiDataUser['username'],
                 'email' => $validasiDataUser['email'],
-                'photo_profile' => $validasiData['photo_profile'] ?? null,
+                'photo_profile' => $validasiData['photo_profile'],
             ]);
         }
         if (Auth::user()->hasRole('admin')) {

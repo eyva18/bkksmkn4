@@ -71,15 +71,14 @@
                                 value="{{ $datadudi->no_telp ?? '-' }}">
                         </div>
                     </div>
-                    <div class="row mrt-6">
+                    <div class="row pdt-20">
                         <div class="col-md-4">
                             <h4 class="text-black m-0">Deskripsi<span class="text-red"> *</span></h4>
                             <p class="text-muted mt-0 text-sm">Deskripsi Perusahaan Anda</p>
                         </div>
-                        <div class="col-md-8 pdt-6">
-                            <div class="form-group">
-                                <textarea class="form-control" name="deskripsi" rows="7">{{ $datadudi->deskripsi ??'-' }}</textarea>
-                            </div>
+                        <div class="col-md-8">
+                            <input id="deskripsi" value="{{ $datadudi->deskripsi ?? '-' }}" class="form-control font-weight-normal" type="hidden" name="deskripsi" value="{{ old('biografi') }}" >
+                            <trix-editor input="deskripsi"></trix-editor>
                         </div>
                     </div>
                     <div class="row mrt-6">

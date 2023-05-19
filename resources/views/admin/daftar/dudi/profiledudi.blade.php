@@ -57,7 +57,7 @@
                             <h4 class="mb-0 text-white">Biografi <i class="fas fa-info-circle text-white"></i></h4>
                         </div>
                         <div class="card-body">
-                            <p class="card-text">{{ $datadudi->deskripsi ?? '-'}}</p>
+                            <p class="card-text">{!! $datadudi->deskripsi ?? '-' !!}</p>
                         </div>
                     </div>
                 </div>
@@ -88,7 +88,7 @@
                             <h4 class="card-title">{{ $data->nama ?? '-'}}</h4>
                             <ul class="list-unstyled">
                                 <li class="media d-flex align-items-start">
-                                    <img class="d-flex me-3 logo-company" src="/images/profileimg/{{ $data->logo }}"
+                                    <img class="d-flex me-3 logo-company" src="/images/profileimg/{{ $data->dudi->logo }}"
                                         alt="Logo Test" width="100">
                                     <div class="media-body">
                                         <ul class="list-unstyled">

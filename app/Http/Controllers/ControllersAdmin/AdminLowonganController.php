@@ -35,7 +35,7 @@ class AdminLowonganController extends Controller
     {   
         //Jurusan Database Function
         $datalowongan = LowonganModel::where('id', $lowongan->id)->with('dudi')->with('kategori')->first();
-        $userdudi = User::where('kode_owner', $datalowongan->dudi->id)->first();
+        $userdudi = User::where('id', $datalowongan->user_id)->first();
         return view('admin.daftar.lowongan.detailjob', [
             "datalowongan" => $datalowongan,
             "datauser" => $userdudi
