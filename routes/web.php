@@ -133,11 +133,16 @@ Route::middleware(['auth', 'role:admin|alumni'])->group(function() {
     Route::get('/lowongan-kerja', [ProfileAlumniController::class, 'daftarLowongan']);
     Route::get('/lowongan-kerja/search+', [ProfileAlumniController::class, 'daftarLowongansearch']);
     Route::get('/lowongan-kerja/detail/{lowongan:nama}', [ProfileAlumniController::class, 'detaillowongan']);
+
     Route::get('/daftar-perusahaan', [ProfileAlumniController::class, 'daftarPerusahaan']);
     Route::get('/daftar-perusahaan/search+', [ProfileAlumniController::class, 'perusahaansearch']);
     Route::get('/perusahaan/profile/{dudi:nama}', [ProfileAlumniController::class, 'profileperusahaan']);
+
     Route::get('/profile/{alumni:nama}', [ProfileAlumniController::class, 'alumniprofil']);
+    Route::post('/profile/riwayat-pendidikan/store', [ProfileAlumniController::class, 'riwayatpendidikan_store']);
+    Route::post('/profile/riwayat-pekerjaan/store', [ProfileAlumniController::class, 'riwayatpekerjaan_store']);
     Route::put('/profile/{alumniModel:nama}/update', [AdminController::class, 'alumni_update']);
+    Route::post('/profile/biografi/update', [ProfileAlumniController::class, 'update_biografi']);
 });
 
 

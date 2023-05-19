@@ -28,59 +28,51 @@
                 <!-- *************************************************************** -->
                 <div class="row">
                     <div class="col-sm-6 col-lg-4">
-                        <div class="card border-end">
+                        <div class="card bg-primary text-light border-end">
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
                                     <div>
                                         <div class="d-inline-flex align-items-center">
-                                            <h2 class="text-dark mb-1 font-weight-medium">{{$totalAlumni}}</h2>
+                                            <h2 class="text-light mb-1 font-weight-medium">{{$totalAlumni}}</h2>
                                         </div>
-                                        <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Total Alumni
-                                        </h6>
+                                        <h6 class="font-weight-normal mb-0 w-100 text-truncate">Total Alumni</h6>
                                     </div>
                                     <div class="ms-auto mt-md-3 mt-lg-0">
-                                        <span class="opacity-7 text-muted"><i
-                                                class="fas fa-users icon-count"></i></span>
+                                        <span><i class="fas fa-users" style="font-size: 35px"></i></span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-lg-4">
-                        <div class="card border-end">
+                        <div class="card bg-primary text-light border-end">
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
                                     <div>
                                         <div class="d-inline-flex align-items-center">
-                                            <h2 class="text-dark mb-1 font-weight-medium">{{ $totalperusahaan }}</h2>
+                                            <h2 class="text-light mb-1 font-weight-medium">{{ $totalperusahaan }}</h2>
                                         </div>
-                                        <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Total
-                                            Perusahaan
-                                        </h6>
+                                        <h6 class="font-weight-normal mb-0 w-100 text-truncate">Total Perusahaan</h6>
                                     </div>
                                     <div class="ms-auto mt-md-3 mt-lg-0">
-                                        <span class="opacity-7 text-muted"><i
-                                                class="fas fa-building icon-count"></i></span>
+                                        <span><i class="fas fa-building" style="font-size: 35px"></i></span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-lg-4">
-                        <div class="card border-end">
+                        <div class="card bg-primary text-light border-end">
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
                                     <div>
                                         <div class="d-inline-flex align-items-center">
-                                            <h2 class="text-dark mb-1 font-weight-medium">{{ $totallowongan }}</h2>
+                                            <h2 class="text-light mb-1 font-weight-medium">{{ $totallowongan }}</h2>
                                         </div>
-                                        <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Total
-                                            Lowongan
-                                        </h6>
+                                        <h6 class="font-weight-normal mb-0 w-100 text-truncate">Total Lowongan</h6>
                                     </div>
                                     <div class="ms-auto mt-md-3 mt-lg-0">
-                                        <span class="opacity-7 text-muted"><i
-                                                class="fas fa-newspaper icon-count"></i></span>
+                                        <span><i class="fas fa-newspaper" style="font-size: 35px"></i></span>
                                     </div>
                                 </div>
                             </div>
@@ -95,30 +87,32 @@
                 <!-- Start Charts Section -->
                 <!-- *************************************************************** -->
                 <div class="row">
-                    <div class="col-lg-6 col-md-12">
+                    <div class="col-md-6">
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Jumlah Alumni Per Tahun</h4>
-                                <div class="mt-2" style="height:283px; width:100%;">
-                                <canvas id="ds1" height="195px"></canvas>
+                                <div class="mt-2" style="width:100%;">
+                                    <canvas id="ds1" height="195px"></canvas>
                                 </div>
-                                <ul class="list-style-none mb-0">
-                                    @foreach ($datatahunlulusan as $tahunlulusdata)
-                                    <li>
-                                        <i class="fas fa-circle text-secondary font-10 me-2"></i>
-                                        <span class="text-muted">{{ $tahunlulusdata->tahun_lulus ?? '-' }}</span>
-                                        <span class="text-dark float-end font-weight-medium">{{ $datatahunlulusanalumni[$tahunlulusdata->tahun_lulus] ?? '-'}} Alumni</span>
-                                    </li>
-                                    @endforeach
-                                </ul>
+                                <div class="mt-3">
+                                    <ul class="list-style-none mb-0">
+                                        @foreach ($datatahunlulusan as $tahunlulusdata)
+                                        <li>
+                                            <i class="fas fa-circle text-secondary font-10 me-2"></i>
+                                            <span class="text-muted">{{ $tahunlulusdata->tahun_lulus ?? '-' }}</span>
+                                            <span class="text-dark float-end font-weight-medium">{{ $datatahunlulusanalumni[$tahunlulusdata->tahun_lulus] ?? '-'}} Alumni</span>
+                                        </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-12">
+                    <div class="col-md-6">
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Jumlah Alumni Per Tahun</h4>
-                                <div class="mt-4 position-relative" style="height:294px;">
+                                <div class="mt-4 position-relative" style="min-width:294px;">
                                     <canvas id="ds2" height="195px"></canvas>
                                 </div>
                                 <ul class="list-inline text-center mt-5 mb-2">
@@ -151,8 +145,8 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Lowongan Semua Perusahaan</h4>
-                                <div class="mt-4 position-relative" style="height:294px;">
-                                    <canvas id="ds5" height="100"></canvas>
+                                <div class="mt-4 position-relative" style="min-width:294px;">
+                                    <canvas id="ds5" width="100"></canvas>
                                 </div>
                             </div>
                         </div>

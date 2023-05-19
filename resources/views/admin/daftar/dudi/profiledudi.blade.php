@@ -25,7 +25,7 @@
         <div class="container-fluid">
             <div class="row">
                 <!-- column -->
-                <div class="col-lg-4 col-md-6">
+                <div class="col-md-5">
                     <!-- Card -->
                     <div class="card">
                         <img class="card-img-top img-fluid" src="{{ URL::asset('images/profileimg/').'/'.$datadudi->logo }}" height="50%"
@@ -51,7 +51,7 @@
                 </div>
                 <!-- column -->
                 <!-- column -->
-                <div class="col-md-8">
+                <div class="col-md-7">
                     <div class="card border-dark">
                         <div class="card-header bg-dark">
                             <h4 class="mb-0 text-white">Biografi <i class="fas fa-info-circle text-white"></i></h4>
