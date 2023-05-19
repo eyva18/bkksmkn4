@@ -496,23 +496,23 @@ class AdminController extends Controller
         $alumnidata = AlumniModel::find($request->id);
 
         $validasiData = $request->validate([
-            'nisn' => '',
-            'nis' => '',
-            'nama' => 'max:225',
-            'no_hp' => '',
+            'nisn' => 'required|unique:alumni',
+            'nis' => 'required|unique:alumni',
+            'nama' => 'required|max:225',
+            'no_hp' => 'required',
             'biografi' => '',
-            'agamaId' => '',
-            'jenis_kelaminId' => '',
-            'alamat' => '',
-            'tempatTanggalLahir' => '',
+            'agamaId' => 'required',
+            'jenis_kelaminId' => 'required',
+            'alamat' => 'required',
+            'tempatTanggalLahir' => 'required',
             'photo_profile' => '',
             'transkrip_nilai' => '',
-            'kode_jurusanId' => '',      
-            'kode_lulusId' => '',
+            'kode_jurusanId' => 'required',      
+            'kode_lulusId' => 'required',
         ]);
         $validasiDataUser = $request->validate([
             'username' => 'required|max:225',
-            'email' => '',
+            'email' => 'required|unique:users',
             'password' => ''
         ]);
         // $validasiData['biografi'] = strip_tags($request->biografi);

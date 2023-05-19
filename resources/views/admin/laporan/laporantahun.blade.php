@@ -71,7 +71,7 @@
                         </div>
                     </div>
                     <div class="row pdt-20">
-                        <div class="col-md-9">
+                        <div class="col-md-9 mb-3">
                             <form action="/admin/administrator/master/report/yeary/pick/" method="GET">
                                 @method('get')
                                 @csrf
@@ -119,8 +119,8 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Alumni Per Jurusan</h4>
-                            <div class="mt-4 position-relative" style="height:294px;">
-                                <canvas id="ds5" height="100"></canvas>
+                            <div class="mt-4 position-relative" style="min-width:294px;">
+                                <canvas id="ds5" width="100"></canvas>
                             </div>
                         </div>
                     </div>

@@ -2,24 +2,27 @@
 
 namespace App\Http\Controllers\ControllersAlumni;
 
+use App\Models\User;
 use App\Models\DudiModel;
+use App\Models\AgamaModel;
 use App\Models\AlumniModel;
 use Illuminate\Support\Str;
+use App\Models\JurusanModel;
 use Illuminate\Http\Request;
+use App\Models\CategoryModel;
 use App\Models\LowonganModel;
 use App\Models\ProfileAlumni;
+use Illuminate\Support\Carbon;
+use App\Models\TahunLulusModel;
+use App\Models\JenisKelaminModel;
 use App\Models\RiwayatAlumniModel;
 use App\Http\Controllers\Controller;
-use App\Models\AgamaModel;
-use App\Models\CategoryModel;
-use App\Models\JenisKelaminModel;
-use App\Models\JurusanModel;
+use App\Models\JenisPekerjaanModel;
+use App\Models\JenisPendidikanModel;
 use Illuminate\Support\Facades\Auth;
 use App\Models\RiwayatPekerjaanModel;
 use Illuminate\Auth\Events\Validated;
 use App\Models\RiwayatPendidikanModel;
-use App\Models\TahunLulusModel;
-use App\Models\User;
 
 class ProfileAlumniController extends Controller
 {
@@ -48,6 +51,8 @@ class ProfileAlumniController extends Controller
                 'dataAlumni' => $dataAlumni,
                 'dataPendidikan' => $dataPendidikan,
                 'dataPekerjaan' => $dataPekerjaan,
+                'dataJenisPendidikan' => JenisPendidikanModel::all(),
+                'dataJenisPekerjaan' => JenisPekerjaanModel::all(),
                 'lowongan' => LowonganModel::with('dudi')->paginate(10),
                 "datadudi" => $datadudi,
                 "countlowongan" => $lowongan,
@@ -167,6 +172,51 @@ class ProfileAlumniController extends Controller
         }
     }
 
+    public function riwayatpendidikan_store(Request $request) {
+        $dataAlumni = AlumniModel::findOrFail($request->id);
+        $validasiData = $request->validate([
+            'nisn' => 'numeric',
+            'nama_instansi' => 'string',
+            'jenis_pendidikan' => 'in:1, 2, 3, 4, 5',
+            'nilai_rata_rata' => 'numeric|decimal:0,100.00',
+            'tahun_awal_pendidikan' => 'date',
+            'tahun_akhir_pendidikan' => 'date',
+        ]);
+
+        $findUser = User::findOrFail($dataAlumni->user_id);
+        $validasiData['user_id'] = $findUser->id;
+
+        RiwayatPendidikanModel::create($validasiData);
+        return back()->with('success', 'Riwayat pendidikan berhasil ditambahkan');
+    }
+
+    public function riwayatpekerjaan_store(Request $request) {
+        $dataAlumni = AlumniModel::findOrFail($request->id);
+        $validasiData = $request->validate([
+            'nisn' => 'numeric',
+            'nama_perusahaan' => 'string',
+            'jenis_pekerjaan' => 'in:1, 2, 3, 4, 5',
+            'bidang' => 'string',
+            'tahun_awal_pekerjaan' => 'date',
+            'tahun_akhir_pekerjaan' => 'date',
+        ]);
+
+        $tanggalAwal = $validasiData['tahun_awal_pekerjaan'];
+        $validasiData['tahun_awal_pekerjaan'] = date('d/m/Y', strtotime($tanggalAwal));
+        $validasiData['tahun_awal_pekerjaan'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_awal_pekerjaan'])->format('l, j F Y');
+        
+        $tanggalAkhir = $validasiData['tahun_akhir_pekerjaan'];
+        $validasiData['tahun_akhir_pekerjaan'] = date('d/m/Y', strtotime($tanggalAkhir));
+        $validasiData['tahun_akhir_pekerjaan'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_akhir_pekerjaan'])->format('l, j F Y');
+
+        $findUser = User::findOrFail($dataAlumni->user_id);
+        $validasiData['user_id'] = $findUser->id;
+        dd($validasiData);
+        // dd($validasiData);
+        RiwayatPekerjaanModel::create($validasiData);
+        return back()->with('success', 'Riwayat pekerjaan berhasil ditambahkan');
+    }
+
     /**
      * Display the specified resource.
      */
@@ -186,18 +236,15 @@ class ProfileAlumniController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
-    {
+    public function update_biografi(Request $request) {
         $validasiDataBiografi = $request->validate([
             'biografi' => '',
         ]);
-
         // $validasiData['biografi'] = strip_tags($request->biografi);
-        // dd($validasiData['biografi']);
-
+        
         $dataBio = AlumniModel::find($request->id);
         AlumniModel::where('id', $dataBio->id)->update($validasiDataBiografi);
-        return redirect('/alumni')->with('success', 'Biografi berhasil diubah');
+        return back()->with('success', 'Biografi berhasil diubah');
     }
 
     /**

@@ -25,7 +25,7 @@
         <div class="container-fluid">
             <div class="row">
                 <!-- column -->
-                <div class="col-lg-4 col-md-6">
+                <div class="col-md-4">
                     <!-- Card -->
                     <div class="card">
                         {{-- @dd($dataAlumni->photo_profile) --}}
@@ -69,9 +69,7 @@
                         <div class="col-md-12">
                             <div class="card border-dark">
                                 <div class="card-header bg-dark">
-                                    <h4 class="mb-0 text-white">Biografi <button class="icon-button-modal"
-                                            data-bs-toggle="modal" data-bs-target="#editbiografi"><i
-                                                class="fas fa-pencil-alt text-white mrl-10"></i></button></h4>
+                                    <h4 class="mb-0 text-white">Biografi <button class="icon-button-modal" data-bs-toggle="modal" data-bs-target="#editbiografi"><i class="fas fa-pencil-alt text-white mrl-10"></i></button></h4>
                                 </div>
                                 <div class="card-body">
                                     <p class="card-text">{!! $dataAlumni->biografi !!}</p>
@@ -221,9 +219,7 @@
                         <div class="col-md-12">
                             <div class="card border-dark">
                                 <div class="card-header bg-dark">
-                                    <h4 class="mb-0 text-white">Pengalaman Kerja <button class="icon-button-modal"
-                                            data-bs-toggle="modal" data-bs-target="#pengalamankerja"><i
-                                                class="fas fa-plus text-white mrl-10"></i></i></a></h4>
+                                    <h4 class="mb-0 text-white">Pengalaman Kerja <button class="icon-button-modal" data-bs-toggle="modal" data-bs-target="#pengalamankerja"><i class="fas fa-plus text-white mrl-10"></i></button></h4>
                                 </div>
                                 @foreach ($dataPekerjaan as $data)
                                     <div class="card-body">
@@ -507,7 +503,6 @@
         </div>
 
         {{-- Modal Tambah Pengalaman Kerja --}}
-        {{-- Ali kena yang buat edit riwayat nya kena copy dari sini aja nah kepanjangan wkwkwk --}}
         <div class="modal fade" id="pengalamankerja" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
             aria-hidden="true">
             <div class="modal-dialog modal-lg">

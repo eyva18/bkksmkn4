@@ -231,6 +231,12 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="row-12 my-3">
+                            <div class="col">
+                                {{-- <h4 class="text-black m-0">Photo Profil<span class="text-red"> *</span></h4> --}}
+                                <span class="fw-bold mt-0 text-sm text-red" style="text-decoration: underline">Kosongkan file jika tidak ingin dirubah</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="card mt-4">
@@ -300,7 +306,7 @@
                     <div class="card-body collapse show">
                             <div class="row">
                                 <div class="col-md-9">
-                                    <h3 class="card-title">Pengguna</h3>
+                                    <h3 class="card-title">Pengguna <span style="text-decoration-line: underline;">{{ $alumni->nama }}</span></h3>
                                     <h6 class="card-subtitle">Data Akses Pengguna</h6>
                                 </div>
                             </div>
@@ -345,11 +351,14 @@
                                         </div>
                                     @enderror
                                 </div>
+                                <div class="col-12 my-3">
+                                    <span class="fw-bold mt-0 text-sm text-red" style="text-decoration: underline">Kosongkan password jika tidak ingin dirubah</span>
+                                </div>
                             </div>
                             <div class="row mrt-6">
                                 <div class="col-md-12 pdt-6" style="text-align: right">
                                     <button class="btn btn-primary" type="submit">Simpan</button>
-                                    <button class="btn btn-primary" type="reset">Batal</button>
+                                    <button class="btn btn-secondary" type="reset">Batal</button>
                                 </div>
                             </div>
                         </form>
