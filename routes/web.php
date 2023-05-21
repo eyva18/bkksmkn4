@@ -148,6 +148,22 @@ Route::middleware(['auth', 'role:admin|alumni'])->group(function() {
 
 Route::middleware(['auth', 'role:dudi'])->group(function() {
     Route::get('/company/dashboard', [DudiController::class, 'index'])->name('dudi@dashboard');
+    Route::post('/company/biografi/update', [DudiController::class, 'update_deskripsi']);
+    Route::get('/company/daftar-alumni', [DudiController::class, 'daftaralumni']);
+    Route::get('/alumni/search+', [DudiController::class, 'alumnisearch']);
+    Route::get('/company/alumni/profile-detail/{alumni:nama}', [DudiController::class, 'alumniprofile']);
+    Route::get('/company/daftar-lowongan', [DudiController::class, 'daftarlowongan']);
+    Route::get('/company/lowongan/create', [DudiController::class, 'lowongancreate']);
+    Route::get('/company/daftar-lowongan/search+', [DudiController::class, 'dudisearch']);
+    Route::post('/company/lowongan/{dudi:nama}/new', [DudiController::class, 'lowonganstore']);
+    Route::post('/company/lowongan/delete', [DudiController::class, 'lowongandelete']);
+    Route::get('/company/lowongan-kerja/detail/{lowongan:nama}', [DudiController::class, 'detaillowongan']);
+    Route::get('/company/lowongan-kerja/edit/{lowongan:nama}', [DudiController::class, 'editlowongan']);
+    Route::post('/company/lowongan-kerja/update/{lowongan:nama}', [DudiController::class, 'updatelowongan']);
+    Route::get('/company/profile/{dudi:nama}', [DudiController::class, 'dudiprofile']);
+    Route::put('/company/profile/{dudi:nama}/update', [DudiController::class, 'updateprofile']);
+
+
 });
 
 

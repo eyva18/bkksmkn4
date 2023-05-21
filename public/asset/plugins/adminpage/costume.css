@@ -1,6 +1,9 @@
 .pdl-10 {
     padding-left: 5px;
 }
+.pdl-6 {
+    padding-left: 15px;
+}
 
 span.text-logo {
     font-weight: 800;
@@ -25,7 +28,12 @@ span.text-logo {
 .mrl-5 {
     margin-left: 5px;
 }
-
+.mrl-28 {
+    margin-left: 28px;
+}
+.pdb-55{
+    padding-bottom: 55px;
+}
 .mrl-10 {
     margin-left: 13px;
 }
@@ -101,7 +109,9 @@ span.text-logo {
 .pdt-6 {
     padding-top: 6px;
 }
-
+.bdr-0{
+    border-radius: 0px !important;
+}
 .mrt-6 {
     margin-top: 6px;
 }
@@ -124,6 +134,11 @@ span.text-logo {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
+.button-posting {
+    height: 55%;
+    margin-top: 15px;
+    margin-right: 10px;
+}
 
 /* Responsive CSS */
 @media only screen and (max-width:640px) {
@@ -146,8 +161,22 @@ span.text-logo {
         margin-bottom: 15px;
         margin-left: 39px;
     }
+    .button-posting {
+        width: 50%;
+        padding-bottom:px;
+    }
 }
-
+@media (max-width: 762px) {
+    .button-posting {
+        width: 50%;
+        padding-bottom: 20px;
+    }
+}
+@media (max-width: 418px) {
+    .mrl-28 {
+        margin-left: 1px;
+    }
+}
 @media (max-width: 986px) {
     .horizontal-menu .bottom-navbar.header-toggled {
         display: block;
