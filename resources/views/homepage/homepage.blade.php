@@ -310,30 +310,15 @@
                         <h3 class="column-title">DUNIA USAHA / DUNIA INDUSTRI </h3>
                         <p>Dunia Usaha / Dunia Industri Yang Bekerja Sama Dengan SMKN 4 Banjarmasin</p>
                         <div class="row all-clients">
+                            @foreach ($dudi as $item)
                             <div class="col-sm-4 col-6">
                                 <figure class="clients-logo">
                                     <a href="#!"><img loading="lazy" class="img-fluid"
-                                            src="{{ URL::asset('images/homepage/dudi/galaxy.jpg') }}"
+                                            src="/images/profileimg/{{ $item->logo ?? null }}"
                                             alt="clients-logo" /></a>
                                 </figure>
-                            </div><!-- Client 1 end -->
-
-                            <div class="col-sm-4 col-6">
-                                <figure class="clients-logo">
-                                    <a href="#!"><img loading="lazy" class="img-fluid"
-                                            src="{{ URL::asset('images/homepage/dudi/mercure.jpg') }}"
-                                            alt="clients-logo" /></a>
-                                </figure>
-                            </div><!-- Client 2 end -->
-
-                            <div class="col-sm-4 col-6">
-                                <figure class="clients-logo">
-                                    <a href="#!"><img loading="lazy" class="img-fluid"
-                                            src="{{ URL::asset('images/homepage/dudi/pyramid.jpg') }}"
-                                            alt="clients-logo" /></a>
-                                </figure>
-                            </div><!-- Client 3 end -->
-
+                            </div>
+                            @endforeach
                         </div><!-- Clients row end -->
 
                     </div><!-- Col end -->
