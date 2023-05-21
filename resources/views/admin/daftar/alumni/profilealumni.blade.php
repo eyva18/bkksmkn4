@@ -90,7 +90,6 @@
                                                 <i class="fas fa-trash-alt text-red mrl-20"></i>
                                             </button>
                                         </h3>
-                                        <hr>
                                     </div>
                                     {{-- Modal Delete Start --}}
                                     <div id="deletePendidikanmodal{{ $riwayat->id ??'-' }}" class="modal fade" tabindex="-1" role="dialog"
@@ -116,7 +115,7 @@
                                     </div>
                                     {{-- Modal Delete End --}}
 
-                                    {{-- Modal Edit Riwayat Pendidikan --}}        
+                                    {{-- Modal Edit Riwayat Pendidikan --}}
                                     <div class="modal fade" id="editpendidikan{{ $riwayat->id }}" tabindex="-1" role="dialog"
                                         aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-lg">

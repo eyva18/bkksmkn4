@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\RiwayatPekerjaanModel;
 use Illuminate\Auth\Events\Validated;
 use App\Models\RiwayatPendidikanModel;
+use App\Models\TingkatPerlombaanModel;
 
 class ProfileAlumniController extends Controller
 {
@@ -53,6 +54,7 @@ class ProfileAlumniController extends Controller
                 'dataPekerjaan' => $dataPekerjaan,
                 'dataJenisPendidikan' => JenisPendidikanModel::all(),
                 'dataJenisPekerjaan' => JenisPekerjaanModel::all(),
+                'dataTingkatPerlombaan' => TingkatPerlombaanModel::all(),
                 'lowongan' => LowonganModel::with('dudi')->paginate(10),
                 "datadudi" => $datadudi,
                 "countlowongan" => $lowongan,
@@ -211,7 +213,6 @@ class ProfileAlumniController extends Controller
 
         $findUser = User::findOrFail($dataAlumni->user_id);
         $validasiData['user_id'] = $findUser->id;
-        dd($validasiData);
         // dd($validasiData);
         RiwayatPekerjaanModel::create($validasiData);
         return back()->with('success', 'Riwayat pekerjaan berhasil ditambahkan');
@@ -247,6 +248,50 @@ class ProfileAlumniController extends Controller
         return back()->with('success', 'Biografi berhasil diubah');
     }
 
+    public function riwayatpendidikan_update(Request $request, RiwayatPendidikanModel $riwayatPendidikanModel) {
+        $validasiData = $request->validate([
+            'nisn' => 'numeric',
+            'nama_instansi' => 'string',
+            'jenis_pendidikan' => 'in:1, 2, 3, 4, 5',
+            'nilai_rata_rata' => 'numeric|decimal:0,100.00',
+            'tahun_awal_pendidikan' => 'date',
+            'tahun_akhir_pendidikan' => 'date',
+        ]);
+
+        $tanggalAwal = $validasiData['tahun_awal_pendidikan'];
+        $validasiData['tahun_awal_pendidikan'] = date('d/m/Y', strtotime($tanggalAwal));
+        $validasiData['tahun_awal_pendidikan'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_awal_pendidikan'])->format('l, j F Y');
+        
+        $tanggalAkhir = $validasiData['tahun_akhir_pendidikan'];
+        $validasiData['tahun_akhir_pendidikan'] = date('d/m/Y', strtotime($tanggalAkhir));
+        $validasiData['tahun_akhir_pendidikan'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_akhir_pendidikan'])->format('l, j F Y');
+
+        RiwayatPendidikanModel::find($request->id)->update($validasiData);
+        return back()->with('success', 'Riwayat pendidikan berhasil diubah');
+    }
+
+    public function riwayatpekerjaan_update(Request $request) {
+        $validasiData = $request->validate([
+            'nisn' => 'numeric',
+            'nama_perusahaan' => 'string',
+            'jenis_pekerjaan' => 'in:1, 2, 3, 4, 5',
+            'bidang' => 'string',
+            'tahun_awal_pekerjaan' => 'date',
+            'tahun_akhir_pekerjaan' => 'date',
+        ]);
+        $tanggalAwal = $validasiData['tahun_awal_pekerjaan'];
+        $validasiData['tahun_awal_pekerjaan'] = date('d/m/Y', strtotime($tanggalAwal));
+        $validasiData['tahun_awal_pekerjaan'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_awal_pekerjaan'])->format('l, j F Y');
+        
+        $tanggalAkhir = $validasiData['tahun_akhir_pekerjaan'];
+        $validasiData['tahun_akhir_pekerjaan'] = date('d/m/Y', strtotime($tanggalAkhir));
+        $validasiData['tahun_akhir_pekerjaan'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_akhir_pekerjaan'])->format('l, j F Y');
+        
+        // dd($validasiData);
+        RiwayatPekerjaanModel::findOrFail($request->id)->update($validasiData);
+        return back()->with('success', 'Riwayat pekerjaan berhasil diubah');
+    }
+
     /**
      * Remove the specified resource from storage.
      */
@@ -254,6 +299,17 @@ class ProfileAlumniController extends Controller
     {
         //
     }
+
+    public function riwayatpendidikan_destroy(Request $request) {
+        RiwayatPendidikanModel::destroy($request->id);
+        return back()->with('success', 'Data Riwayat Pendidikan Berhasil Dihapus');
+    }
+
+    public function riwayatpekerjaan_destroy(Request $request) {
+        RiwayatPekerjaanModel::destroy($request->id);
+        return back()->with('success', 'Data Riwayat Pekerjaan Berhasil Dihapus');
+    }
+
     public function detaillowongan(LowonganModel $lowongan)
     {
         $dataUser = AlumniModel::where('user_id', Auth()->user()->id)->get();

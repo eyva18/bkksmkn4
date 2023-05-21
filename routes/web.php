@@ -139,10 +139,14 @@ Route::middleware(['auth', 'role:admin|alumni'])->group(function() {
     Route::get('/perusahaan/profile/{dudi:nama}', [ProfileAlumniController::class, 'profileperusahaan']);
 
     Route::get('/profile/{alumni:nama}', [ProfileAlumniController::class, 'alumniprofil']);
-    Route::post('/profile/riwayat-pendidikan/store', [ProfileAlumniController::class, 'riwayatpendidikan_store']);
-    Route::post('/profile/riwayat-pekerjaan/store', [ProfileAlumniController::class, 'riwayatpekerjaan_store']);
+    Route::post('/profile/riwayatpendidikan/store', [ProfileAlumniController::class, 'riwayatpendidikan_store']);
+    Route::post('/profile/riwayatpekerjaan/store', [ProfileAlumniController::class, 'riwayatpekerjaan_store']);
     Route::put('/profile/{alumniModel:nama}/update', [AdminController::class, 'alumni_update']);
     Route::post('/profile/biografi/update', [ProfileAlumniController::class, 'update_biografi']);
+    Route::post('/profile/riwayatpendidikan/update', [ProfileAlumniController::class, 'riwayatpendidikan_update']);
+    Route::post('/profile/riwayatpekerjaan/update', [ProfileAlumniController::class, 'riwayatpekerjaan_update']);
+    Route::delete('/profile/riwayatpendidikan/delete', [ProfileAlumniController::class, 'riwayatpendidikan_destroy']);
+    Route::delete('/profile/riwayatpekerjaan/delete', [ProfileAlumniController::class, 'riwayatpekerjaan_destroy']);
 });
 
 

@@ -466,8 +466,8 @@ class AdminController extends Controller
     }
 
     public function alumni_show(Request $request, AlumniModel $alumniModel) {
-        $findSiswaProfile = $alumniModel->findOrFail($request->id);
-        $dataUser = User::findOrFail($findSiswaProfile->user_id);
+        $findSiswaProfile = $alumniModel->find($request->id);
+        $dataUser = User::find($findSiswaProfile->user_id);
         // dd($alumniModel);
         return view('admin.daftar.alumni.profilealumni', [
             'dataAlumni' => $findSiswaProfile,
@@ -495,28 +495,50 @@ class AdminController extends Controller
     public function alumni_update(Request $request) {
         $alumnidata = AlumniModel::find($request->id);
 
-        $validasiData = $request->validate([
-            'nisn' => 'required|unique:alumni',
-            'nis' => 'required|unique:alumni',
-            'nama' => 'required|max:225',
-            'no_hp' => 'required',
-            'biografi' => '',
-            'agamaId' => 'required',
-            'jenis_kelaminId' => 'required',
-            'alamat' => 'required',
-            'tempatTanggalLahir' => 'required',
-            'photo_profile' => '',
-            'transkrip_nilai' => '',
-            'kode_jurusanId' => 'required',      
-            'kode_lulusId' => 'required',
-        ]);
-        $validasiDataUser = $request->validate([
-            'username' => 'required|max:225',
-            'email' => 'required|unique:users',
-            'password' => ''
-        ]);
+        if (Auth::user()->hasRole('admin')) {
+            $validasiData = $request->validate([
+                'nisn' => '',
+                'nis' => '',
+                'nama' => '',
+                'no_hp' => '',
+                'biografi' => '',
+                'agamaId' => '',
+                'jenis_kelaminId' => '',
+                'alamat' => '',
+                'tempatTanggalLahir' => '',
+                'photo_profile' => '',
+                'transkrip_nilai' => '',
+                'kode_jurusanId' => '',      
+                'kode_lulusId' => '',
+            ]);
+            $validasiDataUser = $request->validate([
+                'username' => 'max:225',
+                'email' => '',
+                'password' => ''
+            ]);
+        } elseif (Auth::user()->hasRole('alumni')) {
+            $validasiData = $request->validate([
+                'nisn' => 'required',
+                'nis' => 'required',
+                'nama' => 'required|max:225',
+                'no_hp' => 'required',
+                'biografi' => '',
+                'agamaId' => 'required',
+                'jenis_kelaminId' => 'required',
+                'alamat' => 'required',
+                'tempatTanggalLahir' => 'required',
+                'photo_profile' => '',
+                'transkrip_nilai' => '',
+                'kode_jurusanId' => 'required',      
+                'kode_lulusId' => 'required',
+            ]);
+            $validasiDataUser = $request->validate([
+                'username' => 'required|max:225',
+                'email' => 'required',
+                'password' => ''
+            ]);
+        }
         // $validasiData['biografi'] = strip_tags($request->biografi);
-        
         if($request->file('photo_profile')) {
             if($request->oldPhotoProfile) {
                 Storage::delete($request->oldPhotoProfile);
@@ -590,7 +612,7 @@ class AdminController extends Controller
         $validasiData['tahun_akhir_pendidikan'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_akhir_pendidikan'])->format('l, j F Y');
 
         RiwayatPendidikanModel::findOrFail($request->id)->update($validasiData);
-        return back()->with('success', 'Riwayat pendidikan berhasil ditambahkan');
+        return back()->with('success', 'Riwayat pendidikan berhasil diubah');
     }
 
     public function riwayatpekerjaan_update(Request $request) {
@@ -612,7 +634,7 @@ class AdminController extends Controller
         
         // dd($validasiData);
         RiwayatPekerjaanModel::findOrFail($request->id)->update($validasiData);
-        return back()->with('success', 'Riwayat pekerjaan berhasil ditambahkan');
+        return back()->with('success', 'Riwayat pekerjaan berhasil diubah');
     }
 
     public function alumni_destroy(Request $request, AlumniModel $alumniModel) 
