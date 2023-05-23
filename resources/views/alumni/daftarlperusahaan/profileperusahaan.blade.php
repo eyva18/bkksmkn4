@@ -61,7 +61,7 @@
                             <div class="d-flex align-items-center justify-content-between top-card">
                                 <h4 class="card-title mb-2">Biograpi / Deskripsi</h4>
                             </div>
-                            {{ $dataperusahaan->deskripsi ?? '-' }}
+                            {!! $dataperusahaan->deskripsi ?? '-' !!}
                             <div>
                             </div>
                         </div>
@@ -77,7 +77,7 @@
                         <hr>
                     </div>
                 </div>
-                <div class="row d-flex justify-content-between mt-2">
+                <div class="row d-flex justify-content-between mt-2 card mrl-11">
                     @if ($lowongan[0] == null)
                     <div class="col-sm-12 mr">
                         <div class="card">
@@ -92,7 +92,7 @@
                     </div>
                 @endif
                     @foreach ($lowongan as $item)
-                        <div class="col-md-12 col-lg-6 mb-3">
+                        <div class="col-md-12 col-lg-6 mb-3 mt-4">
                             <div class="card border-top-black-300">
                                 <div class="col-md-12 p-4">
                                     <h4 class="card-title">{{ $item->nama }}</h4>

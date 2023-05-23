@@ -42,6 +42,7 @@ Route::get('/', function () {
             'totalAlumni' => AlumniModel::count(),
             'totalperusahaan' => DudiModel::count(),
             'totallowongan' => LowonganModel::count(),
+            'dudi' => DudiModel::all()
         ]);
     }
 });

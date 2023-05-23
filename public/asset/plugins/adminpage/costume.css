@@ -37,7 +37,9 @@ span.text-logo {
 .mrl-10 {
     margin-left: 13px;
 }
-
+.mrl-11{
+    margin-left: 10px;
+}
 .text-capitalize {
     text-transform: capitalize;
 }

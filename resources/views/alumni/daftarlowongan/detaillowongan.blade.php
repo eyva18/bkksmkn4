@@ -71,7 +71,7 @@
                             <div class="d-flex align-items-center justify-content-between top-card">
                                 <h4 class="card-title mb-2">Deskripsi Perusahaan</h4>
                             </div>
-                             {!! $datalowongan->deskripsi_perusahaan ?? '-' !!}
+                             {!! $datalowongan->dudi->deskripsi ?? '-' !!}
                             <div>
                             </div>
                         </div>
