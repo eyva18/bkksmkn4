@@ -43,11 +43,12 @@
                                 <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
                                     id="profileDropdown">
                                     <span class="nav-profile-name">{{ Auth()->user()->name }}</span>
-                                    <img src="{{ URL::asset('storage/' . Auth::user()->photo_profile) }}" alt="profile" style="object-fit: cover;" />
+                                    <img src="/images/profileimg/{{Auth::user()->photo_profile}}" alt="profile"
+                                        style="object-fit: cover;" />
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown"
                                     aria-labelledby="profileDropdown">
-                                    <a class="dropdown-item" href="/profile/{{ $dataAlumni->nama }}">
+                                    <a class="dropdown-item" href="/company/profile/{{ $dataDudi->nama }}">
                                         <i class="mdi mdi-settings text-primary"></i>
                                         Profile
                                     </a>
@@ -74,22 +75,22 @@
                 <div class="container">
                     <ul class="nav page-navigation">
                         <li class="nav-item">
-                            <a class="nav-link" href="/dashboard">
+                            <a class="nav-link" href="/company/dashboard">
                                 <i class="mdi mdi-file-document-box menu-icon"></i>
                                 <span class="menu-title">Beranda</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/lowongan-kerja" class="nav-link">
-                                <i class=" mdi mdi-newspaper menu-icon"></i>
-                                <span class="menu-title">Daftar Lowongan</span>
+                            <a href="/company/daftar-alumni" class="nav-link">
+                                <i class="mdi mdi-school menu-icon"></i>
+                                <span class="menu-title">Daftar Alumni</span>
                                 <i class="menu-arrow"></i>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/daftar-perusahaan" class="nav-link">
-                                <i class=" mdi mdi-hospital-building menu-icon"></i>
-                                <span class="menu-title">Daftar Perusahaan</span>
+                            <a href="/company/daftar-lowongan" class="nav-link">
+                                <i class=" mdi mdi-newspaper menu-icon"></i>
+                                <span class="menu-title">Daftar Lowongan</span>
                                 <i class="menu-arrow"></i>
                             </a>
                         </li>

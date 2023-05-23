@@ -353,6 +353,343 @@
                                 @endforeach
                             </div>
                         </div>
+
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header bg-dark">
+                                    <h4 class="mb-0 text-white">Sertifikasi <button class="icon-button-modal" data-bs-toggle="modal" data-bs-target="#sertifikasiModal"><i class="fas fa-plus text-white mrl-10"></i></button></h4>
+                                </div>
+                                <div class="card-body">
+                                    @foreach ($dataSertifikasi as $data)
+                                        <div class="row">
+                                            <div class="col-6-md d-flex justify-content-center">
+                                                <a class="gallery-popup" href="{{ URL::asset('storage/'. $data->file_sertifikasi) }}" aria-label="project-img">
+                                                    <img class="img-fluid" src="{{ URL::asset('storage/'. $data->file_sertifikasi) }}" style="width: 120px" alt="project-img">
+                                                </a>
+                                            </div>
+                                            <div class="col-6-md p-3">
+                                                <a href="{{ $data->link_sertifikasi }}" style="text-decoration: none"><p class="fw-bold fs-3">{{ $data->nama_sertifikasi }}</p></a>
+                                                <h5 class="fw-bold">{{ $data->nama_penerbit }}</h5>
+                                                <h5>Diterbitkan : {{ $data->tahun_terbit }}</h5>
+                                            </div>
+                                            <div class="col-12-md my-2 d-flex justify-content-between">
+                                                <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#editsertifikat{{ $data->id }}"><i class="fas fa-edit"></i></button>
+                                                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deletesertifikat{{ $data->id }}"><i class="fas fa-trash"></i></button>
+                                            </div>
+                                            <hr>
+                                        </div>
+
+                                        {{-- Modal Tambah Sertifikasi --}}
+                                        <div class="modal fade" id="editsertifikat{{ $data->id }}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title" id="myLargeModalLabel">Folmulir Sertifikasi</h4>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                                                    </div>
+                                                    <form action="/alumni/sertifikasi/update" method="post" enctype="multipart/form-data">
+                                                        @method('post')
+                                                        @csrf
+                                                        <input type="hidden" name="id" value="{{ $data->id }}">
+                                                        <div class="modal-body">
+                                                            <div class="row p-2">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label for="sertifikat" class="content-hidden">Nama Sertifikat <span class="text-red"> *</span></label>
+                                                                        <input type="text" id="sertifikat" name="nama_sertifikasi" class="form-control @error('nama_sertifikasi') is-invalid @enderror" value="{{ old('nama_sertifikasi', $data->nama_sertifikasi) }}">
+                                                                            @error('nama_sertifikasi')
+                                                                                <div class="invalid-feedback">
+                                                                                    {{ $message }}
+                                                                                </div>
+                                                                            @enderror
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label for="instansi" class="content-hidden">Nama Instansi Penerbit<span class="text-red"> *</span></label>
+                                                                        <input type="text" id="instansi" name="nama_penerbit" class="form-control @error('nama_penerbit') is-invalid @enderror" value="{{ old('nama_penerbit', $data->nama_penerbit) }}">
+                                                                            @error('nama_penerbit')
+                                                                                <div class="invalid-feedback">
+                                                                                    {{ $message }}
+                                                                                </div>
+                                                                            @enderror
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <input type="checkbox" id="waktuSertifikat" name="waktuSertifikat" class="@error('waktuSertifikat') is-invalid @enderror" value="">
+                                                                        <label for="waktuSertifikat">Sertifikat Tidak Akan Kadaluarsa</label>
+                                                                        @error('waktuSertifikat')
+                                                                            <div class="invalid-feedback">
+                                                                                {{ $message }}
+                                                                            </div>
+                                                                        @enderror
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="content-hidden">Tahun Terbit <span class="text-red"> *</span></label>
+                                                                        <input type="date" id="example-input-large" name="tahun_terbit" class="form-control @error('tahun_terbit') is-invalid @enderror" value="{{ old('tahun_terbit', $data->tahun_terbit) }}">
+                                                                        <p class="card-description fw-medium text-danger mt-2">
+                                                                            Data Sebelumnya: {{ $data->tahun_terbit }}.
+                                                                        </p>
+                                                                        @error('tahun_terbit')
+                                                                            <div class="invalid-feedback">
+                                                                                {{ $message }}
+                                                                            </div>
+                                                                        @enderror
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="content-hidden">Tahun Kadaluarsa <span class="text-red"> *</span></label>
+                                                                        <input type="date" id="example-input-large" name="tahun_kadaluarsa" class="form-control @error('tahun_kadaluarsa') is-invalid @enderror" value="{{ old('tahun_kadaluarsa', $data->tahun_kadaluarsa) }}">
+                                                                        <p class="card-description fw-medium text-danger mt-2">
+                                                                            Data Sebelumnya: {{ $data->tahun_kadaluarsa }}.
+                                                                        </p>
+                                                                        @error('tahun_kadaluarsa')
+                                                                            <div class="invalid-feedback">
+                                                                                {{ $message }}
+                                                                            </div>
+                                                                        @enderror
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="kodesertifikat" class="content-hidden">Kode Sertifikasi<span class="text-red"> *</span></label>
+                                                                        <input type="text" id="kodesertifikat" name="kode_sertifikasi" class="form-control @error('kode_sertifikasi') is-invalid @enderror" value="{{ old('kode_sertifikasi', $data->kode_sertifikasi) }}">
+                                                                            @error('kode_sertifikasi')
+                                                                                <div class="invalid-feedback">
+                                                                                    {{ $message }}
+                                                                                </div>
+                                                                            @enderror
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="link" class="content-hidden">Link Sertifikasi<span class="text-red"> *</span></label>
+                                                                        <input type="text" id="link" name="link_sertifikasi" class="form-control @error('link_sertifikasi') is-invalid @enderror" value="{{ old('link_sertifikasi', $data->link_sertifikasi) }}">
+                                                                            @error('link_sertifikasi')
+                                                                                <div class="invalid-feedback">
+                                                                                    {{ $message }}
+                                                                                </div>
+                                                                            @enderror
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label for="fileSertifikat" class="content-hidden">File Sertifikat<span class="text-red"> *</span></label>
+                                                                        <input type="hidden" name="oldSertifikasi" value="{{ $data->file_sertifikasi }}">
+                                                                        <input class="form-control @error('file_sertifikasi') is-invalid @enderror" name="file_sertifikasi" type="file" id="fileSertifikat" value="{{ old('file_sertifikasi') }}">
+                                                                        <p class="card-description fw-medium text-danger mt-2">
+                                                                            Kosongkan file jika tidak ingin dirubah.
+                                                                        </p>
+                                                                        @error('file_sertifikasi')
+                                                                            <div class="invalid-feedback">
+                                                                                {{ $message }}
+                                                                            </div>
+                                                                        @enderror
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="reset" class="btn btn-danger" data-dismiss="modal">Batalkan</button>
+                                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+        
+                                        {{-- Modal Delete Start --}}
+                                        <div id="deletesertifikat{{ $data->id ?? '-' }}" class="modal fade text-light" tabindex="-1" role="dialog" aria-hidden="true">
+                                            <div class="modal-dialog modal-sm">
+                                                <div class="modal-content modal-filled bg-danger">
+                                                    <div class="modal-body p-4">
+                                                        <div class="text-center">
+                                                            <i class="dripicons-wrong h1"></i>
+                                                            <h4 class="mt-2">Peringatan!</h4>
+                                                            <p class="mt-3">Apakan Ingin Melanjutkan Menghapus Data Sertifikasi</p>
+                                                            <form action="/alumni/sertifikasi/destroy" method="post">
+                                                                @method('post')
+                                                                @csrf
+                                                                <input type="hidden" name="id" id="newsletter-id" class="form-control form-control-lg" value="{{ $data->id }}">
+                                                                <button type="submit" class="btn btn-light my-2">Delete</button>
+                                                            </form>
+                                                            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Cancel</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {{-- Modal Delete End --}}
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header bg-dark">
+                                    <h4 class="mb-0 text-white">Penghargaan Lomba <button class="icon-button-modal" data-bs-toggle="modal" data-bs-target="#lombaModal"><i class="fas fa-plus text-white mrl-10"></i></button></h4>
+                                </div>
+                                <div class="card-body">
+                                    @foreach ($dataSertifikasiLomba as $data)
+                                        <div class="row">
+                                            <div class="col-6-md d-flex justify-content-center">
+                                                <a class="gallery-popup" href="{{ URL::asset('storage/'.$data->file_sertifikasi) }}" aria-label="project-img">
+                                                    <img class="img-fluid" src="{{ URL::asset('storage/'.$data->file_sertifikasi) }}" style="width: 120px" alt="project-img">
+                                                </a>
+                                            </div>
+                                            <div class="col-6-md p-3">
+                                                <p class="fw-bold fs-3 text-dark">{{ $data->nama_juara_kompetensi }}</p>
+                                                <h5>{{ $data->TingkatPerlombaan->tingkat_lomba }}</h5>
+                                                <h5>Didapatkan : {{ $data->tanggal_terbit }}</h5>
+                                            </div>
+                                            <div class="col-12-md my-2 d-flex justify-content-between">
+                                                <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#editsertifikatlomba{{ $data->id }}"><i class="fas fa-edit text-light"></i></button>
+                                                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deletesertifikatlomba{{ $data->id }}"><i class="fas fa-trash text-light"></i></button>
+                                            </div>
+                                            <hr>
+                                        </div>
+        
+                                        {{-- Modal Tambah Sertifikasi Perlombaan --}}
+                                        <div class="modal fade" id="editsertifikatlomba{{ $data->id }}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title" id="myLargeModalLabel">Folmulir Sertifikasi Perlombaan</h4>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                                                    </div>
+                                                    <form action="/alumni/sertifikasilomba/update" method="post" enctype="multipart/form-data">
+                                                        @method('post')
+                                                        @csrf
+                                                        <input type="hidden" name="id" value="{{ $data->id }}">
+                                                        <div class="modal-body">
+                                                            <div class="row p-2">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label for="sertifikatLomba" class="content-hidden">Nama Juara Kompetensi <span class="text-red"> *</span></label>
+                                                                        <input type="text" id="sertifikatLomba" name="nama_juara_kompetensi" class="form-control @error('nama_juara_kompetensi') is-invalid @enderror" value="{{ old('nama_juara_kompetensi', $data->nama_juara_kompetensi) }}">
+                                                                            @error('nama_juara_kompetensi')
+                                                                                <div class="invalid-feedback">
+                                                                                    {{ $message }}
+                                                                                </div>
+                                                                            @enderror
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label for="tingkatLomba" class="content-hidden">Tingkat Perlombaan <span class="text-red"> *</span></label>
+                                                                        <select class="form-select full-size-width  @error('tingkat_perlombaan') is-invalid @enderror" id="tingkatLomba" name="tingkat_perlombaan">
+                                                                            <option selected>Tingkat Perlombaan</option>
+                                                                            @foreach ($dataTingkatPerlombaan as $item)
+                                                                                @if (old('tingkat_perlombaan', $data->tingkat_perlombaan) == $item->id)
+                                                                                    <option value="{{ $item->id }}" selected>{{ $item->tingkat_lomba }}</option>
+                                                                                @else
+                                                                                    <option value="{{ $item->id }}">{{ $item->tingkat_lomba }}</option>
+                                                                                @endif
+                                                                            @endforeach
+                                                                        </select>
+                                                                        @error('tingkat_perlombaan')
+                                                                            <div class="invalid-feedback">
+                                                                                {{ $message }}
+                                                                            </div>
+                                                                        @enderror
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <input type="checkbox" id="waktusertifikat" name="waktuSertifikat" class="@error('waktuSertifikat') is-invalid @enderror" value="">
+                                                                        <label for="waktusertifikat">Sertifikat Tidak Akan Kadaluarsa</label>
+                                                                        @error('waktuSertifikat')
+                                                                            <div class="invalid-feedback">
+                                                                                {{ $message }}
+                                                                            </div>
+                                                                        @enderror
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="content-hidden">Tahun Terbit <span class="text-red"> *</span></label>
+                                                                        <input type="date" id="example-input-large" name="tanggal_terbit" class="form-control @error('tanggal_terbit') is-invalid @enderror" value="{{ old('tanggal_terbit') }}">
+                                                                        <p class="card-description fw-medium text-danger mt-2">
+                                                                            Data Sebelumnya: {{ $data->tanggal_terbit }}.
+                                                                        </p>
+                                                                        @error('tanggal_terbit')
+                                                                            <div class="invalid-feedback">
+                                                                                {{ $message }}
+                                                                            </div>
+                                                                        @enderror
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="content-hidden">Tahun Kadaluarsa <span class="text-red"> *</span></label>
+                                                                        <input type="date" id="example-input-large" name="tanggal_kadaluarsa" class="form-control @error('tanggal_kadaluarsa') is-invalid @enderror" value="{{ old('tanggal_kadaluarsa') }}">
+                                                                        <p class="card-description fw-medium text-danger mt-2">
+                                                                            Data Sebelumnya: {{ $data->tanggal_kadaluarsa }}.
+                                                                        </p>
+                                                                        @error('tanggal_kadaluarsa')
+                                                                            <div class="invalid-feedback">
+                                                                                {{ $message }}
+                                                                            </div>
+                                                                        @enderror
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label for="fileSertifikat" class="content-hidden">File Sertifikat Perlombaan<span class="text-red"> *</span></label>
+                                                                        <input type="hidden" name="oldSertifikasi" value="{{ $data->file_sertifikasi }}">
+                                                                        <input class="form-control @error('file_sertifikasi') is-invalid @enderror" name="file_sertifikasi" type="file" id="fileSertifikat" value="{{ old('file_sertifikasi') }}">
+                                                                        <p class="card-description fw-medium text-danger mt-2">
+                                                                            Kosongkan file jika tidak ingin dirubah.
+                                                                        </p>
+                                                                        @error('file_sertifikasi')
+                                                                            <div class="invalid-feedback">
+                                                                                {{ $message }}
+                                                                            </div>
+                                                                        @enderror
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="reset" class="btn btn-danger" data-dismiss="modal">Batalkan</button>
+                                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+        
+                                        {{-- Modal Delete Start --}}
+                                        <div id="deletesertifikatlomba{{ $data->id ?? '-' }}" class="modal fade text-light" tabindex="-1" role="dialog" aria-hidden="true">
+                                            <div class="modal-dialog modal-sm">
+                                                <div class="modal-content modal-filled bg-danger">
+                                                    <div class="modal-body p-4">
+                                                        <div class="text-center">
+                                                            <i class="dripicons-wrong h1"></i>
+                                                            <h4 class="mt-2">Peringatan!</h4>
+                                                            <p class="mt-3">Apakan Ingin Melanjutkan Menghapus Data Penghargaan Lomba?</p>
+                                                            <form action="/alumni/sertifikasilomba/destroy" method="post">
+                                                                @method('post')
+                                                                @csrf
+                                                                <input type="hidden" name="id" id="newsletter-id" class="form-control form-control-lg" value="{{ $data->id }}">
+                                                                <button type="submit" class="btn btn-light my-2">Delete</button>
+                                                            </form>
+                                                            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Cancel</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {{-- Modal Delete End --}}
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -575,6 +912,219 @@
                                         <label class="content-hidden">Tahun Berakhir <span class="text-red"> *</span></label>
                                         <input type="date" id="example-input-large" name="tahun_akhir_pekerjaan" class="form-control @error('tahun_akhir_pekerjaan') is-invalid @enderror" value="{{ old('tahun_akhir_pekerjaan') }}">
                                         @error('tahun_akhir_pekerjaan')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="reset" class="btn btn-danger" data-dismiss="modal">Batalkan</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        {{-- Modal Tambah Sertifikasi --}}
+        <div class="modal fade" id="sertifikasiModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myLargeModalLabel">Folmulir Sertifikasi</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                    </div>
+                    <form action="/alumni/sertifikasi/store" method="post" enctype="multipart/form-data">
+                        @method('post')
+                        @csrf
+                        <input type="hidden" name="id" value="{{ $dataAlumni->id }}">
+                        <div class="modal-body">
+                            <div class="row p-2">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="sertifikat" class="content-hidden">Nama Sertifikat <span class="text-red"> *</span></label>
+                                        <input type="text" id="sertifikat" name="nama_sertifikasi" class="form-control @error('nama_sertifikasi') is-invalid @enderror" value="{{ old('nama_sertifikasi') }}">
+                                            @error('nama_sertifikasi')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="instansi" class="content-hidden">Nama Instansi Penerbit<span class="text-red"> *</span></label>
+                                        <input type="text" id="instansi" name="nama_penerbit" class="form-control @error('nama_penerbit') is-invalid @enderror" value="{{ old('nama_penerbit') }}">
+                                            @error('nama_penerbit')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="checkbox" id="waktuSertifikat" name="waktuSertifikat" class="@error('waktuSertifikat') is-invalid @enderror" value="">
+                                        <label for="waktuSertifikat">Sertifikat Tidak Akan Kadaluarsa</label>
+                                        @error('waktuSertifikat')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="content-hidden">Tahun Terbit <span class="text-red"> *</span></label>
+                                        <input type="date" id="example-input-large" name="tahun_terbit" class="form-control @error('tahun_terbit') is-invalid @enderror" value="{{ old('tahun_terbit') }}">
+                                        @error('tahun_terbit')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="content-hidden">Tahun Kadaluarsa <span class="text-red"> *</span></label>
+                                        <input type="date" id="example-input-large" name="tahun_kadaluarsa" class="form-control @error('tahun_kadaluarsa') is-invalid @enderror" value="{{ old('tahun_kadaluarsa') }}">
+                                        @error('tahun_kadaluarsa')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="kodesertifikat" class="content-hidden">Kode Sertifikasi<span class="text-red"> *</span></label>
+                                        <input type="text" id="kodesertifikat" name="kode_sertifikasi" class="form-control @error('kode_sertifikasi') is-invalid @enderror" value="{{ old('kode_sertifikasi') }}">
+                                            @error('kode_sertifikasi')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="link" class="content-hidden">Link Sertifikasi<span class="text-red"> *</span></label>
+                                        <input type="text" id="link" name="link_sertifikasi" class="form-control @error('link_sertifikasi') is-invalid @enderror" value="{{ old('link_sertifikasi') }}">
+                                            @error('link_sertifikasi')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="fileSertifikat" class="content-hidden">File Sertifikat<span class="text-red"> *</span></label>
+                                        <input class="form-control @error('file_sertifikasi') is-invalid @enderror" name="file_sertifikasi" type="file" id="fileSertifikat" value="{{ old('file_sertifikasi') }}">
+                                        @error('file_sertifikasi')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="reset" class="btn btn-danger" data-dismiss="modal">Batalkan</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        {{-- Modal Tambah Sertifikasi Perlombaan --}}
+        <div class="modal fade" id="lombaModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myLargeModalLabel">Folmulir Sertifikasi Perlombaan</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                    </div>
+                    <form action="/alumni/sertifikasilomba/store" method="post" enctype="multipart/form-data">
+                        @method('post')
+                        @csrf
+                        <input type="hidden" name="id" value="{{ $dataAlumni->id }}">
+                        <div class="modal-body">
+                            <div class="row p-2">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="sertifikatLomba" class="content-hidden">Nama Juara Kompetensi <span class="text-red"> *</span></label>
+                                        <input type="text" id="sertifikatLomba" name="nama_juara_kompetensi" class="form-control @error('nama_juara_kompetensi') is-invalid @enderror" value="{{ old('nama_juara_kompetensi') }}">
+                                            @error('nama_juara_kompetensi')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="tingkatLomba" class="content-hidden">Tingkat Perlombaan <span class="text-red"> *</span></label>
+                                        <select class="form-select full-size-width  @error('tingkat_perlombaan') is-invalid @enderror" id="tingkatLomba" name="tingkat_perlombaan">
+                                            <option selected>Tingkat Perlombaan</option>
+                                            @foreach ($dataTingkatPerlombaan as $data)
+                                                @if (old('tingkat_perlombaan') == $data->id)
+                                                    <option value="{{ $data->id }}" selected>{{ $data->tingkat_lomba }}</option>
+                                                @else
+                                                    <option value="{{ $data->id }}">{{ $data->tingkat_lomba }}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                        @error('tingkat_perlombaan')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="checkbox" id="waktusertifikat" name="waktuSertifikat" class="@error('waktuSertifikat') is-invalid @enderror" value="">
+                                        <label for="waktusertifikat">Sertifikat Tidak Akan Kadaluarsa</label>
+                                        @error('waktuSertifikat')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="content-hidden">Tahun Terbit <span class="text-red"> *</span></label>
+                                        <input type="date" id="example-input-large" name="tanggal_terbit" class="form-control @error('tanggal_terbit') is-invalid @enderror" value="{{ old('tanggal_terbit') }}">
+                                        @error('tanggal_terbit')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="content-hidden">Tahun Kadaluarsa <span class="text-red"> *</span></label>
+                                        <input type="date" id="example-input-large" name="tanggal_kadaluarsa" class="form-control @error('tanggal_kadaluarsa') is-invalid @enderror" value="{{ old('tanggal_kadaluarsa') }}">
+                                        @error('tanggal_kadaluarsa')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="fileSertifikat" class="content-hidden">File Sertifikat Perlombaan<span class="text-red"> *</span></label>
+                                        <input class="form-control @error('file_sertifikasi') is-invalid @enderror" name="file_sertifikasi" type="file" id="fileSertifikat" value="{{ old('file_sertifikasi') }}">
+                                        @error('file_sertifikasi')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>

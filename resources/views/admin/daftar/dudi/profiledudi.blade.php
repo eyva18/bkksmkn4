@@ -28,8 +28,7 @@
                 <div class="col-md-5">
                     <!-- Card -->
                     <div class="card">
-                        <img class="card-img-top img-fluid" src="{{ URL::asset('images/profileimg/').'/'.$datadudi->logo }}" height="50%"
-                            alt="Card image cap">
+                        <img class="card-img-top img-fluid" src="/images/profileimg/{{ $datadudi->logo }}" height="50%" alt="Card image cap">
                         <div class="card-body">
                             <h4 class="card-title">{{ $datadudi->nama ?? '-' }}</h4>
                             <ul class="list-unstyled">
@@ -57,7 +56,7 @@
                             <h4 class="mb-0 text-white">Biografi <i class="fas fa-info-circle text-white"></i></h4>
                         </div>
                         <div class="card-body">
-                            <p class="card-text">{{ $datadudi->deskripsi ?? '-'}}</p>
+                            <p class="card-text">{!! $datadudi->deskripsi ?? '-' !!}</p>
                         </div>
                     </div>
                 </div>
@@ -88,7 +87,7 @@
                             <h4 class="card-title">{{ $data->nama ?? '-'}}</h4>
                             <ul class="list-unstyled">
                                 <li class="media d-flex align-items-start">
-                                    <img class="d-flex me-3 logo-company" src="/images/profileimg/{{ $data->logo }}"
+                                    <img class="d-flex me-3 logo-company" src="/images/profileimg/{{ $data->dudi->logo }}"
                                         alt="Logo Test" width="100">
                                     <div class="media-body">
                                         <ul class="list-unstyled">

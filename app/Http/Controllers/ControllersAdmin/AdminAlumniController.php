@@ -9,10 +9,12 @@ use Illuminate\Http\Request;
 use App\Models\TahunLulusModel;
 use App\Models\JenisKelaminModel;
 use App\Http\Controllers\Controller;
+use App\Models\DudiModel;
 use App\Models\JenisPendidikanModel;
 use App\Models\RiwayatPendidikanModel;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class AdminAlumniController extends Controller
 {
@@ -142,6 +144,21 @@ class AdminAlumniController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, AlumniModel $alumniModel)
+    {
+        $dudi = DudiModel::find($lowongan->id_dudi);
+        LowonganModel::find($lowongan->id)->update([
+            'nama' => $request->nama,
+            'deskripsi_pekerjaan' => $request->deskripsi,
+            'deskripsi_perusahaan' => $dudi->deskripsi,
+            'lokasi' => $request->lokasi,
+            'id_kategoti_pekerjaan' => $request->id_kategoti_pekerjaan,
+            'gaji' => $request->gaji,
+            'tgl_upload' => now(),
+            'id_dudi' => $request->iddudi,
+        ]);
+        return redirect('/company/lowongan-kerja/detail/'.$request->nama)->with('success', 'Lowongan telah ditambahkan!');
+    }
+    public function updateprofile(Request $request, AlumniModel $alumniModel)
     {
         $validasiData = $request->validate([
             'nisn' => 'digits_between:1,15|numeric',

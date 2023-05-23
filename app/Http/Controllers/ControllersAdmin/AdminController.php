@@ -12,16 +12,19 @@ use Illuminate\Http\Request;
 use App\Models\CategoryModel;
 use App\Models\LowonganModel;
 use App\Models\TahunLulusModel;
+use App\Models\SertifikasiModel;
 use App\Models\JenisKelaminModel;
 use App\Models\StatusAlumniModel;
 use App\Models\JenisPekerjaanModel;
 use App\Http\Controllers\Controller;
 use App\Models\JenisPendidikanModel;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use App\Models\RiwayatPekerjaanModel;
+use App\Models\SertifikasiLombaModel;
 use App\Models\RiwayatPendidikanModel;
+use App\Models\TingkatPerlombaanModel;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -183,7 +186,7 @@ class AdminController extends Controller
     public function dudi()
     {
         //Jurusan Database Function
-        $datadudi = DudiModel::paginate(10);
+        $datadudi = DudiModel::latest()->paginate(10);
         //Count Lowongan Kerja
         $lowongan = [];
         foreach ($datadudi as $data) {
@@ -394,7 +397,7 @@ class AdminController extends Controller
             'email' => '',
         ]);
 
-        // $validasiData['biografi'] = strip_tags($request->biografi);
+        // $validasiData['biografi'] = strip_tags($request->biografi);        
         // dd($validasiData);
         if($request->file('photo_profile')) {
             $validasiData['photo_profile'] = $request->file('photo_profile')->getClientOriginalName();
@@ -410,7 +413,7 @@ class AdminController extends Controller
             'name' => $validasiDataUser['username'],
             'email' => $validasiDataUser['email'],
             'password' => bcrypt($validasiData['nisn']),
-            'photo_profile' => $validasiData['photo_profile'] ?? null,
+            'photo_profile' => $validasiData['photo_profile'],
         ])->assignRole('alumni');
 
         $validasiData['user_id'] = $useralumnicreate->id;
@@ -459,10 +462,73 @@ class AdminController extends Controller
 
         $findUser = User::findOrFail($dataAlumni->user_id);
         $validasiData['user_id'] = $findUser->id;
-        dd($validasiData);
         // dd($validasiData);
         RiwayatPekerjaanModel::create($validasiData);
         return back()->with('success', 'Riwayat pekerjaan berhasil ditambahkan');
+    }
+
+    public function sertifikasi_store(Request $request) {
+        $dataAlumni = AlumniModel::findOrFail($request->id);
+        $validasiData = $request->validate([
+            'nama_sertifikasi' => '',
+            'nama_penerbit' => '',
+            'tahun_terbit' => '',
+            'tahun_kadaluarsa' => '',
+            'kode_sertifikasi' => '',
+            'link_sertifikasi' => '',
+            'file_sertifikasi' => '',
+        ]);
+        
+        $tanggalAwal = $validasiData['tahun_terbit'];
+        $validasiData['tahun_terbit'] = date('d/m/Y', strtotime($tanggalAwal));
+        $validasiData['tahun_terbit'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_terbit'])->format('l, j F Y');
+        
+        $tanggalAkhir = $validasiData['tahun_kadaluarsa'];
+        $validasiData['tahun_kadaluarsa'] = date('d/m/Y', strtotime($tanggalAkhir));
+        $validasiData['tahun_kadaluarsa'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_kadaluarsa'])->format('l, j F Y');
+        
+        if($request->file('file_sertifikasi')) {
+            $validasiData['file_sertifikasi'] = $request->file('file_sertifikasi')->getClientOriginalName();
+            $validasiData['file_sertifikasi'] = $request->file('file_sertifikasi')->storeAs('file_sertifikasi_Alumni', $validasiData['file_sertifikasi']);
+        }
+
+        $findUser = User::findOrFail($dataAlumni->user_id);
+        $validasiData['user_id'] = $findUser->id;
+        // dd($validasiData);
+
+        SertifikasiModel::create($validasiData);
+        return back()->with('success', 'Sertifikasi Berhasil Ditambahkan!');
+    }
+
+    public function sertifikasilomba_store(Request $request) {
+        $dataAlumni = AlumniModel::findOrFail($request->id);
+        $validasiData = $request->validate([
+            'nama_juara_kompetensi' => '',
+            'tingkat_perlombaan' => '',
+            'tanggal_terbit' => '',
+            'tanggal_kadaluarsa' => '',
+            'file_sertifikasi' => '',
+        ]);
+        
+        $tanggalAwal = $validasiData['tanggal_terbit'];
+        $validasiData['tanggal_terbit'] = date('d/m/Y', strtotime($tanggalAwal));
+        $validasiData['tanggal_terbit'] = Carbon::createFromFormat('d/m/Y', $validasiData['tanggal_terbit'])->format('l, j F Y');
+        
+        $tanggalAkhir = $validasiData['tanggal_kadaluarsa'];
+        $validasiData['tanggal_kadaluarsa'] = date('d/m/Y', strtotime($tanggalAkhir));
+        $validasiData['tanggal_kadaluarsa'] = Carbon::createFromFormat('d/m/Y', $validasiData['tanggal_kadaluarsa'])->format('l, j F Y');
+        
+        if($request->file('file_sertifikasi')) {
+            $validasiData['file_sertifikasi'] = $request->file('file_sertifikasi')->getClientOriginalName();
+            $validasiData['file_sertifikasi'] = $request->file('file_sertifikasi')->storeAs('file_sertifikasi_Lomba_Alumni', $validasiData['file_sertifikasi']);
+        }
+
+        $findUser = User::findOrFail($dataAlumni->user_id);
+        $validasiData['user_id'] = $findUser->id;
+        // dd($validasiData);
+
+        SertifikasiLombaModel::create($validasiData);
+        return back()->with('success', 'Sertifikasi Berhasil Ditambahkan!');
     }
 
     public function alumni_show(Request $request, AlumniModel $alumniModel) {
@@ -474,6 +540,9 @@ class AdminController extends Controller
             'dataUser' => $dataUser,
             'dataJenisPendidikan' => JenisPendidikanModel::all(),
             'dataJenisPekerjaan' => JenisPekerjaanModel::all(),
+            'dataSertifikasi' => SertifikasiModel::where('user_id', $findSiswaProfile->user_id)->get(),
+            'dataSertifikasiLomba' => SertifikasiLombaModel::where('user_id', $findSiswaProfile->user_id)->get(),
+            'dataTingkatPerlombaan' => TingkatPerlombaanModel::all(),
             'dataPendidikan' => RiwayatPendidikanModel::where('user_id', $findSiswaProfile->user_id)->latest()->get(),
             'dataPekerjaan' => RiwayatPekerjaanModel::where('user_id', $findSiswaProfile->user_id)->latest()->get(),
         ]);
@@ -538,7 +607,10 @@ class AdminController extends Controller
                 'password' => ''
             ]);
         }
+
         // $validasiData['biografi'] = strip_tags($request->biografi);
+        $validasiData['photo_profile'] = $request->oldPhotoProfile;
+
         if($request->file('photo_profile')) {
             if($request->oldPhotoProfile) {
                 Storage::delete($request->oldPhotoProfile);
@@ -557,22 +629,22 @@ class AdminController extends Controller
 
         $useralumnidata = User::find($alumnidata->user_id);
         $validasiData['user_id'] = $useralumnidata->id;
-        
         AlumniModel::where('id', $request->id)->update($validasiData);
         if($request->password != null){
             User::findOrFail($validasiData['user_id'])->update([
                 'name' => $validasiDataUser['username'],
                 'email' => $validasiDataUser['email'],
                 'password' => bcrypt($validasiDataUser['password']),
-                'photo_profile' => $validasiData['photo_profile'] ?? null,
+                'photo_profile' => $validasiData['photo_profile'],
             ]);
         } elseif($request->password == null){
             User::findOrFail($validasiData['user_id'])->update([
                 'name' => $validasiDataUser['username'],
                 'email' => $validasiDataUser['email'],
-                'photo_profile' => $validasiData['photo_profile'] ?? null,
+                'photo_profile' => $validasiData['photo_profile'],
             ]);
         }
+
         if (Auth::user()->hasRole('admin')) {
             return redirect('/alumni')->with('success', 'Data Alumni Telah Berhasi Diubah!');
         } 
@@ -637,6 +709,74 @@ class AdminController extends Controller
         return back()->with('success', 'Riwayat pekerjaan berhasil diubah');
     }
 
+    public function sertifikasi_update(Request $request) {
+        $validasiData = $request->validate([
+            'nama_sertifikasi' => 'string',
+            'nama_penerbit' => 'string',
+            'tahun_terbit' => 'date',
+            'tahun_kadaluarsa' => 'date',
+            'kode_sertifikasi' => 'required',
+            'link_sertifikasi' => '',
+            'file_sertifikasi' => 'image|mimes:jpeg,jpg,|max:2048',
+        ]);
+        
+        $tanggalAwal = $validasiData['tahun_terbit'];
+        $validasiData['tahun_terbit'] = date('d/m/Y', strtotime($tanggalAwal));
+        $validasiData['tahun_terbit'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_terbit'])->format('l, j F Y');
+        
+        $tanggalAkhir = $validasiData['tahun_kadaluarsa'];
+        $validasiData['tahun_kadaluarsa'] = date('d/m/Y', strtotime($tanggalAkhir));
+        $validasiData['tahun_kadaluarsa'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_kadaluarsa'])->format('l, j F Y');
+        
+        $validasiData['file_sertifikasi'] = $request->oldSertifikasi;
+
+        if($request->file('file_sertifikasi')) {
+            if($request->oldSertifikasi) {
+                Storage::delete($request->oldSertifikasi);
+            }
+            $validasiData['file_sertifikasi'] = $request->file('file_sertifikasi')->getClientOriginalName();
+            $validasiData['file_sertifikasi'] = $request->file('file_sertifikasi')->storeAs('file_sertifikasi_Alumni', $validasiData['file_sertifikasi']);
+        }
+
+        // dd($validasiData);
+        SertifikasiModel::find($request->id)->update($validasiData);
+        return back()->with('success', 'Sertifikasi Berhasil Diubah!');
+    }
+
+    
+    public function sertifikasilomba_update(Request $request) {
+        $dataAlumni = AlumniModel::findOrFail($request->id);
+        $validasiData = $request->validate([
+            'nama_juara_kompetensi' => 'string',
+            'tingkat_perlombaan' => 'in:1,2,3,4,5',
+            'tanggal_terbit' => 'date',
+            'tanggal_kadaluarsa' => 'date',
+            'file_sertifikasi' => 'image|mimes:jpeg,jpg,|max:2048',
+        ]);
+        
+        $tanggalAwal = $validasiData['tanggal_terbit'];
+        $validasiData['tanggal_terbit'] = date('d/m/Y', strtotime($tanggalAwal));
+        $validasiData['tanggal_terbit'] = Carbon::createFromFormat('d/m/Y', $validasiData['tanggal_terbit'])->format('l, j F Y');
+        
+        $tanggalAkhir = $validasiData['tanggal_kadaluarsa'];
+        $validasiData['tanggal_kadaluarsa'] = date('d/m/Y', strtotime($tanggalAkhir));
+        $validasiData['tanggal_kadaluarsa'] = Carbon::createFromFormat('d/m/Y', $validasiData['tanggal_kadaluarsa'])->format('l, j F Y');
+        
+        $validasiData['file_sertifikasi'] = $request->oldSertifikasi;
+
+        if($request->file('file_sertifikasi')) {
+            if($request->oldSertifikasi) {
+                Storage::delete($request->oldSertifikasi);
+            }
+            $validasiData['file_sertifikasi'] = $request->file('file_sertifikasi')->getClientOriginalName();
+            $validasiData['file_sertifikasi'] = $request->file('file_sertifikasi')->storeAs('file_sertifikasi_Lomba_Alumni', $validasiData['file_sertifikasi']);
+        }
+        // dd($validasiData);
+
+        SertifikasiLombaModel::find($request->id)->update($validasiData);
+        return back()->with('success', 'Sertifikasi Berhasil Ditambahkan!');
+    }
+
     public function alumni_destroy(Request $request, AlumniModel $alumniModel) 
     {
         $data = $alumniModel->findOrFail($request->id);
@@ -661,5 +801,15 @@ class AdminController extends Controller
     public function riwayatpekerjaan_destroy(Request $request) {
         RiwayatPekerjaanModel::destroy($request->id);
         return back()->with('success', 'Data Riwayat Pekerjaan Berhasil Dihapus');
+    }
+
+    public function sertifikasi_destroy(Request $request) {
+        SertifikasiModel::destroy($request->id);
+        return back()->with('success', 'Data Sertifikat Berhasil Dihapus');
+    }
+
+    public function sertifikasilomba_destroy(Request $request) {
+        SertifikasiLombaModel::destroy($request->id);
+        return back()->with('success', 'Data Sertifikat Lomba Berhasil Dihapus');
     }
 }

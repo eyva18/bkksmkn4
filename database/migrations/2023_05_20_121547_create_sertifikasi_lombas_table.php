@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('tanggal_terbit');
             $table->string('tanggal_kadaluarsa');
             $table->string('file_sertifikasi');
+            $table->foreignId('user_id');
             $table->timestamps();
         });
     }
