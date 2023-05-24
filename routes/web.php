@@ -9,6 +9,7 @@ use App\Http\Controllers\ControllersAdmin\AdminLowonganController;
 use App\Http\Controllers\ControllersAlumni\ProfileAlumniController;
 use App\Http\Controllers\ControllersAdmin\AdminLaporanTahunKelulusanController;
 use App\Http\Controllers\ControllersDudi\DudiController;
+use App\Http\Controllers\KepalaSekolahController;
 use App\Models\AlumniModel;
 use App\Models\DudiModel;
 use App\Models\LowonganModel;
@@ -71,13 +72,7 @@ Route::middleware('role:admin')->get('/admin/dashboard', [AdminController::class
 
 Route::middleware('role:alumni')->get('/dashboard', [ProfileAlumniController::class, 'index'])->name('alumni@dashboard');
 
-Route::middleware('role:kepala_sekolah')->get('/kepala-sekolah/dashboard', function () {
-    return 'Kepala Sekolah Dashboard Here';
-})->name('kepala_sekolah@dashboard');
 
-Route::middleware('role:dudi')->get('/dudi/dashboard', function () {
-    return 'Dudi Dashboard Here';
-})->name('dudi@dashboard');
 //Router For Login End
 
 
@@ -145,6 +140,9 @@ Route::middleware(['auth', 'role:admin|alumni'])->group(function() {
     Route::post('/profile/riwayat-pekerjaan/store', [ProfileAlumniController::class, 'riwayatpekerjaan_store']);
     Route::put('/profile/{alumniModel:nama}/update', [AdminController::class, 'alumni_update']);
     Route::post('/profile/biografi/update', [ProfileAlumniController::class, 'update_biografi']);
+});
+Route::middleware(['auth', 'role:kepala_sekolah'])->group(function() {
+    Route::get('/kepala-sekolah/dashboard', [KepalaSekolahController::class, 'index'])->name('kepala_sekolah@dashboard');
 });
 
 Route::middleware(['auth', 'role:dudi'])->group(function() {
