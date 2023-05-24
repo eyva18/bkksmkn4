@@ -43,7 +43,17 @@ span.text-logo {
 .text-capitalize {
     text-transform: capitalize;
 }
+.topbar .navbar-collapse{
+    background-color: #fff !important;
+}
+.page-wrapper>.page-breadcrumb{
+    background-color: #eae2e2;
+}
 
+.page-wrapper>.container-fluid{
+    background-color: #eae2e2;
+    
+}
 .color-23 {
     --tw-text-opacity: 1;
     color: rgba(79, 70, 229, var(--tw-text-opacity));
