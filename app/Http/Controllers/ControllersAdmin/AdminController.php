@@ -207,7 +207,7 @@ class AdminController extends Controller
         $olddata = DudiModel::find($request->id);
         if ($image = $request->file('logo')) {
             $destinationPath = 'images/profileimg/';
-            $logoimage = $request->id . "%" . $image->getClientOriginalName();
+            $logoimage = $request->id . "_" . $image->getClientOriginalName();
             $image->move($destinationPath, $logoimage);
             $logo = "$logoimage";
             $imagename = $olddata->logo;
