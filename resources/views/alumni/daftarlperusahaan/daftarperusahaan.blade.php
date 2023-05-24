@@ -20,7 +20,7 @@
                     </a>
                 </div>
                 <div class="pe-1 mb-3 mb-xl-0">
-                    <a href="/daftar-perushaan" class="btn btn-outline-inverse-info btn-icon-text">
+                    <a href="/daftar-perusahaan" class="btn btn-outline-inverse-info btn-icon-text">
                         Daftar Perusahaan
                     </a>
                 </div>

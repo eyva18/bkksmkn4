@@ -59,7 +59,7 @@
                         <div class="card-body">
                             <h4 class="card-title text-light fs-4">{{ $dataKepalaSekolah->nama }}</h4>
                             <p class="card-text"><i class="mdi mdi-mdi mdi-account-check  text-light"></i> <span
-                                    class="status-alumni">Posisi - Kepala Sekolah</span></p>
+                                    class="status-alumni">Jabatan - Kepala Sekolah</span></p>
                             <p class="card-text"><i class="mdi mdi-calendar text-light"></i> <span
                                     class="status-alumni">{{ $dataKepalaSekolah->tahun_jabatan }}</span></p>
                             <p class="card-text"><i class="mdi mdi-hospital-building text-light"></i> <span
@@ -93,7 +93,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-6 col-lg-4">
+                <div class="col-md-6 mb-3">
                     <div class="card bg-primary text-light border-end" style="border-left: 15px solid white">
                         <div class="card-body">
                             <div class="d-flex align-items-center">
@@ -110,7 +110,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6 col-lg-4">
+                <div class="col-md-6 mb-3">
                     <div class="card bg-primary text-light border-end" style="border-left: 15px solid white">
                         <div class="card-body">
                             <div class="d-flex align-items-center">
@@ -128,7 +128,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6 col-lg-4">
+                <div class="col-md-12 mb-3">
                     <div class="card bg-primary text-light border-end" style="border-left: 15px solid white">
                         <div class="card-body">
                             <div class="d-flex align-items-center">
@@ -145,44 +145,47 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 mt-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">Jumlah Alumni Per Tahun</h4>
-                            <div class="mt-2" style="width:100%;">
-                                <canvas id="ds1" height="195px"></canvas>
-                            </div>
-                            <div class="mt-3">
-                                <ul class="list-style-none mb-0">
-                                    @foreach ($datatahunlulusan as $tahunlulusdata)
-                                        <li>
-                                            <i class="fas fa-circle text-secondary font-10 me-2"></i>
-                                            <span class="text-muted">{{ $tahunlulusdata->tahun_lulus ?? '-' }}</span>
-                                            <span
-                                                class="text-dark float-end font-weight-medium">{{ $datatahunlulusanalumni[$tahunlulusdata->tahun_lulus] ?? '-' }}
-                                                Alumni</span>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-md-12 my-3">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Jumlah Alumni Per Tahun</h4>
+                    <div class="mt-2" style="min-width:100%;">
+                        <canvas id="ds1" height="195px"></canvas>
                     </div>
-                </div>
-                <div class="col-md-6 mt-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">Jumlah Alumni Per Tahun</h4>
-                            <div class="mt-4 position-relative" style="min-width:294px;">
-                                <canvas id="ds2" height="195px"></canvas>
-                            </div>
-                            <ul class="list-inline text-center mt-5 mb-2">
-                                <li class="list-inline-item text-muted fst-italic">Alumni Tahun Ini</li>
-                            </ul>
-                        </div>
+                    <div class="mt-3">
+                        <ul class="list-style-none mb-0">
+                            @foreach ($datatahunlulusan as $tahunlulusdata)
+                                <li>
+                                    <i class="fas fa-circle text-secondary font-10 me-2"></i>
+                                    <span class="text-muted">{{ $tahunlulusdata->tahun_lulus ?? '-' }}</span>
+                                    <span
+                                        class="text-dark float-end font-weight-medium">{{ $datatahunlulusanalumni[$tahunlulusdata->tahun_lulus] ?? '-' }}
+                                        Alumni</span>
+                                </li>
+                            @endforeach
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="col-lg-6 col-md-12 my-3">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Jumlah Alumni Per Tahun</h4>
+                    <div class="mt-4 position-relative" style="min-width:295px;">
+                        <canvas id="ds2" width="195px"></canvas>
+                    </div>
+                    <ul class="list-inline text-center mt-5 mb-2">
+                        <li class="list-inline-item text-muted fst-italic">Alumni Tahun Ini</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
     @endsection
     @section('js-tambahan')
         <script>

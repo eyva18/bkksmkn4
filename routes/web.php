@@ -166,7 +166,7 @@ Route::middleware(['auth', 'role:kepala_sekolah'])->group(function() {
 });
 
 Route::middleware(['auth', 'role:dudi'])->group(function() {
-    Route::get('/company/dashboard', [DudiController::class, 'index']);
+    Route::get('/company/dashboard', [DudiController::class, 'index'])->name('dudi@dashboard');
     Route::post('/company/biografi/update', [DudiController::class, 'update_deskripsi']);
     Route::get('/company/daftar-alumni', [DudiController::class, 'daftaralumni']);
     Route::get('/alumni/search+', [DudiController::class, 'alumnisearch']);
@@ -181,8 +181,6 @@ Route::middleware(['auth', 'role:dudi'])->group(function() {
     Route::post('/company/lowongan-kerja/update/{lowongan:nama}', [DudiController::class, 'updatelowongan']);
     Route::get('/company/profile/{dudi:nama}', [DudiController::class, 'dudiprofile']);
     Route::put('/company/profile/{dudi:nama}/update', [DudiController::class, 'updateprofile']);
-
-
 });
 
 

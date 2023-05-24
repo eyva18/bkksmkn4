@@ -25,7 +25,7 @@
 
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-6 col-lg-6">
+                <div class="col-md-6">
                     <div class="card border-end">
                         <div class="card-body">
                             <div class="d-flex align-items-center">
@@ -43,7 +43,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6 col-lg-6">
+                <div class="col-md-6">
                     <div class="card border-end">
                         <div class="card-body">
                             <div class="d-flex align-items-center">
@@ -95,21 +95,21 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-6 col-md-12">
+                <div class="col-md-6">
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Alumni Yang Bekerja</h4>
-                            <div class="mt-4 position-relative" style="height:294px;">
+                            <div class="mt-4 position-relative" style="min-width:294px;">
                                 <canvas id="ds3" height="195px"></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-12">
+                <div class="col-md-6">
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Alumni Melanjutkan Pendidikan</h4>
-                            <div class="mt-4 position-relative" style="height:294px;">
+                            <div class="mt-4 position-relative" style="min-width:294px;">
                                 <canvas id="ds4" height="195px"></canvas>
                             </div>
                         </div>
