@@ -15,6 +15,7 @@ use App\Models\TahunLulusModel;
 use App\Models\SertifikasiModel;
 use App\Models\JenisKelaminModel;
 use App\Models\StatusAlumniModel;
+use App\Models\StatusBekerjaModel;
 use App\Models\JenisPekerjaanModel;
 use App\Http\Controllers\Controller;
 use App\Models\JenisPendidikanModel;
@@ -22,6 +23,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use App\Models\RiwayatPekerjaanModel;
 use App\Models\SertifikasiLombaModel;
+use App\Models\StatusPendidikanModel;
 use App\Models\RiwayatPendidikanModel;
 use App\Models\TingkatPerlombaanModel;
 use Illuminate\Support\Facades\Storage;
@@ -52,10 +54,10 @@ class AdminController extends Controller
             $LabelsChartJurusan[] = $original->jurusan;
         }
         $DataChartStatus = [
-            'bekerja' => StatusAlumniModel::where('bekerja', 'bekerja')->count(),
-            'tidak_bekerja' => StatusAlumniModel::where('bekerja', 'tidak bekerja')->count(),
-            'malanjutkan_pendidikan' => StatusAlumniModel::where('pendidikan', 'melanjutkan pendidikan')->count(),
-            'tidakmalanjutkan_pendidikan' => StatusAlumniModel::where('pendidikan', 'tidak melanjutkan pendidikan')->count(),
+            'bekerja' => StatusAlumniModel::where('status_bekerja', 1)->count(),
+            'tidak_bekerja' => StatusAlumniModel::where('status_bekerja', 2)->count(),
+            'malanjutkan_pendidikan' => StatusAlumniModel::where('status_pendidikan', 1)->count(),
+            'tidakmalanjutkan_pendidikan' => StatusAlumniModel::where('status_pendidikan', 2)->count(),
         ];
         $DataLowonganKerja = [];
         $LabelLowonganDudi = [];
@@ -373,6 +375,8 @@ class AdminController extends Controller
             'dataJenisKelamin' => JenisKelaminModel::all(),
             'dataJurusan' => JurusanModel::all(),
             'dataTahunLulus' => TahunLulusModel::all(),
+            'dataStatusBekerja' => StatusBekerjaModel::all(),
+            'dataStatusPendidikan' => StatusPendidikanModel::all(),
         ]);
     }
 
@@ -391,6 +395,12 @@ class AdminController extends Controller
             'transkrip_nilai' => '',
             'kode_jurusanId' => '',
             'kode_lulusId' => '',
+        ]);
+        $validasiDataStatusAlumni = $request->validate([
+            'status_bekerja' => '',
+            'status_pendidikan' => '',
+            'universitas' => '',
+            'perusahaan' => '',
         ]);
         $validasiDataUser = $request->validate([
             'username' => 'required|max:225',
@@ -413,11 +423,21 @@ class AdminController extends Controller
             'name' => $validasiDataUser['username'],
             'email' => $validasiDataUser['email'],
             'password' => bcrypt($validasiData['nisn']),
-            'photo_profile' => $validasiData['photo_profile'],
+            'photo_profile' => $validasiData['photo_profile'] ?? 'none',
         ])->assignRole('alumni');
 
+        StatusAlumniModel::create([
+            'nisn' => $validasiData['nisn'],
+            'jurusan' => $validasiData['kode_jurusanId'],
+            'tahun_lulus' => $validasiData['kode_lulusId'],
+            'status_bekerja' => $validasiDataStatusAlumni['status_bekerja'],
+            'status_pendidikan' => $validasiDataStatusAlumni['status_pendidikan'],
+            'universitas' => $validasiDataStatusAlumni['universitas'],
+            'perusahaan' => $validasiDataStatusAlumni['perusahaan'],
+            'user_id' => $useralumnicreate->id,
+        ]);
+        
         $validasiData['user_id'] = $useralumnicreate->id;
-
         AlumniModel::create($validasiData);
         return redirect('/alumni')->with('success', 'Alumni telah ditambahkan!');
     }
@@ -534,10 +554,11 @@ class AdminController extends Controller
     public function alumni_show(Request $request, AlumniModel $alumniModel) {
         $findSiswaProfile = $alumniModel->find($request->id);
         $dataUser = User::find($findSiswaProfile->user_id);
-        // dd($alumniModel);
+        $dataStatusAlumni = StatusAlumniModel::find($findSiswaProfile->id);
         return view('admin.daftar.alumni.profilealumni', [
             'dataAlumni' => $findSiswaProfile,
             'dataUser' => $dataUser,
+            'dataStatusAlumni' => $dataStatusAlumni,
             'dataJenisPendidikan' => JenisPendidikanModel::all(),
             'dataJenisPekerjaan' => JenisPekerjaanModel::all(),
             'dataSertifikasi' => SertifikasiModel::where('user_id', $findSiswaProfile->user_id)->get(),
@@ -551,9 +572,13 @@ class AdminController extends Controller
     public function alumni_edit(Request $request, AlumniModel $alumniModel) {
         $dataAlumni = $alumniModel->findOrFail($request->id);
         $dataUser = User::findOrFail($dataAlumni->user_id);
+        $dataStatusAlumni = StatusAlumniModel::find($dataAlumni->id);
         return view('admin.daftar.alumni.ubahalumni', [
             "alumni" => $dataAlumni,
             "dataUser" => $dataUser,
+            'dataStatusAlumni' => $dataStatusAlumni,
+            'dataStatusBekerja' => StatusBekerjaModel::all(),
+            'dataStatusPendidikan' => StatusPendidikanModel::   all(),
             'dataAgama' => AgamaModel::all(),
             'dataJenisKelamin' => JenisKelaminModel::all(),
             'dataJurusan' => JurusanModel::all(),
@@ -580,6 +605,12 @@ class AdminController extends Controller
                 'kode_jurusanId' => '',      
                 'kode_lulusId' => '',
             ]);
+            $validasiDataStatusAlumni = $request->validate([
+                'status_bekerja' => '',
+                'status_pendidikan' => '',
+                'universitas' => '',
+                'perusahaan' => '',
+            ]);
             $validasiDataUser = $request->validate([
                 'username' => 'max:225',
                 'email' => '',
@@ -600,6 +631,12 @@ class AdminController extends Controller
                 'transkrip_nilai' => '',
                 'kode_jurusanId' => 'required',      
                 'kode_lulusId' => 'required',
+            ]);
+            $validasiDataStatusAlumni = $request->validate([
+                'status_bekerja' => 'required',
+                'status_pendidikan' => 'required',
+                'universitas' => 'string',
+                'perusahaan' => 'string',
             ]);
             $validasiDataUser = $request->validate([
                 'username' => 'required|max:225',
@@ -630,6 +667,7 @@ class AdminController extends Controller
         $useralumnidata = User::find($alumnidata->user_id);
         $validasiData['user_id'] = $useralumnidata->id;
         AlumniModel::where('id', $request->id)->update($validasiData);
+        StatusAlumniModel::find($request->id)->update($validasiDataStatusAlumni);
         if($request->password != null){
             User::findOrFail($validasiData['user_id'])->update([
                 'name' => $validasiDataUser['username'],
@@ -789,6 +827,7 @@ class AdminController extends Controller
         }
 
         AlumniModel::destroy($request->id);
+        StatusAlumniModel::destroy($request->id);
         User::destroy($dataUser->id);
         return back();
     }

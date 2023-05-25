@@ -22,6 +22,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\RiwayatPekerjaanModel;
 use App\Models\SertifikasiLombaModel;
 use App\Models\RiwayatPendidikanModel;
+use App\Models\StatusAlumniModel;
+use App\Models\StatusBekerjaModel;
+use App\Models\StatusPendidikanModel;
 use App\Models\TingkatPerlombaanModel;
 use Illuminate\Support\Facades\Storage;
 
@@ -36,6 +39,10 @@ class ProfileAlumniController extends Controller
         $dataUser = AlumniModel::where('user_id', Auth()->user()->id)->get();
         foreach ($dataUser as $data) {
             $dataAlumni = AlumniModel::find($data->id);
+        }
+        $dataStatusAlumni = StatusAlumniModel::where('user_id', Auth()->user()->id)->get();
+        foreach ($dataStatusAlumni as $data) {
+            $dataStatusA = $data;
         }
         $dataPendidikan = RiwayatPendidikanModel::where('user_id', Auth()->user()->id)->get();
         $dataPekerjaan = RiwayatPekerjaanModel::where('user_id', Auth()->user()->id)->get();
@@ -52,6 +59,7 @@ class ProfileAlumniController extends Controller
         if (Auth::user()->hasRole('alumni')) {
             return view('alumni.dashboard', [
                 'dataAlumni' => $dataAlumni,
+                'dataStatusAlumni' => $dataStatusA,
                 'dataPendidikan' => $dataPendidikan,
                 'dataPekerjaan' => $dataPekerjaan,
                 'dataSertifikasi' => $dataSertifikasi,
@@ -544,11 +552,15 @@ class ProfileAlumniController extends Controller
     {
         $dataAlumni = AlumniModel::find($alumni->id);
         $dataUser = User::findOrFail($dataAlumni->user_id);
+        $dataStatusAlumni = StatusAlumniModel::find($dataAlumni->id);
         if (Auth::user()->hasRole('alumni')) {
             return view('alumni.profile', [
                 'alumni' => $dataAlumni,
                 'dataAlumni' => $dataAlumni,
                 "dataUser" => $dataUser,
+                'dataStatusAlumni' => $dataStatusAlumni,
+                'dataStatusBekerja' => StatusBekerjaModel::all(),
+                'dataStatusPendidikan' => StatusPendidikanModel::all(),
                 'dataAgama' => AgamaModel::all(),
                 'dataJenisKelamin' => JenisKelaminModel::all(),
                 'dataJurusan' => JurusanModel::all(),

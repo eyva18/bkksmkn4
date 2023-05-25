@@ -280,6 +280,95 @@
                     </div>
                 </div>
             </div>
+            <div class="card mt-4">
+                <div class="card-body collapse show">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <h3 class="card-title">Status Alumni</h3>
+                        </div>
+                    </div>
+                    <div class="row mrt-6">
+                        <div class="col-md-4">
+                            <h4 class="text-black m-0">Status Bekerja<span class="text-red"> *</span></h4>
+                            {{-- <p class="text-muted mt-0 text-sm">NISN Siswa</p> --}}
+                        </div>
+                        <div class="col-md-8 pdt-6">
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="kode_statusbekerjaId">Pilih</label>
+                                <select class="form-select @error('status_bekerja') is-invalid @enderror" id="kode_statusbekerjaId" name="status_bekerja">
+                                    <option selected value="">Status Bekerja</option>
+                                    @foreach ($dataStatusBekerja as $data)
+                                        @if (old('status_bekerja') == $data->id)
+                                            <option value="{{ $data->id }}" selected>{{ $data->status_bekerja }}</option>
+                                        @else
+                                            <option value="{{ $data->id }}">{{ $data->status_bekerja }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                                @error('status_bekerja')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mrt-6">
+                        <div class="col-md-4">
+                            <h4 class="text-black m-0">Status Pendidikan<span class="text-red"> *</span></h4>
+                            {{-- <p class="text-muted mt-0 text-sm">NISN Siswa</p> --}}
+                        </div>
+                        <div class="col-md-8 pdt-6">
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="kode_statusbekerjaId">Pilih</label>
+                                <select class="form-select @error('status_pendidikan') is-invalid @enderror" id="kode_statusbekerjaId" name="status_pendidikan">
+                                    <option selected value="">Status Pendidikan</option>
+                                    @foreach ($dataStatusPendidikan as $data)
+                                        @if (old('status_pendidikan') == $data->id)
+                                            <option value="{{ $data->id }}" selected>{{ $data->status_pendidikan }}</option>
+                                        @else
+                                            <option value="{{ $data->id }}">{{ $data->status_pendidikan }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                                @error('status_pendidikan')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pdt-20">
+                        <div class="col-md-4">
+                            <h4 class="text-black m-0">Universitas <span class="text-red"> *</span></h4>
+                            {{-- <p class="text-muted mt-0 text-sm">Universitas</p> --}}
+                        </div>
+                        <div class="col-md-8 pdt-6">
+                            <input type="text" class="form-control font-weight-normal @error('universitas') is-invalid @enderror" name="universitas" value="{{ old('universitas') }}">
+                            @error('universitas')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row mrt-6">
+                        <div class="col-md-4">
+                            <h4 class="text-black m-0">Perusahaan<span class="text-red"> *</span></h4>
+                            {{-- <p class="text-muted mt-0 text-sm">Perusahaan</p> --}}
+                        </div>
+                        <div class="col-md-8 pdt-6">
+                            <input type="text" class="form-control font-weight-normal @error('perusahaan') is-invalid @enderror" name="perusahaan" value="{{ old('perusahaan') }}">
+                            @error('perusahaan')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="card">
                 <div class="card-body collapse show">
                         <div class="row">

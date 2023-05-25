@@ -18,18 +18,16 @@ class StatusAlumniModelFactory extends Factory
      */
     public function definition(): array
     {
-        $alumnifactory = AlumniModel::factory(1)->create();
-        $alumnidata = $alumnifactory->toArray();
-        $bekerja = ['bekerja','tidak bekerja'];
-        $pendidikan = ['melanjutkan pendidikan','tidak melanjutkan pendidikan'];
-        return [
-            'nisn_alumni' => $alumnidata[0]["NISN"],
-            'tahun_lulus' => $alumnidata[0]["kode_lulusId"],
-            'id_jurusan' => $alumnidata[0]["kode_jurusanId"],
-            'bekerja' => Arr::random($bekerja),
-            'pendidikan' => Arr::random($pendidikan),
-            'universitas' => $this->faker->name,
-            'perusahaan' => $this->faker->name,
-        ];
+        // $alumnifactory = AlumniModel::factory(1)->create();
+        // $alumnidata = $alumnifactory->toArray();
+        // $bekerja = ['bekerja','tidak bekerja'];
+        // $pendidikan = ['melanjutkan pendidikan','tidak melanjutkan pendidikan'];
+        // return [
+        //     'nisn_alumni' => $alumnidata[0]["NISN"],
+        //     'bekerja' => Arr::random($bekerja),
+        //     'pendidikan' => Arr::random($pendidikan),
+        //     'universitas' => $this->faker->name,
+        //     'perusahaan' => $this->faker->name,
+        // ];
     }
 }
