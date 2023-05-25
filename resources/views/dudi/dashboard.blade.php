@@ -32,6 +32,7 @@
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-md-12">
             @if (session()->has('success'))
@@ -85,8 +86,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row my-4 pdl-6">
-                <div class="row  justify-content-center bg-dark rounded">
+            <div class="row-12 my-4">
+                <div class="row justify-content-center bg-dark rounded">
                     <div class="col-md-6 text-center">
                         <h2 class="text-light p-3">Sekilas Lowongan Kamu</h2>
                     </div>
@@ -140,7 +141,7 @@
                                     </li>
                                 </ul>
                             </div>
-                            <a href="/lowongan-kerja/detail/{{ $datalowongan->nama }}" class="btn btn-secondary">Detail
+                            <a href="/company/lowongan-kerja/detail/{{ $datalowongan->nama }}" class="btn btn-secondary">Detail
                                 Lowongan</a>
                         </div>
                     </div>

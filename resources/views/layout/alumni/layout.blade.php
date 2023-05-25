@@ -43,8 +43,7 @@
                                 <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
                                     id="profileDropdown">
                                     <span class="nav-profile-name">{{ Auth()->user()->name }}</span>
-                                    <img src="{{ URL::asset('storage/' . Auth::user()->photo_profile) }}" alt="profile"
-                                        style="object-fit: cover;" />
+                                    <img src="{{ URL::asset('storage/' . Auth::user()->photo_profile) }}" alt="profile" style="object-fit: cover;" />
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown"
                                     aria-labelledby="profileDropdown">

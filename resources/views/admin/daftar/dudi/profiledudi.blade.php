@@ -28,8 +28,7 @@
                 <div class="col-md-5">
                     <!-- Card -->
                     <div class="card">
-                        <img class="card-img-top img-fluid" src="{{ URL::asset('images/profileimg/').'/'.$datadudi->logo }}" height="50%"
-                            alt="Card image cap">
+                        <img class="card-img-top img-fluid" src="{{ URL::asset('/images/profileimg' . '/' . $datadudi->logo) }}" height="50%" alt="Card image cap">
                         <div class="card-body">
                             <h4 class="card-title">{{ $datadudi->nama ?? '-' }}</h4>
                             <ul class="list-unstyled">
