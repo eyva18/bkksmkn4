@@ -266,7 +266,7 @@ class AdminController extends Controller
         $logo = null;
         if ($image = $request->file('logo')) {
             $destinationPath = 'images/profileimg/';
-            $logoimage = $fixidcreate . "%" . $image->getClientOriginalName();
+            $logoimage = $fixidcreate . "_" . $image->getClientOriginalName();
             $image->move($destinationPath, $logoimage);
             $logo = "$logoimage";
         } else {

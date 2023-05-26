@@ -89,7 +89,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="/kepala-sekolah/daftar-perusahaan" class="nav-link">
-                                <i class="mdi mdi-school menu-icon"></i>
+                                <i class="mdi mdi-hospital-building menu-icon"></i>
                                 <span class="menu-title">Daftar Perusahaan</span>
                                 <i class="menu-arrow"></i>
                             </a>
@@ -103,7 +103,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="/kepala-sekolah/report/yearly" class="nav-link">
-                                <i class=" mdi mdi-newspaper menu-icon"></i>
+                                <i class=" mdi mdi-chart-areaspline menu-icon"></i>
                                 <span class="menu-title">Laporan Tahun Kelulusan</span>
                                 <i class="menu-arrow"></i>
                             </a>

@@ -11,6 +11,8 @@ use App\Models\CategoryModel;
 use App\Models\JurusanModel;
 use App\Models\RiwayatPekerjaanModel;
 use App\Models\RiwayatPendidikanModel;
+use App\Models\SertifikasiLombaModel;
+use App\Models\SertifikasiModel;
 use App\Models\TahunLulusModel;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -61,13 +63,17 @@ class DudiController extends Controller
     public function alumniprofile(AlumniModel $alumni)
     {
         $dataUser = DudiModel::where('user_id', Auth()->user()->id)->first();
-        $dataPendidikan = RiwayatPendidikanModel::where('user_id', Auth()->user()->id)->get();
-        $dataPekerjaan = RiwayatPekerjaanModel::where('user_id', Auth()->user()->id)->get();
+        $dataPendidikan = RiwayatPendidikanModel::where('user_id',  $alumni->user_id)->get();
+        $dataPekerjaan = RiwayatPekerjaanModel::where('user_id',  $alumni->user_id)->get();
+        $dataSertifikasi = SertifikasiModel::where('user_id',  $alumni->user_id)->get();
+        $dataSertifikasiLomba = SertifikasiLombaModel::where('user_id',  $alumni->user_id)->get();
         return view('dudi.daftaralumni.alumniprofiledetail', [
             'dataDudi' => $dataUser,
             'dataAlumni' => $alumni,
             'dataPendidikan' => $dataPendidikan,
             'dataPekerjaan' => $dataPekerjaan,
+            'dataSertifikasi' => $dataSertifikasi,
+            'dataSertifikasiLomba' => $dataSertifikasiLomba,
             'alumnisekilas' => AlumniModel::where('id', '!=', $alumni->id)->paginate(3)
         ]);        
     }

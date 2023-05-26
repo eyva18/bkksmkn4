@@ -35,10 +35,9 @@ Route::get('/login', function () {
     return view('login.login');
 });
 Route::get('/', function () {
-    if(Auth::user() != null){
+    if (Auth::user() != null) {
         return back();
-    }
-    elseif (Auth::user() == null) {
+    } elseif (Auth::user() == null) {
         return view('homepage.homepage', [
             'totalAlumni' => AlumniModel::count(),
             'totalperusahaan' => DudiModel::count(),
@@ -49,19 +48,16 @@ Route::get('/', function () {
 });
 Auth::routes();
 Route::get('/home', function () {
-    if(Auth::user() == null){
+    if (Auth::user() == null) {
         return redirect('/');
     }
-    if(Auth::user()->hasRole('admin')){
+    if (Auth::user()->hasRole('admin')) {
         return redirect()->route('admin@dashboard');
-    }
-    elseif(Auth::user()->hasRole('alumni')){
+    } elseif (Auth::user()->hasRole('alumni')) {
         return redirect()->route('alumni@dashboard');
-    }
-    elseif(Auth::user()->hasRole('kepala_sekolah')){
+    } elseif (Auth::user()->hasRole('kepala_sekolah')) {
         return redirect()->route('kepala_sekolah@dashboard');
-    }
-    elseif(Auth::user()->hasRole('dudi')){
+    } elseif (Auth::user()->hasRole('dudi')) {
         return redirect()->route('dudi@dashboard');
     }
 });
@@ -106,7 +102,7 @@ Route::middleware('role:admin')->get('/admin/administrator/master/company/profil
 Route::middleware('role:admin')->get('/admin/administrator/master/company/edit/{dudi:nama}',  [AdminController::class, 'editdudi_profile']);
 
 //Alumni Year
-Route::middleware(['auth', 'role:admin'])->group(function() {
+Route::middleware(['auth', 'role:admin'])->group(function () {
     // Route::resource('/alumni', AdminAlumniController::class);
     Route::get('/alumni/', [AdminController::class, 'alumni_index']);
     Route::get('/alumni/create', [AdminController::class, 'alumni_create']);
@@ -133,7 +129,7 @@ Route::middleware(['auth', 'role:admin'])->group(function() {
     Route::post('/alumni/pekerjaan/delete', [AdminController::class, 'riwayatpekerjaan_destroy']);
 });
 
-Route::middleware(['auth', 'role:admin|alumni'])->group(function() {
+Route::middleware(['auth', 'role:admin|alumni'])->group(function () {
     Route::resource('/alumni/profile', ProfileAlumniController::class);
     Route::get('/lowongan-kerja', [ProfileAlumniController::class, 'daftarLowongan']);
     Route::get('/lowongan-kerja/search+', [ProfileAlumniController::class, 'daftarLowongansearch']);
@@ -153,7 +149,7 @@ Route::middleware(['auth', 'role:admin|alumni'])->group(function() {
     Route::post('/profile/sertifikasilomba/update', [ProfileAlumniController::class, 'sertifikasilomba_update']);
     Route::post('/profile/sertifikasi/destroy', [ProfileAlumniController::class, 'sertifikasi_destroy']);
     Route::post('/profile/sertifikasilomba/destroy', [ProfileAlumniController::class, 'sertifikasilomba_destroy']);
-    
+
     Route::put('/profile/{alumniModel:nama}/update', [AdminController::class, 'alumni_update']);
     Route::post('/profile/biografi/update', [ProfileAlumniController::class, 'update_biografi']);
     Route::post('/profile/riwayatpendidikan/update', [ProfileAlumniController::class, 'riwayatpendidikan_update']);
@@ -161,11 +157,28 @@ Route::middleware(['auth', 'role:admin|alumni'])->group(function() {
     Route::delete('/profile/riwayatpendidikan/delete', [ProfileAlumniController::class, 'riwayatpendidikan_destroy']);
     Route::delete('/profile/riwayatpekerjaan/delete', [ProfileAlumniController::class, 'riwayatpekerjaan_destroy']);
 });
-Route::middleware(['auth', 'role:kepala_sekolah'])->group(function() {
+Route::middleware(['auth', 'role:kepala_sekolah'])->group(function () {
     Route::get('/kepala-sekolah/dashboard', [KepalaSekolahController::class, 'index'])->name('kepala_sekolah@dashboard');
+    Route::post('/kepala-sekolah/kutipan/update', [KepalaSekolahController::class, 'update_kutipan']);
+    Route::get('/kepala-sekolah/daftar-alumni', [KepalaSekolahController::class, 'daftaralumni']);
+    Route::get('/kepala-sekolah/alumni/search+', [KepalaSekolahController::class, 'alumnisearch']);
+    Route::get('/kepala-sekolah/alumni/profile-detail/{alumni:nama}', [KepalaSekolahController::class, 'alumniprofile']);
+    Route::get('/kepala-sekolah/daftar-perusahaan', [KepalaSekolahController::class, 'daftarPerusahaan']);
+    Route::get('/kepala-sekolah/perusahaan/profile/{dudi:nama}', [KepalaSekolahController::class, 'profileperusahaan']);
+    Route::get('/kepala-sekolah/daftar-perusahaan/search+', [KepalaSekolahController::class, 'perusahaansearch']);
+    Route::get('/kepala-sekolah/daftar-lowongan', [KepalaSekolahController::class, 'daftarLowongan']);
+    Route::get('/kepala-sekolah/lowongan-kerja/search+', [KepalaSekolahController::class, 'daftarLowongansearch']);
+    Route::get('/kepala-sekolah/lowongan-kerja/detail/{lowongan:nama}', [KepalaSekolahController::class, 'detaillowongan']);
+    Route::get('/kepala-sekolah/report/yearly', [KepalaSekolahController::class, 'laporankelulusan']);
+    Route::get('/kepala-sekolah/report/yeary/pick/',  [KepalaSekolahController::class, 'laporan_yearly']);
+    Route::get('/kepala-sekolah/report/yearly/all/jurusan/{idjurusan}',  [KepalaSekolahController::class, 'detail_laporan_perjurusan']);
+    Route::get('/kepala-sekolah/report/yearly/{tahun_lulus:tahun_lulus}/jurusan/{idjurusan}',  [KepalaSekolahController::class, 'detail_laporan_perjurusan_pertahun']);
+    Route::get('/kepala-sekolah/report/yearly/all/jurusan/{idjurusan}/export',  [KepalaSekolahController::class, 'detail_laporan_perjurusan_export']);
+    Route::get('/kepala-sekolah/report/yearly/{tahun_lulus:tahun_lulus}/jurusan/{idjurusan}/export',  [KepalaSekolahController::class, 'detail_laporan_perjurusan_pertahun_export']);
+
 });
 
-Route::middleware(['auth', 'role:dudi'])->group(function() {
+Route::middleware(['auth', 'role:dudi'])->group(function () {
     Route::get('/company/dashboard', [DudiController::class, 'index'])->name('dudi@dashboard');
     Route::post('/company/biografi/update', [DudiController::class, 'update_deskripsi']);
     Route::get('/company/daftar-alumni', [DudiController::class, 'daftaralumni']);
