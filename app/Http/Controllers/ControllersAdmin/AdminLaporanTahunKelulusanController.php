@@ -67,6 +67,9 @@ class AdminLaporanTahunKelulusanController extends Controller
     }
     public function laporan_yearly(Request $request)
     {
+        if($request->idtahunlulus == null){
+            return redirect('/admin/administrator/master/report/yearly');
+        }
         $DataChartStatus = [
             'bekerja' => StatusAlumniModel::where('tahun_lulus', $request->idtahunlulus)->where('bekerja', 'bekerja')->count(),
             'tidak_bekerja' => StatusAlumniModel::where('tahun_lulus', $request->idtahunlulus)->where('bekerja', 'tidak bekerja')->count(),
@@ -164,15 +167,17 @@ class AdminLaporanTahunKelulusanController extends Controller
     }
 
     public function detail_laporan_perjurusan_export($idjurusan)
-    {
-        return Excel::download(new LaporanPerTahun($idjurusan), 'laporansemuatahun.xlsx');
+    {        
+        $jurusanget = JurusanModel::find($idjurusan);
+        $namepathfile = 'Laporan-Jurusan#'.$jurusanget->jurusan.' - Semua-Tahun'.'.xlsx';
+        return Excel::download(new LaporanPerTahun($idjurusan), $namepathfile);
         return back();
     }
     
     public function detail_laporan_perjurusan_pertahun_export(TahunLulusModel $tahun_lulus ,$idjurusan)
     {
         $jurusanget = JurusanModel::find($idjurusan);
-        $namepathfile = 'laporandjursan#'.$jurusanget->nama.'- Tahun#'.$tahun_lulus->tahun_lulus.'.xlsx';
+        $namepathfile = 'Laporan-Jurusan#'.$jurusanget->jurusan.' - Tahun#'.$tahun_lulus->tahun_lulus.'.xlsx';
         return Excel::download(new LaporanPickTahunan($tahun_lulus->id, $idjurusan), $namepathfile);
         return back();
     }

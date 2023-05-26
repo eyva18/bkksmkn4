@@ -1,4 +1,4 @@
-@extends('layout.alumni.layout')
+@extends('layout.kepalasekolah.layout')
 @section('css-tambahan')
     <link href="{{ URL::asset('asset/plugins/adminpage/costume.css') }}" rel="stylesheet">
 @endsection
@@ -11,23 +11,27 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-12">
-            <div class="d-flex align-items-center justify-content-evenly">
-                <div class="pe-1 mb-3 mb-xl-0">
-                    <a href="/lowongan-kerja" class="btn btn-outline-inverse-info btn-icon-text">
-                        Daftar Lowongan
-                    </a>
-                </div>
-                <div class="pe-1 mb-3 mb-xl-0">
-                    <a href="/daftar-perusahaan" class="btn btn-outline-inverse-info btn-icon-text">
-                        Daftar Perusahaan
-                    </a>
-                </div>
-                <div class="pe-1 mb-3 mb-xl-0">
-                    <a href="/profile/{{ $dataAlumni->nama }}" class="btn btn-outline-inverse-info btn-icon-text">
-                        Profile Saya
-                    </a>
-                </div>
+        <div class="d-flex align-items-center justify-content-evenly">
+            <div class="pe-1 mb-3 mb-xl-0">
+                <a href="/kepala-sekolah/daftar-alumni" class="btn btn-outline-inverse-info btn-icon-text">
+                    Daftar Alumni
+                </a>
+            </div>
+            <div class="pe-1 mb-3 mb-xl-0">
+                <a href="/kepala-sekolah/daftar-perusahaan" class="btn btn-outline-inverse-info btn-icon-text">
+                    Daftar Perusahaan
+                </a>
+            </div>
+            <div class="pe-1 mb-3 mb-xl-0">
+                <a href="/kepala-sekolah/report/yearly" class="btn btn-outline-inverse-info btn-icon-text">
+                    Laporan Tahun Kelulusan
+                </a>
+            </div>
+            <div class="pe-1 mb-3 mb-xl-0">
+                <a href="/kepala-sekolah/profile/{{ Auth()->user()->name }}"
+                    class="btn btn-outline-inverse-info btn-icon-text">
+                    Edit Profile
+                </a>
             </div>
         </div>
     </div>
@@ -111,7 +115,7 @@
                                                     <li><i class="mdi mdi-calendar color-23"></i> <span
                                                             class="mrl-5 text-black">{{ $item->tgl_upload }}</span></li>
                                                     <li><i class="mdi mdi-map-marker color-23"></i> <span
-                                                            class="mrl-5 text-black">{{ $item->lokasi ?? '-' }}</span>
+                                                            class="mrl-5 text-black">{{ $item->lokasi ?? '-'}}</span>
                                                     </li>
                                                 </ul>
                                             </div>

@@ -1,4 +1,4 @@
-@extends('layout.dudi.layout')
+@extends('layout.kepalasekolah.layout')
 @section('css-tambahan')
     <link href="{{ URL::asset('asset/plugins/adminpage/costume.css') }}" rel="stylesheet">
 @endsection
@@ -15,17 +15,23 @@
     <div class="col-sm-8">
         <div class="d-flex align-items-center justify-content-evenly">
             <div class="pe-1 mb-3 mb-xl-0">
-                <a href="/company/daftar-alumni" class="btn btn-outline-inverse-info btn-icon-text">
+                <a href="/kepala-sekolah/daftar-alumni" class="btn btn-outline-inverse-info btn-icon-text">
                     Daftar Alumni
                 </a>
             </div>
             <div class="pe-1 mb-3 mb-xl-0">
-                <a href="/company/daftar-lowongan" class="btn btn-outline-inverse-info btn-icon-text">
-                    Daftar Lowongan
+                <a href="/kepala-sekolah/daftar-perusahaan" class="btn btn-outline-inverse-info btn-icon-text">
+                    Daftar Perusahaan
                 </a>
             </div>
             <div class="pe-1 mb-3 mb-xl-0">
-                <a href="/company/profile/{{ $dataDudi->nama }}" class="btn btn-outline-inverse-info btn-icon-text">
+                <a href="/kepala-sekolah/report/yearly" class="btn btn-outline-inverse-info btn-icon-text">
+                    Laporan Tahun Kelulusan
+                </a>
+            </div>
+            <div class="pe-1 mb-3 mb-xl-0">
+                <a href="/kepala-sekolah/profile/{{ Auth()->user()->name }}"
+                    class="btn btn-outline-inverse-info btn-icon-text">
                     Edit Profile
                 </a>
             </div>
@@ -204,7 +210,7 @@
                         </li>
                     </ul>
                 </div>
-                <a href="/company/alumni/profile-detail/{{ $alumni->nama }}" class="btn btn-primary">Profile Alumni</a>
+                <a href="/kepala-sekolah/alumni/profile-detail/{{ $alumni->nama }}" class="btn btn-primary">Profile Alumni</a>
             </div>
         </div>
     @endforeach

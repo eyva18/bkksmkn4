@@ -12,7 +12,7 @@
         <div class="page-breadcrumb">
             <div class="row">
                 <div class="col-7 align-self-center">
-                    <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">Laporan Detail Semua Tahun Kelulusan - <strong> {{ $jurusandata->jurusan }} </strong></h3>
+                    <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">Laporan Detail - <strong> {{ $jurusandata->jurusan }} </strong></h3>
                 </div>
             </div>
         </div>
