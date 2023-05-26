@@ -35,7 +35,8 @@ class UserSeeder extends Seeder
             'id' => 3,
             'name' => 'Drs. Syafruddin Noor, M.Pd.',
             'email' => 'kepala_sekolah@web',
-            'password' => bcrypt('kepalasekolah123')
+            'password' => bcrypt('kepalasekolah123'),
+            'photo_profile' => 'syafruddin-noor.jpeg'
         ]);
         $kepala_sekolah->assignRole('kepala_sekolah');
         KepalaSekolahModel::create([

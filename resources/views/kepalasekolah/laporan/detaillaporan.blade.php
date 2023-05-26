@@ -147,8 +147,8 @@
                                     @foreach ($dataalumni as $alumni)
                                     <tr>
                                         <td>{{ $alumni->nama ?? '-'}}</td>
-                                        <td>{{ ($statusalumni[$alumni->id]->bekerja ?? '-') == "bekerja" ? '✓' : 'X' }}</td>
-                                        <td>{{ ($statusalumni[$alumni->id]->pendidikan ?? '-') == "melanjutkan pendidikan" ? '✓' : 'X' ?? 'X'}}</td>
+                                        <td>{{ ($statusalumni[$alumni->id]->status_bekerja ?? '-') == 1 ? '✓' : 'X' }}</td>
+                                        <td>{{ ($statusalumni[$alumni->id]->status_pendidikan ?? '-') == 1 ? '✓' : 'X' ?? 'X'}}</td>
                                         <td>{{ $statusalumni[$alumni->id]->universitas ?? '-'}}</td>
                                         <td>{{ $statusalumni[$alumni->id]->perusahaan ?? '-'}}</td>
                                     </tr>

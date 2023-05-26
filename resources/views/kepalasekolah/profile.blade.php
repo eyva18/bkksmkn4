@@ -1,4 +1,4 @@
-@extends('layout.dudi.layout')
+@extends('layout.kepalasekolah.layout')
 @section('css-tambahan')
     <link href="{{ URL::asset('asset/plugins/adminpage/costume.css') }}" rel="stylesheet">
 @endsection
@@ -74,14 +74,16 @@
                                 </div>
                                 <div class="row pdt-20">
                                     <div class="col-md-4">
-                                        <h4 class="text-black m-0">Bidang Perusahaan<span class="text-red"> *</span></h4>
-                                        <p class="text-muted mt-0 text-sm">Bidang Operasi Perusahaan</p>
+                                        <h4 class="text-black m-0">Kutipan <span class="text-red"> *</span></h4>
+                                        <p class="text-muted mt-0 text-sm">Kutipan Yang Ingin Anda Sampaikan</p>
                                     </div>
-                                    <div class="col-md-8 pdt-6">
-                                        <input type="text" name="bidang"
-                                            class="form-control font-weight-normal @error('bidang') is-invalid @enderror"
-                                            value="{{ old('bidang', $dataKepalaSekolah->bidang) }}">
-                                        @error('bidang')
+                                    <div class="col-md-8">
+                                        <input id="kutipan" placeholder="Kutipan Anda..."
+                                            class="form-control font-weight-normal @error('kutipan') is-invalid @enderror"
+                                            type="hidden" name="kutipan"
+                                            value="{{ old('kutipan', $dataKepalaSekolah->kutipan) }}">
+                                        <trix-editor input="kutipan"></trix-editor>
+                                        @error('kutipan')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
@@ -90,8 +92,50 @@
                                 </div>
                                 <div class="row pdt-20">
                                     <div class="col-md-4">
-                                        <h4 class="text-black m-0">No Telpon <span class="text-red"> *</span></h4>
-                                        <p class="text-muted mt-0 text-sm">No WhatsApp Perusahaan</p>
+                                        <h4 class="text-black m-0">Lama Menjabat <span class="text-red"> *</span></h4>
+                                        <p class="text-muted mt-0 text-sm">Lama Menjabat Sebagai Kepala Sekolah</p>
+                                    </div>
+                                    <div class="col-md-8 pdt-6">
+                                        <input type="text" name="tahun_jabatan"
+                                            class="form-control font-weight-normal @error('tahun_jabatan') is-invalid @enderror"
+                                            value="{{ old('tahun_jabatan', $dataKepalaSekolah->tahun_jabatan) }}">
+                                        @error('tahun_jabatan')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="row mrt-6">
+                                    <div class="col-md-4">
+                                        <h4 class="text-black m-0">Jenis Kelamin<span class="text-red"> *</span></h4>
+                                        <p class="text-muted mt-0 text-sm">Jenis Kelamin Anda</p>
+                                    </div>
+                                    <div class="col-md-8 pdt-6">
+                                        <div class="input-group mb-3">
+                                            <label class="input-group-text" for="jenis_kelamin">Pilih</label>
+                                            <select class="form-select @error('jenis_kelamin') is-invalid @enderror" id="jenis_kelamin" name="jenis_kelamin">
+                                                <option selected>Jenis Kelamin</option>
+                                                @foreach ($dataJenisKelamin as $item)
+                                                    @if (old('jenis_kelamin', $dataKepalaSekolah->jenis_kelamin) == $item->id)
+                                                        <option value="{{ $item->id }}" selected>{{ $item->jenis_kelamin }}</option>
+                                                    @else
+                                                        <option value="{{ $item->id }}">{{ $item->jenis_kelamin }}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                            @error('jenis_kelamin')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row pdt-20">
+                                    <div class="col-md-4">
+                                        <h4 class="text-black m-0">NO Telepon <span class="text-red"> *</span></h4>
+                                        <p class="text-muted mt-0 text-sm">Bisa Saja Isikan Nomor Telepon Sekolah</p>
                                     </div>
                                     <div class="col-md-8 pdt-6">
                                         <input type="text" name="no_telp"
@@ -104,52 +148,17 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="row pdt-20">
-                                    <div class="col-md-4">
-                                        <h4 class="text-black m-0">Deskripsi <span class="text-red"> *</span></h4>
-                                        <p class="text-muted mt-0 text-sm">Deskripsi Perusahaan Anda</p>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <input id="deskripsi" placeholder="Tentang diri anda"
-                                            class="form-control font-weight-normal @error('deskripsi') is-invalid @enderror"
-                                            type="hidden" name="deskripsi"
-                                            value="{{ old('deskripsi', $dataKepalaSekolah->deskripsi) }}">
-                                        <trix-editor input="deskripsi"></trix-editor>
-                                        @error('deskripsi')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="row mrt-6">
-                                    <div class="col-md-4">
-                                        <h4 class="text-black m-0">Alamat<span class="text-red"> *</span></h4>
-                                        <p class="text-muted mt-0 text-sm">Alamat Domisi Anda</p>
-                                    </div>
-                                    <div class="col-md-8 pdt-6">
-                                        <div class="form-group">
-                                            <textarea class="form-control @error('alamat') is-invalid @enderror" name="alamat" rows="7"
-                                                placeholder="Alamat Rumah...">{{ old('alamat', $dataKepalaSekolah->alamat) }}</textarea>
-                                            @error('alamat')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="row mt-3">
                                     <div class="col-md-4">
-                                        <h4 class="text-black m-0">Logo Perusahaan<span class="text-red"> *</span></h4>
-                                        <p class="text-muted mt-0 text-sm">Diutamakan Ukuran 300x300</p>
+                                        <h4 class="text-black m-0">Photo Profile<span class="text-red"> *</span></h4>
+                                        <p class="text-muted mt-0 text-sm">Photo Profile Yang Ingin Anda Gunakan</p>
                                     </div>
                                     <div class="col-md-8 pdt-6">
-                                        <input type="hidden" name="oldlogo" value="{{ $dataKepalaSekolah->logo }}">
-                                        <input class="form-control @error('logo') is-invalid @enderror"
-                                            name="logo" type="file" id="formFile"
-                                            value="{{ old('logo') }}">
-                                        @error('logo')
+                                        <input type="hidden" name="oldphoto_profile" value="{{ $dataKepalaSekolah->photo_profile }}">
+                                        <input class="form-control @error('photo_profile') is-invalid @enderror"
+                                            name="photo_profile" type="file" id="formFile"
+                                            value="{{ old('photo_profile') }}">
+                                        @error('photo_profile')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
@@ -177,7 +186,7 @@
                             <div class="row mrt-6">
                                 <div class="col-md-4">
                                     <h4 class="text-black m-0">Username<span class="text-red"> *</span></h4>
-                                    <p class="text-muted mt-0 text-sm">Username Perusahaan</p>
+                                    <p class="text-muted mt-0 text-sm">Username Kepala Sekolah</p>
                                 </div>
                                 <div class="col-md-8 pdt-6">
                                     <input type="text"
@@ -194,7 +203,7 @@
                             <div class="row pdt-20">
                                 <div class="col-md-4">
                                     <h4 class="text-black m-0">E-Mail<span class="text-red"> *</span></h4>
-                                    <p class="text-muted mt-0 text-sm">E-Mail Perusahaan</p>
+                                    <p class="text-muted mt-0 text-sm">E-Mail Kepala Sekolah</p>
                                 </div>
                                 <div class="col-md-8 pdt-6">
                                     <input type="email"
@@ -211,7 +220,7 @@
                             <div class="row mrt-6">
                                 <div class="col-md-4">
                                     <h4 class="text-black m-0">Password<span class="text-red"> *</span></h4>
-                                    <p class="text-muted mt-0 text-sm">Password Pengguna Perusahaan</p>
+                                    <p class="text-muted mt-0 text-sm">Password Pengguna User</p>
                                 </div>
                                 <div class="col-md-8 pdt-6">
                                     <input type="password"

@@ -235,7 +235,7 @@ class DudiController extends Controller
         ]);
         return redirect('/company/lowongan-kerja/detail/'.$request->nama)->with('success', 'Lowongan telah ditambahkan!');
     }
-    public function updateprofile(Request $request, AlumniModel $alumniModel)
+    public function updateprofile(Request $request, DudiModel $alumniModel)
     {
         $validasiData = $request->validate([
             'nama' => 'max:225',
@@ -249,7 +249,7 @@ class DudiController extends Controller
         $olddata = DudiModel::find($request->id);
         if ($image = $request->file('logo')) {
             $destinationPath = 'images/profileimg/';
-            $logoimage = $request->id . "%" . $image->getClientOriginalName();
+            $logoimage = $request->id . "_" . $image->getClientOriginalName();
             $image->move($destinationPath, $logoimage);
             $validasiData['logo'] = "$logoimage";
             $imagename = $olddata->logo;

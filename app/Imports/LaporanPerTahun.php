@@ -21,7 +21,7 @@ class LaporanPerTahun implements FromView
         $originalalumnidata = AlumniModel::where('kode_jurusanId', $this->idjurusan)->get();
         $statusalumni = [];
         foreach ($originalalumnidata as $original) {
-            $status = StatusAlumniModel::where('nisn_alumni', $original->nisn)->first();
+            $status = StatusAlumniModel::where('nisn', $original->nisn)->first();
             $statusalumni[$original->id] = $status;
         }
         return view('admin.exportdata.alltahun', [

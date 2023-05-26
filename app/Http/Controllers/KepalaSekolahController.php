@@ -7,6 +7,7 @@ use App\Imports\LaporanPickTahunan;
 use App\Models\AlumniModel;
 use App\Models\CategoryModel;
 use App\Models\DudiModel;
+use App\Models\JenisKelaminModel;
 use App\Models\JurusanModel;
 use App\Models\KepalaSekolahModel;
 use App\Models\LowonganModel;
@@ -19,6 +20,7 @@ use App\Models\TahunLulusModel;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\File;
 
 class KepalaSekolahController extends Controller
 {
@@ -446,7 +448,55 @@ class KepalaSekolahController extends Controller
         $dataKepalaSekolah = KepalaSekolahModel::where('user_id', Auth()->user()->id)->first();
         return view('kepalasekolah.profile', [
             'dataKepalaSekolah' => $dataKepalaSekolah,
-            'dataUser' => User::find(Auth()->user()->id)
+            'dataUser' => User::find(Auth()->user()->id),
+            'dataJenisKelamin' => JenisKelaminModel::all()
         ]);        
+    }
+    public function updateprofile(Request $request, KepalaSekolahModel $kepala_sekolah)
+    {
+        $validasiDataPhoto = [
+            'photo_profile' => 'file|min:10|max:1024|image|mimes:jpeg,jpg',
+        ];
+        $validasiData = $request->validate([
+            'nama' => 'max:225',
+            'tahun_jabatan' => 'max:225',
+            'no_telp' => 'digits_between:1,15|numeric',
+            'kutipan' => '',
+            'jenis_kelamin' => '',
+        ]);
+                
+        $olddatakepalasekolah = KepalaSekolahModel::find($request->id);
+        $olddata = User::find($olddatakepalasekolah->user_id);
+        if ($image = $request->file('photo_profile')) {
+            $destinationPath = 'images/profileimg/';
+            $logoimage = $request->id . "_" . $image->getClientOriginalName();
+            $image->move($destinationPath, $logoimage);
+            $validasiDataPhoto['photo_profile'] = "$logoimage";
+            $imagename = $olddata->logo;
+            $image1 = $imagename;
+            File::delete(public_path("images/profileimg/$image1"));
+        } else {
+            $validasiDataPhoto['photo_profile'] = $olddata->photo_profile;
+        }
+        
+        $validasiData['user_id'] = auth()->user()->id;
+        // dd($request->input('id'));
+        if($request->password != null){
+            User::where('id', $olddata->user_id)->update([
+                'name' => $request->username,
+                'email' => $request->email,
+                'password' => bcrypt($request->password),
+                'photo_profile' => $validasiDataPhoto['photo_profile']
+        ]);
+        }
+        elseif($request->password == null){
+            User::where('id', $olddata->user_id)->update([
+                'name' => $request->username,
+                'email' => $request->email,
+                'photo_profile' => $validasiDataPhoto['photo_profile']
+        ]);
+        }
+        KepalaSekolahModel::where('id', $request->id)->update($validasiData);
+        return redirect('/kepala-sekolah/dashboard')->with('success', 'Data Profile Telah Berhasi Diubah!');
     }
 }
