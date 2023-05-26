@@ -16,17 +16,23 @@
             <div class="col-sm-8">
                 <div class="d-flex align-items-center justify-content-evenly">
                     <div class="pe-1 mb-3 mb-xl-0">
-                        <a href="/company/daftar-alumni" class="btn btn-outline-inverse-info btn-icon-text">
+                        <a href="/kepala-sekolah/daftar-alumni" class="btn btn-outline-inverse-info btn-icon-text">
                             Daftar Alumni
                         </a>
                     </div>
                     <div class="pe-1 mb-3 mb-xl-0">
-                        <a href="/company/daftar-lowongan" class="btn btn-outline-inverse-info btn-icon-text">
-                            Daftar Lowongan
+                        <a href="/kepala-sekolah/daftar-perusahaan" class="btn btn-outline-inverse-info btn-icon-text">
+                            Daftar Perusahaan
                         </a>
                     </div>
                     <div class="pe-1 mb-3 mb-xl-0">
-                        <a href="/company/profile/{{ $dataDudi->nama }}" class="btn btn-outline-inverse-info btn-icon-text">
+                        <a href="/kepala-sekolah/report/yearly" class="btn btn-outline-inverse-info btn-icon-text">
+                            Laporan Tahun Kelulusan
+                        </a>
+                    </div>
+                    <div class="pe-1 mb-3 mb-xl-0">
+                        <a href="/kepala-sekolah/profile/{{ Auth()->user()->name }}"
+                            class="btn btn-outline-inverse-info btn-icon-text">
                             Edit Profile
                         </a>
                     </div>
@@ -41,24 +47,24 @@
                             <div class="row">
                                 <div class="col-md-9">
                                     <h3 class="card-title">Informasi Profil <span
-                                            style="text-decoration-line: underline;">{{ $dataDudi->nama }}</span></h3>
+                                            style="text-decoration-line: underline;">{{ $dataKepalaSekolah->nama }}</span></h3>
                                     <h6 class="card-subtitle">Data Personal dan Deskripsi</h6>
                                 </div>
                             </div>
-                            <form action="/company/profile/{{ $dataDudi->nama }}/update" method="post"
+                            <form action="/kepala-sekolah/profile/{{ $dataKepalaSekolah->nama }}/update" method="post"
                                 enctype="multipart/form-data">
                                 @method('put')
                                 @csrf
-                                <input type="hidden" name="id" value="{{ $dataDudi->id }}">
+                                <input type="hidden" name="id" value="{{ $dataKepalaSekolah->id }}">
                                 <div class="row pdt-20">
                                     <div class="col-md-4">
-                                        <h4 class="text-black m-0">Nama Perusahaan<span class="text-red"> *</span></h4>
-                                        <p class="text-muted mt-0 text-sm">Nama Lengkap Perusahaan</p>
+                                        <h4 class="text-black m-0">Nama Kepala Sekolah<span class="text-red"> *</span></h4>
+                                        <p class="text-muted mt-0 text-sm">Nama Lengkap Kepala Sekolah</p>
                                     </div>
                                     <div class="col-md-8 pdt-6">
                                         <input type="text" name="nama"
                                             class="form-control font-weight-normal @error('nama') is-invalid @enderror"
-                                            value="{{ old('nama', $dataDudi->nama) }}">
+                                            value="{{ old('nama', $dataKepalaSekolah->nama) }}">
                                         @error('nama')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -74,7 +80,7 @@
                                     <div class="col-md-8 pdt-6">
                                         <input type="text" name="bidang"
                                             class="form-control font-weight-normal @error('bidang') is-invalid @enderror"
-                                            value="{{ old('bidang', $dataDudi->bidang) }}">
+                                            value="{{ old('bidang', $dataKepalaSekolah->bidang) }}">
                                         @error('bidang')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -90,7 +96,7 @@
                                     <div class="col-md-8 pdt-6">
                                         <input type="text" name="no_telp"
                                             class="form-control font-weight-normal @error('no_telp') is-invalid @enderror"
-                                            value="{{ old('no_telp', $dataDudi->no_telp) }}">
+                                            value="{{ old('no_telp', $dataKepalaSekolah->no_telp) }}">
                                         @error('no_telp')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -107,7 +113,7 @@
                                         <input id="deskripsi" placeholder="Tentang diri anda"
                                             class="form-control font-weight-normal @error('deskripsi') is-invalid @enderror"
                                             type="hidden" name="deskripsi"
-                                            value="{{ old('deskripsi', $dataDudi->deskripsi) }}">
+                                            value="{{ old('deskripsi', $dataKepalaSekolah->deskripsi) }}">
                                         <trix-editor input="deskripsi"></trix-editor>
                                         @error('deskripsi')
                                             <div class="invalid-feedback">
@@ -124,7 +130,7 @@
                                     <div class="col-md-8 pdt-6">
                                         <div class="form-group">
                                             <textarea class="form-control @error('alamat') is-invalid @enderror" name="alamat" rows="7"
-                                                placeholder="Alamat Rumah...">{{ old('alamat', $dataDudi->alamat) }}</textarea>
+                                                placeholder="Alamat Rumah...">{{ old('alamat', $dataKepalaSekolah->alamat) }}</textarea>
                                             @error('alamat')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -139,7 +145,7 @@
                                         <p class="text-muted mt-0 text-sm">Diutamakan Ukuran 300x300</p>
                                     </div>
                                     <div class="col-md-8 pdt-6">
-                                        <input type="hidden" name="oldlogo" value="{{ $dataDudi->logo }}">
+                                        <input type="hidden" name="oldlogo" value="{{ $dataKepalaSekolah->logo }}">
                                         <input class="form-control @error('logo') is-invalid @enderror"
                                             name="logo" type="file" id="formFile"
                                             value="{{ old('logo') }}">
@@ -164,7 +170,7 @@
                             <div class="row">
                                 <div class="col-md-9">
                                     <h3 class="card-title">Pengguna <span
-                                            style="text-decoration-line: underline;">{{ $dataDudi->nama }}</span></h3>
+                                            style="text-decoration-line: underline;">{{ $dataKepalaSekolah->nama }}</span></h3>
                                     <h6 class="card-subtitle">Data Akses Pengguna</h6>
                                 </div>
                             </div>

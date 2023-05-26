@@ -16,6 +16,7 @@ use App\Models\SertifikasiLombaModel;
 use App\Models\SertifikasiModel;
 use App\Models\StatusAlumniModel;
 use App\Models\TahunLulusModel;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -440,5 +441,12 @@ class KepalaSekolahController extends Controller
         return Excel::download(new LaporanPickTahunan($tahun_lulus->id, $idjurusan), $namepathfile);
         return back();
     }
-    
+    public function kepalasekolahprofile(User $userdata)
+    {
+        $dataKepalaSekolah = KepalaSekolahModel::where('user_id', Auth()->user()->id)->first();
+        return view('kepalasekolah.profile', [
+            'dataKepalaSekolah' => $dataKepalaSekolah,
+            'dataUser' => User::find(Auth()->user()->id)
+        ]);        
+    }
 }

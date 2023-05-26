@@ -175,6 +175,7 @@ Route::middleware(['auth', 'role:kepala_sekolah'])->group(function () {
     Route::get('/kepala-sekolah/report/yearly/{tahun_lulus:tahun_lulus}/jurusan/{idjurusan}',  [KepalaSekolahController::class, 'detail_laporan_perjurusan_pertahun']);
     Route::get('/kepala-sekolah/report/yearly/all/jurusan/{idjurusan}/export',  [KepalaSekolahController::class, 'detail_laporan_perjurusan_export']);
     Route::get('/kepala-sekolah/report/yearly/{tahun_lulus:tahun_lulus}/jurusan/{idjurusan}/export',  [KepalaSekolahController::class, 'detail_laporan_perjurusan_pertahun_export']);
+    Route::get('/kepala-sekolah/profile/{dudi:name}', [DudiController::class, 'kepalasekolahprofile']);
 
 });
 
