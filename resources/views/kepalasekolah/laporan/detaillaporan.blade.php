@@ -44,7 +44,7 @@
         <div class="row-12">
             <div class="col-sm-12">
                 <div class="row mb-3">
-                    <div class="col-md-6">
+                    <div class="col-md-6 mb-3">
                         <div class="card border-end">
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
@@ -74,7 +74,7 @@
                             </div>  
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 mt-3">
                         <div class="card border-end">
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
@@ -89,7 +89,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 mt-3">
                         <div class="card border-end">
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
@@ -108,21 +108,21 @@
             </div>
         </div>
         <div class="row mt-4">
-            <div class="col-lg-6 col-md-12">
+            <div class="col-lg-6 col-md-12 mt-3">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Alumni Yang Bekerja</h4>
-                        <div class="mt-2 position-relative mb-5" style="height:294px;">
+                        <div class="mt-2 position-relative mb-5" style="min-width:294px;">
                             <canvas id="ds3" height="195px"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 col-md-12">
+            <div class="col-lg-6 col-md-12 mt-3">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Alumni Melanjutkan Pendidikan</h4>
-                        <div class="mt-2 position-relative mb-5" style="height:294px;">
+                        <div class="mt-2 position-relative mb-5" style="min-width:294px;">
                             <canvas id="ds4" height="195px"></canvas>
                         </div>
                     </div>

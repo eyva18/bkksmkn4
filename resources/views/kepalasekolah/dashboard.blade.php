@@ -54,7 +54,7 @@
             <div class="row flex-grow">
                 <div class="col-sm-12 grid-margin stretch-card">
                     <div class="card bg-dark text-light">
-                        <img class="card-img-top img-fluid" src="/images/profileimg/{{ Auth()->user()->photo_profile }}"
+                        <img class="card-img-top img-fluid" src="{{ URL::asset('/images/profileimg/' . Auth()->user()->photo_profile) }}"
                             alt="Card image cap">
                         <div class="card-body">
                             <h4 class="card-title text-light fs-4">{{ $dataKepalaSekolah->nama }}</h4>
