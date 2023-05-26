@@ -28,7 +28,6 @@
                 <div class="col-md-4">
                     <!-- Card -->
                     <div class="card">
-                        {{-- @dd($dataAlumni->photo_profile) --}}
                         <img class="card-img-top img-fluid" src="{{ URL::asset('storage' . '/' . $dataAlumni->photo_profile) }}"
                             height="50%" alt="Card image cap">
                         <div class="card-body">

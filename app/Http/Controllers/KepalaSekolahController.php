@@ -45,10 +45,10 @@ class KepalaSekolahController extends Controller
             $LabelsChartJurusan[] = $original->jurusan;
         }
         $DataChartStatus = [
-            'bekerja' => StatusAlumniModel::where('bekerja', 'bekerja')->count(),
-            'tidak_bekerja' => StatusAlumniModel::where('bekerja', 'tidak bekerja')->count(),
-            'malanjutkan_pendidikan' => StatusAlumniModel::where('pendidikan', 'melanjutkan pendidikan')->count(),
-            'tidakmalanjutkan_pendidikan' => StatusAlumniModel::where('pendidikan', 'tidak melanjutkan pendidikan')->count(),
+            'bekerja' => StatusAlumniModel::where('status_bekerja', 1)->count(),
+            'tidak_bekerja' => StatusAlumniModel::where('status_bekerja', 2)->count(),
+            'malanjutkan_pendidikan' => StatusAlumniModel::where('status_pendidikan', 1)->count(),
+            'tidakmalanjutkan_pendidikan' => StatusAlumniModel::where('status_pendidikan', 2)->count(),
         ];
         $DataLowonganKerja = [];
         $LabelLowonganDudi = [];

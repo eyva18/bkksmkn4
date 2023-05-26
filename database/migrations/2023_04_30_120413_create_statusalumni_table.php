@@ -13,13 +13,14 @@ return new class extends Migration
     {
         Schema::create('status_alumni', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('nisn_alumni')->unsigned();
-            $table->bigInteger('tahun_lulus')->unsigned();
-            $table->bigInteger('id_jurusan')->unsigned();
-            $table->enum('bekerja', ['bekerja', 'tidak bekerja']);
-            $table->enum('pendidikan', ['melanjutkan pendidikan', 'tidak melanjutkan pendidikan']);
+            $table->bigInteger('nisn')->nullable();
+            $table->foreignId('jurusan')->nullable();
+            $table->foreignId('tahun_lulus')->nullable();
+            $table->foreignId('status_bekerja')->nullable();
+            $table->foreignId('status_pendidikan')->nullable();
             $table->string('universitas')->nullable();
             $table->string('perusahaan')->nullable();
+            $table->foreignId('user_id')->nullable();
             $table->timestamps();
         });
     }

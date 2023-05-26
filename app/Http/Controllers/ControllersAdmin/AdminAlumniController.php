@@ -2,19 +2,20 @@
 
 namespace app\Http\Controllers\ControllersAdmin;
 
+use App\Models\User;
+use App\Models\DudiModel;
 use App\Models\AgamaModel;
 use App\Models\AlumniModel;
 use App\Models\JurusanModel;
 use Illuminate\Http\Request;
+use App\Models\LowonganModel;
 use App\Models\TahunLulusModel;
 use App\Models\JenisKelaminModel;
 use App\Http\Controllers\Controller;
-use App\Models\DudiModel;
 use App\Models\JenisPendidikanModel;
-use App\Models\RiwayatPendidikanModel;
-use App\Models\User;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use App\Models\RiwayatPendidikanModel;
+use Illuminate\Support\Facades\Storage;
 
 class AdminAlumniController extends Controller
 {

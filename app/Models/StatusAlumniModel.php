@@ -9,18 +9,17 @@ class StatusAlumniModel extends Model
 {
     use HasFactory;
     protected $table = 'status_alumni';
-    protected $guarded = 'id';
+    protected $guarded = ['id'];
 
-    public function tahunlulus()
-    {
-        return $this->belongsTo(TahunLulusModel::class, 'tahun_lulus', 'id');
-    }
-    public function jurusan()
-    {
-        return $this->belongsTo(TahunLulusModel::class, 'tahun_lulus', 'id');
+    public function Jurusan() {
+        return $this->belongsTo(JurusanModel::class, 'kode_jurusanId', 'id');
     }
 
-    public function Alumni() {
-        return $this->belongsTo(AlumniModel::class);
+    public function StatusBekerja() {
+        return $this->belongsTo(StatusBekerjaModel::class, 'status_bekerja', 'id');
+    }
+
+    public function StatusPendidikan() {
+        return $this->belongsTo(StatusPendidikanModel::class, 'status_pendidikan', 'id');
     }
 }

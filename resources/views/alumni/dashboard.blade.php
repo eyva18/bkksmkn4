@@ -51,11 +51,16 @@
                             alt="Card image cap">
                         <div class="card-body">
                             <h4 class="card-title text-light fs-4">{{ $dataAlumni->nama }}</h4>
+                            <p class="card-text"><i class="text-light"></i> <span class="status-alumni">{{ $dataAlumni->nisn }}</span></p>
                             <p class="card-text"><i class="mdi mdi-calendar-clock  text-light"></i> <span class="status-alumni">Lulus - {{ $dataAlumni->tahunlulus->tahun_lulus }}</span></p>
                             <p class="card-text"><i class="mdi mdi-school text-light"></i> <span class="status-alumni">{{ $dataAlumni->jurusan->jurusan }}</span></p>
                             <p class="card-text"><i class="mdi mdi-cake-layered  text-light"></i> <span class="status-alumni">{{ $dataAlumni->tempatTanggalLahir }}</span></p>
                             <p class="card-text"><i class=" mdi mdi-account text-light"></i> <span class="status-alumni">{{ $dataAlumni->Jenis_Kelamin->jenis_kelamin }}</span></p>
                             <p class="card-text"><i class="mdi mdi-phone text-light"></i> <span class="status-alumni">{{ $dataAlumni->no_hp }}</span></p>
+                            <p class="card-text"><i class="text-light"></i> <span class="status-alumni">{{ $dataStatusAlumni->StatusBekerja->status_bekerja }}</span></p>
+                            <p class="card-text"><i class="text-light"></i> <span class="status-alumni">{{ $dataStatusAlumni->StatusPendidikan->status_pendidikan }}</span></p>
+                            <p class="card-text"><i class="text-light"></i> <span class="status-alumni">{{ $dataStatusAlumni->universitas }}</span></p>
+                            <p class="card-text"><i class="text-light"></i> <span class="status-alumni">{{ $dataStatusAlumni->perusahaan }}</span></p>
                         </div>
                     </div>
                 </div>
