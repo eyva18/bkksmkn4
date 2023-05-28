@@ -146,7 +146,7 @@
                         </div>
                     </div>
                 @endforeach
-                <div class="pagination">{{ $lowongandudi->links() }}</div>
+                <div class="pagination d-flex justify-content-center mt-3">{{ $lowongandudi->links() }}</div>
             </div>
         </div>
         <div class="row-12 mt-4">
