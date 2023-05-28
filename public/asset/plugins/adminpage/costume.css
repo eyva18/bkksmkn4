@@ -63,7 +63,10 @@ span.text-logo {
     border-bottom: 1px solid #e5e7eb;
     margin-bottom: 20px;
 }
-
+.text-green-500 {
+    --tw-text-opacity: 1;
+    color: rgba(16,185,129,var(--tw-text-opacity));
+  }
 .text-black {
     color: black;
 }
