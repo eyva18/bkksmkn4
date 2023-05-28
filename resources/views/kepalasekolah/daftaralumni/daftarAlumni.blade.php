@@ -108,7 +108,7 @@
                     </div>
                 </div>
             @endforeach
-            <div class="pagination mt-3 mrl-10">{{ $Alumnidata->links() }}</div>
+            <div class="pagination d-flex justify-content-center mt-3">{{ $Alumnidata->links() }}</div>
         </div>
     </div>
     @endsection

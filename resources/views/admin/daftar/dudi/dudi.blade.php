@@ -137,7 +137,7 @@
             {{-- Modal Delete End --}}
                 @endforeach
             </div>
-            <div class="pagination">{{ $datadudi->links() }}</div>
+            <div class="pagination d-flex justify-content-center mt-3">{{ $datadudi->links() }}</div>
         </div>
         <!-- ============================================================== -->
         <!-- footer -->

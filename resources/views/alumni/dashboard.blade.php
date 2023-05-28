@@ -50,17 +50,27 @@
                             src="{{ URL::asset('storage' . '/' . $dataAlumni->photo_profile) }}"
                             alt="Card image cap">
                         <div class="card-body">
-                            <h4 class="card-title text-light fs-4">{{ $dataAlumni->nama }}</h4>
-                            <p class="card-text"><i class="text-light"></i> <span class="status-alumni">{{ $dataAlumni->nisn }}</span></p>
+                            <h4 class="card-title text-light fs-4">{{ $dataAlumni->nama }} ~ {{ $dataAlumni->nisn }}</h4>
                             <p class="card-text"><i class="mdi mdi-calendar-clock  text-light"></i> <span class="status-alumni">Lulus - {{ $dataAlumni->tahunlulus->tahun_lulus }}</span></p>
                             <p class="card-text"><i class="mdi mdi-school text-light"></i> <span class="status-alumni">{{ $dataAlumni->jurusan->jurusan }}</span></p>
                             <p class="card-text"><i class="mdi mdi-cake-layered  text-light"></i> <span class="status-alumni">{{ $dataAlumni->tempatTanggalLahir }}</span></p>
                             <p class="card-text"><i class=" mdi mdi-account text-light"></i> <span class="status-alumni">{{ $dataAlumni->Jenis_Kelamin->jenis_kelamin }}</span></p>
                             <p class="card-text"><i class="mdi mdi-phone text-light"></i> <span class="status-alumni">{{ $dataAlumni->no_hp }}</span></p>
-                            <p class="card-text"><i class="text-light"></i> <span class="status-alumni">{{ $dataStatusAlumni->StatusBekerja->status_bekerja }}</span></p>
-                            <p class="card-text"><i class="text-light"></i> <span class="status-alumni">{{ $dataStatusAlumni->StatusPendidikan->status_pendidikan }}</span></p>
-                            <p class="card-text"><i class="text-light"></i> <span class="status-alumni">{{ $dataStatusAlumni->universitas }}</span></p>
-                            <p class="card-text"><i class="text-light"></i> <span class="status-alumni">{{ $dataStatusAlumni->perusahaan }}</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-12 grid-margin stretch-card">
+                    <div class="card text-bg-dark mb-3" style="max-width: 18rem;">
+                        <div class="card-header bg-dark">
+                            <h5 class="fw-bold pt-2 fs-4 text-light">Status Alumni</h5>
+                        </div>
+                        <div class="card-body bg-dark text-light">
+                            <p class="card-text"><i class="mdi mdi-office text-light"></i> <span class="status-alumni">{{ $dataStatusAlumni->StatusBekerja->status_bekerja }}</span></p>
+                            <p class="card-text"><i class="mdi mdi-school text-light"></i> <span class="status-alumni">{{ $dataStatusAlumni->StatusPendidikan->status_pendidikan }}</span></p>
+                            <p class="card-text"><i class="mdi mdi-chair-school text-light"></i> <span class="status-alumni">{{ $dataStatusAlumni->universitas }}</span></p>
+                            <p class="card-text"><i class="mdi mdi-office-building text-light"></i> <span class="status-alumni">{{ $dataStatusAlumni->perusahaan }}</span></p>
                         </div>
                     </div>
                 </div>
@@ -764,7 +774,7 @@
                         </div>
                     </div>
                 @endforeach
-                <div class="pagination">{{ $lowongan->links() }}</div>
+                <div class="pagination d-flex justify-content-center mt-3">{{ $lowongan->links() }}</div>
             </div>
             <div class="row my-4">
                 <div class="col">

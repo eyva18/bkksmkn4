@@ -104,7 +104,7 @@
                     </div>
                 </div>
             @endforeach
-            <div class="pagination">{{ $perusahaan->links() }}</div>
+            <div class="pagination d-flex justify-content-center mt-3">{{ $perusahaan->links() }}</div>
         </div>
         <div class="row-12 my-4">
             <div class="col">

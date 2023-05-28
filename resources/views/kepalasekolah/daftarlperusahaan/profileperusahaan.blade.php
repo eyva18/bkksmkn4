@@ -127,7 +127,7 @@
                             </div>
                         </div>
                     @endforeach
-                    <div class="pagination">{{ $lowongan->links() }}</div>
+                    <div class="pagination d-flex justify-content-center mt-3">{{ $lowongan->links() }}</div>
                 </div>
             </div>
         </div>

@@ -635,8 +635,8 @@ class AdminController extends Controller
             $validasiDataStatusAlumni = $request->validate([
                 'status_bekerja' => 'required',
                 'status_pendidikan' => 'required',
-                'universitas' => 'string',
-                'perusahaan' => 'string',
+                'universitas' => '',
+                'perusahaan' => '',
             ]);
             $validasiDataUser = $request->validate([
                 'username' => 'required|max:225',
@@ -644,7 +644,8 @@ class AdminController extends Controller
                 'password' => ''
             ]);
         }
-
+        $validasiDataStatusAlumni['universitas'] = $request->universitas ?? '~';
+        $validasiDataStatusAlumni['perusahaan'] = $request->perusahaan ?? '~';
         // $validasiData['biografi'] = strip_tags($request->biografi);
         $validasiData['photo_profile'] = $request->oldPhotoProfile;
 
