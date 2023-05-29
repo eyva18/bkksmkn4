@@ -74,7 +74,7 @@
                                         class="svg-icon"></i></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end dropdown-menu-right user-dd animated flipInY">
-                                <a class="dropdown-item" href="javascript:void(0)"><i data-feather="settings"
+                                <a class="dropdown-item" href="/admin/administrator/master/pusat-keamanan/{{ Auth::user()->name }}"><i data-feather="settings"
                                         class="svg-icon me-2 ms-1"></i>
                                     Pusat Keamanan</a>
                                 <div class="dropdown-divider"></div>

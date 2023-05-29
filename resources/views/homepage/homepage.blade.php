@@ -108,14 +108,12 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="newsletter-email" class="content-hidden">E-Mail / Username</label>
-                                <input type="email" name="email" id="newsletter-email"
-                                    class="form-control form-control-lg" placeholder="E-Mail / Username"
-                                    autocomplete="off" autofocus>
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" placeholder="E-Mail / Username" required autofocus>
+                                @error('username')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                             </div>
                             <div class="form-group">
                                 <label for="password" class="content-hidden">Password</label>
@@ -171,14 +169,12 @@
                                         @csrf
                                     <div class="form-group">
                                         <label for="newsletter-email" class="content-hidden">E-Mail / Username</label>
-                                        <input type="email" name="email" id="newsletter-email"
-                                            class="form-control form-control-lg" placeholder="E-Mail / Username"
-                                            autocomplete="off">
-                                        @error('email')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+                                        <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" placeholder="E-Mail / Username" value="{{ old('username') }}" required autofocus>
+                                        @error('username')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                     </div>
                                     <div class="form-group">
                                         <label for="password" class="content-hidden">Password</label>
@@ -230,10 +226,7 @@
                             <div class="item">
                                 <div class="quote-item">
                                     <span class="quote-text">
-                                        Kalau magang itu berarti mereka sudah terjun langsung bekerja, Jadi siswa kami
-                                        sudah siap terjun langsung ke dunia kerja. Harapan kami mereka akan mengikuti
-                                        kelas dan magang kemudian membentuk kompetensi luar biasa untuk masuk dunia
-                                        kerja.
+                                        {!! $kutipankepalasekolah->kutipan !!}
                                     </span>
 
                                     <div class="quote-item-footer d-flex justify-content-center">

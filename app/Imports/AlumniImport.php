@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Models\AlumniModel;
+use App\Models\StatusAlumniModel;
 use App\Models\User;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -25,6 +26,16 @@ class AlumniImport implements ToModel, WithHeadingRow
             'password' => bcrypt($row['nisn'])
         ]);
         $user->assignRole('alumni');
+         StatusAlumniModel::create([
+             'nisn' => $row['nisn'],
+             'jurusan' => $row['kode_jurusanid'],
+             'tahun_lulus' => $row['kode_lulusid'],
+             'status_bekerja' => 2,
+             'status_pendidikan' => 2,
+             'universitas' => "",
+             'perusahaan' => "",
+             'user_id'=> $user->id 
+         ]);
         return new AlumniModel([
             'nisn' => $row["nisn"],
             'nis' => $row['nis'],
@@ -35,6 +46,8 @@ class AlumniImport implements ToModel, WithHeadingRow
             'alamat' => $row['alamat'],
             'tempatTanggalLahir' => $row['tempat_lahir'].", ".$row['tanggal_lahir'],
             'user_id' => $user->id,
+            'kode_jurusanId' => $row['kode_jurusanid'],
+            'kode_lulusId' => $row['kode_lulusid'],
         ]);
     }
 }

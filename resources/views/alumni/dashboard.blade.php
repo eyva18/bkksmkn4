@@ -69,8 +69,8 @@
                         <div class="card-body bg-dark text-light">
                             <p class="card-text"><i class="mdi mdi-office text-light"></i> <span class="status-alumni">{{ $dataStatusAlumni->StatusBekerja->status_bekerja }}</span></p>
                             <p class="card-text"><i class="mdi mdi-school text-light"></i> <span class="status-alumni">{{ $dataStatusAlumni->StatusPendidikan->status_pendidikan }}</span></p>
-                            <p class="card-text"><i class="mdi mdi-chair-school text-light"></i> <span class="status-alumni">{{ $dataStatusAlumni->universitas }}</span></p>
-                            <p class="card-text"><i class="mdi mdi-office-building text-light"></i> <span class="status-alumni">{{ $dataStatusAlumni->perusahaan }}</span></p>
+                            <p class="card-text"><i class="mdi mdi-chair-school text-light"></i> <span class="status-alumni">{{ $dataStatusAlumni->universitas ?? '-'}}</span></p>
+                            <p class="card-text"><i class="mdi mdi-office-building text-light"></i> <span class="status-alumni">{{ $dataStatusAlumni->perusahaan ?? '-'}}</span></p>
                         </div>
                     </div>
                 </div>

@@ -29,13 +29,12 @@
                                 <form class="pt-3" action="{{ route('login') }}" method="post">
                                     @csrf
                                     <div class="form-group">
-                                        <input type="email"  name="email" class="form-control form-control-lg"
-                                            id="exampleInputEmail1" placeholder="Email">
-                                        @error('email')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+                                        <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" placeholder="Username / E-Mail" name="username" value="{{ old('username') }}" required autofocus>
+                                        @error('username')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                     </div>
                                     <div class="form-group">
                                         <input type="password" name="password" class="form-control form-control-lg"

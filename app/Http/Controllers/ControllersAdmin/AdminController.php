@@ -26,6 +26,7 @@ use App\Models\SertifikasiLombaModel;
 use App\Models\StatusPendidikanModel;
 use App\Models\RiwayatPendidikanModel;
 use App\Models\TingkatPerlombaanModel;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
@@ -63,12 +64,10 @@ class AdminController extends Controller
         $LabelLowonganDudi = [];
         foreach ($originaldudi as $original) {
             $yz = LowonganModel::where('id_dudi', $original->id)->count();
-            if($yz != 0){
-            $DataLowonganKerja[] = $yz;
-            $LabelLowonganDudi[] = $original->nama;
-            }
-            else{
-
+            if ($yz != 0) {
+                $DataLowonganKerja[] = $yz;
+                $LabelLowonganDudi[] = $original->nama;
+            } else {
             }
         }
         return view('admin.dashboard.dashboard', [
@@ -218,7 +217,7 @@ class AdminController extends Controller
         } else {
             $logo = $olddata->logo;
         }
-         DudiModel::find($request->id)->update([
+        DudiModel::find($request->id)->update([
             'nama' => $request->nama,
             'bidang' => $request->bidang,
             'no_telp' => $request->no_telp,
@@ -227,32 +226,31 @@ class AdminController extends Controller
             'logo' => $logo,
         ]);
         $pw = null;
-        if($request->password != null){
+        if ($request->password != null) {
             User::where('id', $olddata->user_id)->update([
                 'name' => $request->username,
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
                 'photo_profile' => $logo
-        ]);
-        }
-        elseif($request->password == null){
+            ]);
+        } elseif ($request->password == null) {
             User::where('id', $olddata->user_id)->update([
                 'name' => $request->username,
                 'email' => $request->email,
                 'photo_profile' => $logo
-        ]);
+            ]);
         }
         $dudiafterupdate = DudiModel::find($request->id);
-        return redirect('/admin/administrator/master/company/profile/'.$dudiafterupdate->nama);
+        return redirect('/admin/administrator/master/company/profile/' . $dudiafterupdate->nama);
     }
     public function dudi_add(Request $request)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'nama' => 'required',
             'email' => 'required',
             'username' => 'required',
             'password' => 'required',
-         ]);
+        ]);
         $number = 1000;
         for ($z1 = 1; $z1 <= $number; $z1++) {
             $getlatest = DudiModel::count();
@@ -288,7 +286,7 @@ class AdminController extends Controller
             'logo' => $logo,
             'user_id' => $userdudi->id,
         ]);
-        return redirect('/admin/administrator/master/company/profile/'.$dudidata->nama);
+        return redirect('/admin/administrator/master/company/profile/' . $dudidata->nama);
     }
     public function dudi_delete(Request $request)
     {
@@ -345,19 +343,15 @@ class AdminController extends Controller
     public function alumni_index(Request $request, AlumniModel $Alumni)
     {
         //Jurusan Database Function
-        if($request->idjurusan == null and $request->idtahunlulus == null and $request->nama_alumni == null){
+        if ($request->idjurusan == null and $request->idtahunlulus == null and $request->nama_alumni == null) {
             $dataalumni = AlumniModel::with('jurusan')->with('tahunlulus')->latest()->paginate(25);
-        }  
-        elseif($request->idjurusan != "Jurusan" and $request->idtahunlulus != "Tahun Lulus"){
+        } elseif ($request->idjurusan != "Jurusan" and $request->idtahunlulus != "Tahun Lulus") {
             $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->where('kode_jurusanId', $request->idjurusan)->where('kode_lulusId', $request->idtahunlulus)->latest()->paginate(25);
-        }
-        elseif($request->idjurusan != "Jurusan" and $request->idtahunlulus == "Tahun Lulus"){
+        } elseif ($request->idjurusan != "Jurusan" and $request->idtahunlulus == "Tahun Lulus") {
             $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->where('kode_jurusanId', $request->idjurusan)->latest()->paginate(25);
-        }
-        elseif($request->idtahunlulus != "Tahun Lulus" and $request->idjurusan == "Jurusan" ){
+        } elseif ($request->idtahunlulus != "Tahun Lulus" and $request->idjurusan == "Jurusan") {
             $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->where('kode_lulusId', $request->idtahunlulus)->latest()->paginate(25);
-        }
-        elseif($request->idjurusan == "Jurusan" and $request->idtahunlulus == "Tahun Lulus"){
+        } elseif ($request->idjurusan == "Jurusan" and $request->idtahunlulus == "Tahun Lulus") {
             $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->latest()->paginate(25);
         }
 
@@ -369,7 +363,8 @@ class AdminController extends Controller
         ]);
     }
 
-    public function alumni_create() {
+    public function alumni_create()
+    {
         return view('admin.daftar.alumni.tambahalumni', [
             'dataAgama' => AgamaModel::all(),
             'dataJenisKelamin' => JenisKelaminModel::all(),
@@ -380,7 +375,8 @@ class AdminController extends Controller
         ]);
     }
 
-    public function alumni_store(Request $request) {
+    public function alumni_store(Request $request)
+    {
         $validasiData = $request->validate([
             'nisn' => 'required',
             'nis' => 'required',
@@ -409,16 +405,16 @@ class AdminController extends Controller
 
         // $validasiData['biografi'] = strip_tags($request->biografi);        
         // dd($validasiData);
-        if($request->file('photo_profile')) {
+        if ($request->file('photo_profile')) {
             $validasiData['photo_profile'] = $request->file('photo_profile')->getClientOriginalName();
             $validasiData['photo_profile'] = $request->file('photo_profile')->storeAs('Photo_Profile_Alumni', $validasiData['photo_profile']);
         }
 
-        if($request->file('transkrip_nilai')) {
+        if ($request->file('transkrip_nilai')) {
             $validasiData['transkrip_nilai'] = $request->file('transkrip_nilai')->getClientOriginalName();
             $validasiData['transkrip_nilai'] = $request->file('transkrip_nilai')->storeAs('Transkrip_Nilai_Alumni', $validasiData['transkrip_nilai']);
         }
-        
+
         $useralumnicreate = User::create([
             'name' => $validasiDataUser['username'],
             'email' => $validasiDataUser['email'],
@@ -436,13 +432,14 @@ class AdminController extends Controller
             'perusahaan' => $validasiDataStatusAlumni['perusahaan'],
             'user_id' => $useralumnicreate->id,
         ]);
-        
+
         $validasiData['user_id'] = $useralumnicreate->id;
         AlumniModel::create($validasiData);
         return redirect('/alumni')->with('success', 'Alumni telah ditambahkan!');
     }
 
-    public function riwayatpendidikan_store(Request $request) {
+    public function riwayatpendidikan_store(Request $request)
+    {
         $dataAlumni = AlumniModel::findOrFail($request->id);
         $validasiData = $request->validate([
             'nisn' => 'numeric',
@@ -460,7 +457,8 @@ class AdminController extends Controller
         return back()->with('success', 'Riwayat pendidikan berhasil ditambahkan');
     }
 
-    public function riwayatpekerjaan_store(Request $request) {
+    public function riwayatpekerjaan_store(Request $request)
+    {
         $dataAlumni = AlumniModel::findOrFail($request->id);
         $validasiData = $request->validate([
             'nisn' => 'numeric',
@@ -475,7 +473,7 @@ class AdminController extends Controller
         $tanggalAwal = $validasiData['tahun_awal_pekerjaan'];
         $validasiData['tahun_awal_pekerjaan'] = date('d/m/Y', strtotime($tanggalAwal));
         $validasiData['tahun_awal_pekerjaan'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_awal_pekerjaan'])->format('l, j F Y');
-        
+
         $tanggalAkhir = $validasiData['tahun_akhir_pekerjaan'];
         $validasiData['tahun_akhir_pekerjaan'] = date('d/m/Y', strtotime($tanggalAkhir));
         $validasiData['tahun_akhir_pekerjaan'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_akhir_pekerjaan'])->format('l, j F Y');
@@ -487,7 +485,8 @@ class AdminController extends Controller
         return back()->with('success', 'Riwayat pekerjaan berhasil ditambahkan');
     }
 
-    public function sertifikasi_store(Request $request) {
+    public function sertifikasi_store(Request $request)
+    {
         $dataAlumni = AlumniModel::findOrFail($request->id);
         $validasiData = $request->validate([
             'nama_sertifikasi' => '',
@@ -498,16 +497,16 @@ class AdminController extends Controller
             'link_sertifikasi' => '',
             'file_sertifikasi' => '',
         ]);
-        
+
         $tanggalAwal = $validasiData['tahun_terbit'];
         $validasiData['tahun_terbit'] = date('d/m/Y', strtotime($tanggalAwal));
         $validasiData['tahun_terbit'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_terbit'])->format('l, j F Y');
-        
+
         $tanggalAkhir = $validasiData['tahun_kadaluarsa'];
         $validasiData['tahun_kadaluarsa'] = date('d/m/Y', strtotime($tanggalAkhir));
         $validasiData['tahun_kadaluarsa'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_kadaluarsa'])->format('l, j F Y');
-        
-        if($request->file('file_sertifikasi')) {
+
+        if ($request->file('file_sertifikasi')) {
             $validasiData['file_sertifikasi'] = $request->file('file_sertifikasi')->getClientOriginalName();
             $validasiData['file_sertifikasi'] = $request->file('file_sertifikasi')->storeAs('file_sertifikasi_Alumni', $validasiData['file_sertifikasi']);
         }
@@ -520,7 +519,8 @@ class AdminController extends Controller
         return back()->with('success', 'Sertifikasi Berhasil Ditambahkan!');
     }
 
-    public function sertifikasilomba_store(Request $request) {
+    public function sertifikasilomba_store(Request $request)
+    {
         $dataAlumni = AlumniModel::findOrFail($request->id);
         $validasiData = $request->validate([
             'nama_juara_kompetensi' => '',
@@ -529,16 +529,16 @@ class AdminController extends Controller
             'tanggal_kadaluarsa' => '',
             'file_sertifikasi' => '',
         ]);
-        
+
         $tanggalAwal = $validasiData['tanggal_terbit'];
         $validasiData['tanggal_terbit'] = date('d/m/Y', strtotime($tanggalAwal));
         $validasiData['tanggal_terbit'] = Carbon::createFromFormat('d/m/Y', $validasiData['tanggal_terbit'])->format('l, j F Y');
-        
+
         $tanggalAkhir = $validasiData['tanggal_kadaluarsa'];
         $validasiData['tanggal_kadaluarsa'] = date('d/m/Y', strtotime($tanggalAkhir));
         $validasiData['tanggal_kadaluarsa'] = Carbon::createFromFormat('d/m/Y', $validasiData['tanggal_kadaluarsa'])->format('l, j F Y');
-        
-        if($request->file('file_sertifikasi')) {
+
+        if ($request->file('file_sertifikasi')) {
             $validasiData['file_sertifikasi'] = $request->file('file_sertifikasi')->getClientOriginalName();
             $validasiData['file_sertifikasi'] = $request->file('file_sertifikasi')->storeAs('file_sertifikasi_Lomba_Alumni', $validasiData['file_sertifikasi']);
         }
@@ -551,7 +551,8 @@ class AdminController extends Controller
         return back()->with('success', 'Sertifikasi Berhasil Ditambahkan!');
     }
 
-    public function alumni_show(Request $request, AlumniModel $alumniModel) {
+    public function alumni_show(Request $request, AlumniModel $alumniModel)
+    {
         $findSiswaProfile = $alumniModel->find($request->id);
         $dataUser = User::find($findSiswaProfile->user_id);
         $dataStatusAlumni = StatusAlumniModel::find($findSiswaProfile->id);
@@ -569,7 +570,8 @@ class AdminController extends Controller
         ]);
     }
 
-    public function alumni_edit(Request $request, AlumniModel $alumniModel) {
+    public function alumni_edit(Request $request, AlumniModel $alumniModel)
+    {
         $dataAlumni = $alumniModel->findOrFail($request->id);
         $dataUser = User::findOrFail($dataAlumni->user_id);
         $dataStatusAlumni = StatusAlumniModel::find($dataAlumni->id);
@@ -578,7 +580,7 @@ class AdminController extends Controller
             "dataUser" => $dataUser,
             'dataStatusAlumni' => $dataStatusAlumni,
             'dataStatusBekerja' => StatusBekerjaModel::all(),
-            'dataStatusPendidikan' => StatusPendidikanModel::   all(),
+            'dataStatusPendidikan' => StatusPendidikanModel::all(),
             'dataAgama' => AgamaModel::all(),
             'dataJenisKelamin' => JenisKelaminModel::all(),
             'dataJurusan' => JurusanModel::all(),
@@ -586,7 +588,8 @@ class AdminController extends Controller
         ]);
     }
 
-    public function alumni_update(Request $request) {
+    public function alumni_update(Request $request)
+    {
         $alumnidata = AlumniModel::find($request->id);
 
         if (Auth::user()->hasRole('admin')) {
@@ -602,7 +605,7 @@ class AdminController extends Controller
                 'tempatTanggalLahir' => '',
                 'photo_profile' => '',
                 'transkrip_nilai' => '',
-                'kode_jurusanId' => '',      
+                'kode_jurusanId' => '',
                 'kode_lulusId' => '',
             ]);
             $validasiDataStatusAlumni = $request->validate([
@@ -629,7 +632,7 @@ class AdminController extends Controller
                 'tempatTanggalLahir' => 'required',
                 'photo_profile' => '',
                 'transkrip_nilai' => '',
-                'kode_jurusanId' => 'required',      
+                'kode_jurusanId' => 'required',
                 'kode_lulusId' => 'required',
             ]);
             $validasiDataStatusAlumni = $request->validate([
@@ -649,16 +652,16 @@ class AdminController extends Controller
         // $validasiData['biografi'] = strip_tags($request->biografi);
         $validasiData['photo_profile'] = $request->oldPhotoProfile;
 
-        if($request->file('photo_profile')) {
-            if($request->oldPhotoProfile) {
+        if ($request->file('photo_profile')) {
+            if ($request->oldPhotoProfile) {
                 Storage::delete($request->oldPhotoProfile);
             }
             $validasiData['photo_profile'] = $request->file('photo_profile')->getClientOriginalName();
             $validasiData['photo_profile'] = $request->file('photo_profile')->storeAs('Photo_Profile_Alumni', $validasiData['photo_profile']);
         }
-        
-        if($request->file('transkrip_nilai')) {
-            if($request->oldTranskripNilai) {
+
+        if ($request->file('transkrip_nilai')) {
+            if ($request->oldTranskripNilai) {
                 Storage::delete($request->oldTranskripNilai);
             }
             $validasiData['transkrip_nilai'] = $request->file('transkrip_nilai')->getClientOriginalName();
@@ -669,14 +672,14 @@ class AdminController extends Controller
         $validasiData['user_id'] = $useralumnidata->id;
         AlumniModel::where('id', $request->id)->update($validasiData);
         StatusAlumniModel::find($request->id)->update($validasiDataStatusAlumni);
-        if($request->password != null){
+        if ($request->password != null) {
             User::findOrFail($validasiData['user_id'])->update([
                 'name' => $validasiDataUser['username'],
                 'email' => $validasiDataUser['email'],
                 'password' => bcrypt($validasiDataUser['password']),
                 'photo_profile' => $validasiData['photo_profile'],
             ]);
-        } elseif($request->password == null){
+        } elseif ($request->password == null) {
             User::findOrFail($validasiData['user_id'])->update([
                 'name' => $validasiDataUser['username'],
                 'email' => $validasiDataUser['email'],
@@ -686,14 +689,15 @@ class AdminController extends Controller
 
         if (Auth::user()->hasRole('admin')) {
             return redirect('/alumni')->with('success', 'Data Alumni Telah Berhasi Diubah!');
-        } 
+        }
         if (Auth::user()->hasRole('alumni')) {
             return redirect('/dashboard')->with('success', 'Data Alumni Telah Berhasi Diubah!');
         }
         // tampilkan ke funtion show 
     }
 
-    public function update_biografi(Request $request) {
+    public function update_biografi(Request $request)
+    {
         $validasiDataBiografi = $request->validate([
             'biografi' => '',
         ]);
@@ -705,7 +709,8 @@ class AdminController extends Controller
         return back()->with('success', 'Biografi berhasil diubah');
     }
 
-    public function riwayatpendidikan_update(Request $request, RiwayatPendidikanModel $riwayatPendidikanModel) {
+    public function riwayatpendidikan_update(Request $request, RiwayatPendidikanModel $riwayatPendidikanModel)
+    {
         $validasiData = $request->validate([
             'nisn' => 'numeric',
             'nama_instansi' => 'string',
@@ -717,7 +722,7 @@ class AdminController extends Controller
         $tanggalAwal = $validasiData['tahun_awal_pendidikan'];
         $validasiData['tahun_awal_pendidikan'] = date('d/m/Y', strtotime($tanggalAwal));
         $validasiData['tahun_awal_pendidikan'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_awal_pendidikan'])->format('l, j F Y');
-        
+
         $tanggalAkhir = $validasiData['tahun_akhir_pendidikan'];
         $validasiData['tahun_akhir_pendidikan'] = date('d/m/Y', strtotime($tanggalAkhir));
         $validasiData['tahun_akhir_pendidikan'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_akhir_pendidikan'])->format('l, j F Y');
@@ -726,7 +731,8 @@ class AdminController extends Controller
         return back()->with('success', 'Riwayat pendidikan berhasil diubah');
     }
 
-    public function riwayatpekerjaan_update(Request $request) {
+    public function riwayatpekerjaan_update(Request $request)
+    {
         $validasiData = $request->validate([
             'nisn' => 'numeric',
             'nama_perusahaan' => 'string',
@@ -738,17 +744,18 @@ class AdminController extends Controller
         $tanggalAwal = $validasiData['tahun_awal_pekerjaan'];
         $validasiData['tahun_awal_pekerjaan'] = date('d/m/Y', strtotime($tanggalAwal));
         $validasiData['tahun_awal_pekerjaan'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_awal_pekerjaan'])->format('l, j F Y');
-        
+
         $tanggalAkhir = $validasiData['tahun_akhir_pekerjaan'];
         $validasiData['tahun_akhir_pekerjaan'] = date('d/m/Y', strtotime($tanggalAkhir));
         $validasiData['tahun_akhir_pekerjaan'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_akhir_pekerjaan'])->format('l, j F Y');
-        
+
         // dd($validasiData);
         RiwayatPekerjaanModel::findOrFail($request->id)->update($validasiData);
         return back()->with('success', 'Riwayat pekerjaan berhasil diubah');
     }
 
-    public function sertifikasi_update(Request $request) {
+    public function sertifikasi_update(Request $request)
+    {
         $validasiData = $request->validate([
             'nama_sertifikasi' => 'string',
             'nama_penerbit' => 'string',
@@ -758,19 +765,19 @@ class AdminController extends Controller
             'link_sertifikasi' => '',
             'file_sertifikasi' => 'image|mimes:jpeg,jpg,|max:2048',
         ]);
-        
+
         $tanggalAwal = $validasiData['tahun_terbit'];
         $validasiData['tahun_terbit'] = date('d/m/Y', strtotime($tanggalAwal));
         $validasiData['tahun_terbit'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_terbit'])->format('l, j F Y');
-        
+
         $tanggalAkhir = $validasiData['tahun_kadaluarsa'];
         $validasiData['tahun_kadaluarsa'] = date('d/m/Y', strtotime($tanggalAkhir));
         $validasiData['tahun_kadaluarsa'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_kadaluarsa'])->format('l, j F Y');
-        
+
         $validasiData['file_sertifikasi'] = $request->oldSertifikasi;
 
-        if($request->file('file_sertifikasi')) {
-            if($request->oldSertifikasi) {
+        if ($request->file('file_sertifikasi')) {
+            if ($request->oldSertifikasi) {
                 Storage::delete($request->oldSertifikasi);
             }
             $validasiData['file_sertifikasi'] = $request->file('file_sertifikasi')->getClientOriginalName();
@@ -782,8 +789,9 @@ class AdminController extends Controller
         return back()->with('success', 'Sertifikasi Berhasil Diubah!');
     }
 
-    
-    public function sertifikasilomba_update(Request $request) {
+
+    public function sertifikasilomba_update(Request $request)
+    {
         $dataAlumni = AlumniModel::findOrFail($request->id);
         $validasiData = $request->validate([
             'nama_juara_kompetensi' => 'string',
@@ -792,19 +800,19 @@ class AdminController extends Controller
             'tanggal_kadaluarsa' => 'date',
             'file_sertifikasi' => 'image|mimes:jpeg,jpg,|max:2048',
         ]);
-        
+
         $tanggalAwal = $validasiData['tanggal_terbit'];
         $validasiData['tanggal_terbit'] = date('d/m/Y', strtotime($tanggalAwal));
         $validasiData['tanggal_terbit'] = Carbon::createFromFormat('d/m/Y', $validasiData['tanggal_terbit'])->format('l, j F Y');
-        
+
         $tanggalAkhir = $validasiData['tanggal_kadaluarsa'];
         $validasiData['tanggal_kadaluarsa'] = date('d/m/Y', strtotime($tanggalAkhir));
         $validasiData['tanggal_kadaluarsa'] = Carbon::createFromFormat('d/m/Y', $validasiData['tanggal_kadaluarsa'])->format('l, j F Y');
-        
+
         $validasiData['file_sertifikasi'] = $request->oldSertifikasi;
 
-        if($request->file('file_sertifikasi')) {
-            if($request->oldSertifikasi) {
+        if ($request->file('file_sertifikasi')) {
+            if ($request->oldSertifikasi) {
                 Storage::delete($request->oldSertifikasi);
             }
             $validasiData['file_sertifikasi'] = $request->file('file_sertifikasi')->getClientOriginalName();
@@ -816,14 +824,14 @@ class AdminController extends Controller
         return back()->with('success', 'Sertifikasi Berhasil Ditambahkan!');
     }
 
-    public function alumni_destroy(Request $request, AlumniModel $alumniModel) 
+    public function alumni_destroy(Request $request, AlumniModel $alumniModel)
     {
         $data = $alumniModel->findOrFail($request->id);
         $dataUser = User::find($data->user_id);
-        if($data->photo_profile) {
+        if ($data->photo_profile) {
             Storage::delete($data->photo_profile);
         }
-        if($data->transkrip_nilai) {
+        if ($data->transkrip_nilai) {
             Storage::delete($data->transkrip_nilai);
         }
 
@@ -833,23 +841,89 @@ class AdminController extends Controller
         return back();
     }
 
-    public function riwayatpendidikan_destroy(Request $request) {
+    public function riwayatpendidikan_destroy(Request $request)
+    {
         RiwayatPendidikanModel::destroy($request->id);
         return back()->with('success', 'Data Riwayat Pendidikan Berhasil Dihapus');
     }
 
-    public function riwayatpekerjaan_destroy(Request $request) {
+    public function riwayatpekerjaan_destroy(Request $request)
+    {
         RiwayatPekerjaanModel::destroy($request->id);
         return back()->with('success', 'Data Riwayat Pekerjaan Berhasil Dihapus');
     }
 
-    public function sertifikasi_destroy(Request $request) {
+    public function sertifikasi_destroy(Request $request)
+    {
         SertifikasiModel::destroy($request->id);
         return back()->with('success', 'Data Sertifikat Berhasil Dihapus');
     }
 
-    public function sertifikasilomba_destroy(Request $request) {
+    public function sertifikasilomba_destroy(Request $request)
+    {
         SertifikasiLombaModel::destroy($request->id);
         return back()->with('success', 'Data Sertifikat Lomba Berhasil Dihapus');
+    }
+
+    public function pusatkeamanan(User $admin)
+    {
+        return view('admin.profileadmin', ['userUpdate' => $admin]);
+    }
+    public function passwordUpdate(Request $request)
+    {
+        # Validation
+        $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|confirmed',
+        ]);
+
+
+        #Match The Old Password
+        if (!Hash::check($request->old_password, auth()->user()->password)) {
+            return back()->with("error", "Old Password Doesn't match!");
+        }
+
+
+        #Update the new Password
+        User::whereId(auth()->user()->id)->update([
+            'password' => Hash::make($request->new_password)
+        ]);
+
+        return back()->with("status", "Password changed successfully!");
+    }
+
+    public function logOutAllDevice(Request $request)
+    {
+        Auth::logoutOtherDevices($request->password);
+        Auth::logout();
+        return back();
+    }
+    public function profileAdminUpdate(Request $request)
+    {
+        $olddata = User::find(auth()->user()->id);
+        if ($image = $request->file('photo_profile')) {
+            $destinationPath = 'images/profileimg/';
+            $logoimage = $request->id . "_" . $image->getClientOriginalName();
+            $image->move($destinationPath, $logoimage);
+            $photoprofile = "$logoimage";
+            $imagename = $olddata->photo_profile;
+            $image1 = $imagename;
+            File::delete(public_path("images/profileimg/$image1"));
+        } else {
+            $photoprofile = $olddata->logo;
+        }        
+        if($request->photo_profile != null){
+            User::where('id', auth()->user()->id)->update([
+                'name' => $request->username,
+                'email' => $request->email,
+                'photo_profile' => $photoprofile
+        ]);
+        }else{
+            User::where('id', auth()->user()->id)->update([
+                'name' => $request->username,
+                'email' => $request->email,
+        ]);
+        }
+        return redirect('/admin/administrator/master/pusat-keamanan/'.$request->username)->with('status', 'Update Profile Success!!!');
     }
 }
