@@ -920,7 +920,7 @@
                                             @enderror
                                         </div>
                                         <div class="form-group">
-                                            <input type="checkbox" id="checkstatus" name="checkstatus" class="@error('') is-invalid @enderror" value="">
+                                            <input type="checkbox" id="checkstatus" name="checkStatus" class="@error('') is-invalid @enderror" value="">
                                             <label for="checkstatus">Masih Bersekolah Sampai Sekarang</label>
                                             @error('')
                                                 <div class="invalid-feedback">
@@ -1019,9 +1019,9 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <input type="checkbox" id="checkstatus" name="checkstatus" class="@error('') is-invalid @enderror" value="">
-                                        <label for="checkstatus">Masih Bekerja Sampai Sekarang</label>
-                                        @error('')
+                                        <input type="checkbox" id="waktubekerja" name="waktuBekerja" class="@error('waktuBekerja') is-invalid @enderror" value="">
+                                        <label for="waktubekerja">Masih Berkerja Sampai Sekarang</label>
+                                        @error('waktuBekerja')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>

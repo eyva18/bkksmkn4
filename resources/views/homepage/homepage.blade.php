@@ -107,8 +107,8 @@
                         @csrf
                         <div class="modal-body">
                             <div class="form-group">
-                                <label for="newsletter-email" class="content-hidden">E-Mail / Username</label>
-                                <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" placeholder="E-Mail / Username" required autofocus>
+                                <label for="newsletter-email" class="content-hidden">Username</label>
+                                <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" placeholder="Username" required autofocus>
                                 @error('username')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -137,25 +137,6 @@
         <!-- End Modal Login -->
 
         <div class="banner-carousel banner-carousel-2 mb-0">
-
-            <div class="banner-carousel-item"
-                style="background-image:url({{ URL::asset('images/homepage/slide-image/smkn4.jpg') }})">
-                <div class="container">
-                    <div class="box-slider-content">
-                        <div class="box-slider-text">
-                            <h2 class="box-slide-title">SMKN 4 BANJARMASIN</h2>
-                            <h3 class="box-slide-sub-title">Siap Kerja, Cerdas dan Kompetitif</h3>
-                            <p class="box-slide-description">Aplikasi ini sebagai sarana antara alumni SMK Negeri 4
-                                Banjarmasin dan Mitra Dunia Usaha/Dunia Industri.</p>
-                            <p>
-                                <a href="https://smkn4bjm.sch.id/" class="slider btn btn-primary">Tentang SMKN 4
-                                    Banjarmasin</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <div class="banner-carousel-item"
                 style="background-image:url({{ URL::asset('images/homepage/slide-image/smkn4.jpg') }})">
                 <div class="slider-content text-left">
@@ -168,8 +149,8 @@
                                     <p class="box-slide-description">
                                         @csrf
                                     <div class="form-group">
-                                        <label for="newsletter-email" class="content-hidden">E-Mail / Username</label>
-                                        <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" placeholder="E-Mail / Username" value="{{ old('username') }}" required autofocus>
+                                        <label for="newsletter-email" class="content-hidden">Username</label>
+                                        <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" placeholder="Username" value="{{ old('username') }}" required autofocus>
                                         @error('username')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -193,6 +174,23 @@
                                 </form>
                                 </p>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="banner-carousel-item"
+                style="background-image:url({{ URL::asset('images/homepage/slide-image/smkn4.jpg') }})">
+                <div class="container">
+                    <div class="box-slider-content">
+                        <div class="box-slider-text">
+                            <h2 class="box-slide-title">SMKN 4 BANJARMASIN</h2>
+                            <h3 class="box-slide-sub-title">Siap Kerja, Cerdas dan Kompetitif</h3>
+                            <p class="box-slide-description">Aplikasi ini sebagai sarana antara alumni SMK Negeri 4
+                                Banjarmasin dan Mitra Dunia Usaha/Dunia Industri.</p>
+                            <p>
+                                <a href="https://smkn4bjm.sch.id/" class="slider btn btn-primary">Tentang SMKN 4
+                                    Banjarmasin</a>
+                            </p>
                         </div>
                     </div>
                 </div>
