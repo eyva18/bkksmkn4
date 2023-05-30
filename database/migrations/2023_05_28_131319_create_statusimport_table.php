@@ -11,15 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dudi', function (Blueprint $table) {
+        Schema::create('status_import', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->string('bidang')->nullable();
-            $table->string('no_telp')->nullable();
+            $table->timestamp('waktu')->nullable();
+            $table->string('tipe')->nullable();
+            $table->string('status')->nullable();
             $table->text('deskripsi')->nullable();
-            $table->text('alamat')->nullable();
-            $table->text('logo')->nullable();
-            $table->foreignId('user_id')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dudi');
+        Schema::dropIfExists('statusimport');
     }
 };

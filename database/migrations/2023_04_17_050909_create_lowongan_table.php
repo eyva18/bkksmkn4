@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('lowongan', function (Blueprint $table) {
             $table->id();
             $table->text('nama');
-            $table->text('deskripsi_pekerjaan');
-            $table->text('deskripsi_perusahaan');
-            $table->text('lokasi');
-            $table->string('gaji');
-            $table->date('tgl_upload');
+            $table->text('deskripsi_pekerjaan')->nullable();
+            $table->text('deskripsi_perusahaan')->nullable();
+            $table->text('lokasi')->nullable();
+            $table->string('gaji')->nullable();
+            $table->date('tgl_upload')->nullable();
             $table->bigInteger('id_dudi')->unsigned();
-            $table->bigInteger('id_kategoti_pekerjaan')->unsigned();
+            $table->bigInteger('id_kategoti_pekerjaan')->unsigned()->nullable();
             $table->timestamps();
         });
     }

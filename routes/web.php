@@ -8,10 +8,12 @@ use App\Http\Controllers\ControllersAdmin\AdminAlumniController;
 use App\Http\Controllers\ControllersAdmin\AdminLowonganController;
 use App\Http\Controllers\ControllersAlumni\ProfileAlumniController;
 use App\Http\Controllers\ControllersAdmin\AdminLaporanTahunKelulusanController;
+use App\Http\Controllers\ControllersAdmin\ImportDataController;
 use App\Http\Controllers\ControllersDudi\DudiController;
 use App\Http\Controllers\KepalaSekolahController;
 use App\Models\AlumniModel;
 use App\Models\DudiModel;
+use App\Models\KepalaSekolahModel;
 use App\Models\LowonganModel;
 
 /*
@@ -42,7 +44,8 @@ Route::get('/', function () {
             'totalAlumni' => AlumniModel::count(),
             'totalperusahaan' => DudiModel::count(),
             'totallowongan' => LowonganModel::count(),
-            'dudi' => DudiModel::all()
+            'dudi' => DudiModel::all(),
+            'kutipankepalasekolah' => KepalaSekolahModel::latest()->first()
         ]);
     }
 });
@@ -127,6 +130,16 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/alumni/{alumniModel:nama}/destroy', [AdminController::class, 'alumni_destroy']);
     Route::post('/alumni/pendidikan/delete', [AdminController::class, 'riwayatpendidikan_destroy']);
     Route::post('/alumni/pekerjaan/delete', [AdminController::class, 'riwayatpekerjaan_destroy']);
+    //Import Data
+    Route::get('/admin/administrator/master/import', [ImportDataController::class, 'index']);
+    Route::get('/admin/administrator/master/import/alumni/format-download', [ImportDataController::class, 'downloadformatalumni']);
+    Route::get('/admin/administrator/master/import/perusahaan/format-download', [ImportDataController::class, 'downloadformatperusahaan']);
+    Route::post('/admin/administrator/master/import/data/excel', [ImportDataController::class, 'importdataexcel']);
+    
+    Route::get('/admin/administrator/master/pusat-keamanan/{admin:name}', [AdminController::class, 'pusatkeamanan']);
+    Route::post('/admin/administrator/master/password/update', [AdminController::class, 'passwordUpdate']);
+    Route::post('/admin/administrator/master/profile/update', [AdminController::class, 'profileAdminUpdate']);
+    Route::post('/admin/administrator/master/logout/all-device', [AdminController::class, 'logOutAllDevice']);
 });
 
 Route::middleware(['auth', 'role:admin|alumni'])->group(function () {
@@ -156,6 +169,8 @@ Route::middleware(['auth', 'role:admin|alumni'])->group(function () {
     Route::post('/profile/riwayatpekerjaan/update', [ProfileAlumniController::class, 'riwayatpekerjaan_update']);
     Route::delete('/profile/riwayatpendidikan/delete', [ProfileAlumniController::class, 'riwayatpendidikan_destroy']);
     Route::delete('/profile/riwayatpekerjaan/delete', [ProfileAlumniController::class, 'riwayatpekerjaan_destroy']);
+
+    //Import Data Route
 });
 Route::middleware(['auth', 'role:kepala_sekolah'])->group(function () {
     Route::get('/kepala-sekolah/dashboard', [KepalaSekolahController::class, 'index'])->name('kepala_sekolah@dashboard');
