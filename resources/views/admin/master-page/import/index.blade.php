@@ -202,6 +202,16 @@
                                             <td>Jl. Brig Jend. Hasan Basri No.7</td>
                                         </tr>
                                         <tr>
+                                            <td>kode_jurusanid</td>
+                                            <td>Wajib</td>
+                                            <td>Terdapat di Halaman Ini bagian Kode Jurusan </td>
+                                        </tr>
+                                        <tr>
+                                            <td>kode_lulusid</td>
+                                            <td>Wajib</td>
+                                            <td>Terdapat di Halaman Ini bagian Kode Kelulusan </td>
+                                        </tr>
+                                        <tr>
                                             <td>username</td>
                                             <td>Username akan diisi dengan NISN Alumni</td>
                                             <td>00123532343</td>

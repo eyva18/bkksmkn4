@@ -21,8 +21,8 @@ class ImportDataController extends Controller
         ]);
     }
     public function downloadformatalumni(){
-        $file= public_path(). "/file/"."alumni.xlsx";
-        return Response::download($file, "alumni.xlsx");
+        $file= public_path(). "/file/"."alumni-import.xlsx";
+        return Response::download($file, "alumni-import.xlsx");
     }
     public function downloadformatperusahaan(){
         $file= public_path(). "/file/"."perusahaan.xlsx";
