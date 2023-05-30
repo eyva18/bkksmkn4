@@ -24,7 +24,7 @@ class AlumniImport implements ToModel, WithHeadingRow
         $user = User::create([
             'name' => $row['nisn'],
             'password' => bcrypt($row['nisn'])
-        ]);
+        ])
         $user->assignRole('alumni');
          StatusAlumniModel::create([
              'nisn' => $row['nisn'],
