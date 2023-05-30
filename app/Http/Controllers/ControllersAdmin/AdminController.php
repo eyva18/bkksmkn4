@@ -644,6 +644,7 @@ class AdminController extends Controller
                 'password' => ''
             ]);
         }
+
         $validasiDataStatusAlumni['universitas'] = $request->universitas ?? '~';
         $validasiDataStatusAlumni['perusahaan'] = $request->perusahaan ?? '~';
         // $validasiData['biografi'] = strip_tags($request->biografi);

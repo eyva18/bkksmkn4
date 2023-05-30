@@ -1018,6 +1018,15 @@
                                             </div>
                                         @enderror
                                     </div>
+                                    <div class="form-group">
+                                        <input type="checkbox" id="checkstatus" name="checkstatus" class="@error('') is-invalid @enderror" value="">
+                                        <label for="checkstatus">Masih Bekerja Sampai Sekarang</label>
+                                        @error('')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
                                 </div>
                             </div>
                         </div>
