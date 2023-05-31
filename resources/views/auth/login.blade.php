@@ -29,7 +29,7 @@
                                 <form class="pt-3" action="{{ route('login') }}" method="post">
                                     @csrf
                                     <div class="form-group">
-                                        <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" placeholder="Username / E-Mail" name="username" value="{{ old('username') }}" required autofocus>
+                                        <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" placeholder="Username" name="username" value="{{ old('username') }}" required autofocus>
                                         @error('username')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>

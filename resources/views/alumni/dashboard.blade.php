@@ -235,19 +235,6 @@
                                                                     </div>
                                                                 @enderror
                                                             </div>
-                                                            <div class="form-group">
-                                                                <input type="checkbox" id="checkstatusedit"
-                                                                    name="checkstatus" onclick="masihBersekolah()"
-                                                                    class="@error('') is-invalid @enderror"
-                                                                    value="">
-                                                                <label for="checkstatus">Masih Bersekolah Sampai
-                                                                    Sekarang</label>
-                                                                @error('')
-                                                                    <div class="invalid-feedback">
-                                                                        {{ $message }}
-                                                                    </div>
-                                                                @enderror
-                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -491,6 +478,7 @@
                                         </a>
                                         <h5 class="fw-bold">{{ $data->nama_penerbit }}</h5>
                                         <h5>Diterbitkan : {{ $data->tahun_terbit }}</h5>
+                                        <h5>Berakhir : {{ $data->tahun_kadaluarsa }}</h5>
                                     </div>
                                     <div class="col-12-md my-2 d-flex justify-content-between">
                                         <button class="btn btn-secondary" data-bs-toggle="modal"
@@ -543,21 +531,6 @@
                                                                     class="form-control @error('nama_penerbit') is-invalid @enderror"
                                                                     value="{{ old('nama_penerbit', $data->nama_penerbit) }}">
                                                                 @error('nama_penerbit')
-                                                                    <div class="invalid-feedback">
-                                                                        {{ $message }}
-                                                                    </div>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <div class="form-group">
-                                                                <input type="checkbox" id="waktuSertifikat"
-                                                                    name="waktuSertifikat"
-                                                                    class="@error('waktuSertifikat') is-invalid @enderror"
-                                                                    value="">
-                                                                <label for="waktuSertifikat">Sertifikat Tidak Akan
-                                                                    Kadaluarsa</label>
-                                                                @error('waktuSertifikat')
                                                                     <div class="invalid-feedback">
                                                                         {{ $message }}
                                                                     </div>
@@ -717,6 +690,7 @@
                                         <p class="fw-bold fs-5 text-dark">{{ $data->nama_juara_kompetensi }}</p>
                                         <h5>{{ $data->TingkatPerlombaan->tingkat_lomba }}</h5>
                                         <h5>Didapatkan : {{ $data->tanggal_terbit }}</h5>
+                                        <h5>Berakhir : {{ $data->tanggal_kadaluarsa }}</h5>
                                     </div>
                                     <div class="col-12-md my-2 d-flex justify-content-between">
                                         <button class="btn btn-secondary" data-bs-toggle="modal"
@@ -782,21 +756,6 @@
                                                                     @endforeach
                                                                 </select>
                                                                 @error('tingkat_perlombaan')
-                                                                    <div class="invalid-feedback">
-                                                                        {{ $message }}
-                                                                    </div>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <div class="form-group">
-                                                                <input type="checkbox" id="waktusertifikat"
-                                                                    name="waktuSertifikat"
-                                                                    class="@error('waktuSertifikat') is-invalid @enderror"
-                                                                    value="">
-                                                                <label for="waktusertifikat">Sertifikat Tidak Akan
-                                                                    Kadaluarsa</label>
-                                                                @error('waktuSertifikat')
                                                                     <div class="invalid-feedback">
                                                                         {{ $message }}
                                                                     </div>
@@ -1152,17 +1111,9 @@
                                                 </div>
                                             @enderror
                                         </div>
-                                        <div class="form-group">
-                                            <input type="checkbox" id="checkstatustambah" name="checkstatus"
-                                                onclick="tahunberakhir_tambah()" class="@error('') is-invalid @enderror"
-                                                value="">
-                                            <label for="checkstatus">Masih Bersekolah Sampai Sekarang</label>
-                                            @error('')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
+                                        <p class="card-description fw-medium text-danger mt-2">
+                                            Kosongkan tahun berakhir jika masih bersekolah.
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -1272,6 +1223,9 @@
                                                 </div>
                                             @enderror
                                         </div>
+                                        <p class="card-description fw-medium text-danger mt-2">
+                                            Kosongkan tahun berakhir jika masih bekerja.
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -1329,18 +1283,6 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <input type="checkbox" id="waktuSertifikat" name="waktuSertifikat"
-                                                class="@error('waktuSertifikat') is-invalid @enderror" value="">
-                                            <label for="waktuSertifikat">Sertifikat Tidak Akan Kadaluarsa</label>
-                                            @error('waktuSertifikat')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                    </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="content-hidden">Tahun Terbit <span class="text-red">
@@ -1367,6 +1309,9 @@
                                                     {{ $message }}
                                                 </div>
                                             @enderror
+                                            <p class="card-description fw-medium text-danger mt-2">
+                                                Kosongkan tahun kadaluarsa jika sertifikat berlaku seumur hidup.
+                                            </p>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -1478,18 +1423,6 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <input type="checkbox" id="waktusertifikat" name="waktuSertifikat"
-                                                class="@error('waktuSertifikat') is-invalid @enderror" value="">
-                                            <label for="waktusertifikat">Sertifikat Tidak Akan Kadaluarsa</label>
-                                            @error('waktuSertifikat')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                    </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="content-hidden">Tahun Terbit <span class="text-red">
@@ -1516,6 +1449,9 @@
                                                     {{ $message }}
                                                 </div>
                                             @enderror
+                                            <p class="card-description fw-medium text-danger mt-2">
+                                                Kosongkan tahun kadaluarsa jika sertifikat berlaku seumur hidup.
+                                            </p>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
@@ -1549,6 +1485,23 @@
                 
             </div>
         </div> --}}
+<<<<<<< HEAD
+=======
+            {{-- <div class="col-md-6">
+                <div class="form-group mb-2">
+                    <label class="content-hidden">Tahun Berakhir <span class="text-red">
+                            *</span></label>
+                    <input type="date" id="tahunberakhir_tambah" name="tahun_akhir_pendidikan"
+                        class="form-control @error('tahun_akhir_pendidikan') is-invalid @enderror"
+                        value="{{ old('tahun_akhir_pendidikan') }}">
+                    @error('tahun_akhir_pendidikan')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+            </div> --}}
+>>>>>>> 699d1d0d8c0a98a162d4a8a02269eda51a91124e
         @endsection
         @section('js-tambahan')
         @endsection

@@ -37,42 +37,17 @@
                 <div class="card-body collapse show">
                     <div class="row">
                         <div class="col-md-9">
-                            <h4 class="card-title">Data Import Dapodik</h4>
+                            <h4 class="card-title">Import Data</h4>
                         </div>
                     </div>
                     <div class="row pdt-20">
-                        <div class="col-md-6">
-                            <form action="/admin/administrator/master/import/data-dapodik" method="post">
-                                @csrf
-                                <label class="input-group-text" for="tahun_kelulus">Dimasukan Kedalam Tahun
-                                    Kelulusan</label>
-                                <select class="form-select" id="tahun_kelulus" name="tahun_kelulus">
-                                    <option selected value="">Tahun Lulus</option>
-                                    @foreach ($dataTahunlulus as $item)
-                                        <option value="{{ $item->id }}">{{ $item->tahun_lulus }}</option>
-                                    @endforeach
-                                </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="input-group-text" for="kelas">Pilih Kelas Dari Dapodik</label>
-                            <select class="form-select" id="kelas" name="kelas">
-                                <option selected value="">Kelas</option>
-                                <option value="10">10</option>
-                                <option value="11">11</option>
-                                <option value="12">12</option>
-                            </select>
-                        </div>
                         <div class="col-md-9 pdt-6 mt-3">
                             Catatan:
                             <ul>
                                 <li>* Username dan Password Secara Default adalah NISN Alumni Tersebut</li>
                                 <li>* Mohon dipastikan Data Dapodik Terlebih dahulu sebelum melakukan import</li>
-                                <li>* Apabila Terjadi Duplikasi NISN dan NIS maka Data Dapodik Diprioritaskan</li>
+                                <li>* Apabila Terjadi Duplikasi NISN dan NIS maka Akan Terjadi Erro</li>
                             </ul>
-                        </div>
-                        <div class="col-md-3 pdt-6 mt-3">
-                            <button type="submit" class="btn btn-primary pdt- full-size-width">Import</button>
-                            </form>
                         </div>
                     </div>
                 </div>

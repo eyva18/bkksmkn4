@@ -194,16 +194,20 @@ class ProfileAlumniController extends Controller
             'jenis_pendidikan' => 'in:1, 2, 3, 4, 5',
             'nilai_rata_rata' => 'numeric|decimal:0,100.00',
             'tahun_awal_pendidikan' => 'date',
-            'tahun_akhir_pendidikan' => 'date',
+            'tahun_akhir_pendidikan' => '',
         ]);
 
-        $tanggalAwal = $validasiData['tahun_awal_pekerjaan'];
-        $validasiData['tahun_awal_pekerjaan'] = date('d/m/Y', strtotime($tanggalAwal));
-        $validasiData['tahun_awal_pekerjaan'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_awal_pekerjaan'])->format('l, j F Y');
+        $tanggalAwal = $validasiData['tahun_awal_pendidikan'];
+        $validasiData['tahun_awal_pendidikan'] = date('d/m/Y', strtotime($tanggalAwal));
+        $validasiData['tahun_awal_pendidikan'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_awal_pendidikan'])->format('l, j F Y');
         
-        $tanggalAkhir = $validasiData['tahun_akhir_pekerjaan'];
-        $validasiData['tahun_akhir_pekerjaan'] = date('d/m/Y', strtotime($tanggalAkhir));
-        $validasiData['tahun_akhir_pekerjaan'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_akhir_pekerjaan'])->format('l, j F Y');
+        if ($request->tahun_akhir_pendidikan != null) {
+            $tanggalAkhir = $validasiData['tahun_akhir_pendidikan'];
+            $validasiData['tahun_akhir_pendidikan'] = date('d/m/Y', strtotime($tanggalAkhir));
+            $validasiData['tahun_akhir_pendidikan'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_akhir_pendidikan'])->format('l, j F Y');
+        } else {
+            $validasiData['tahun_akhir_pendidikan'] = 'Masih bersekolah sampai sekarang';
+        }
 
         $findUser = User::findOrFail($dataAlumni->user_id);
         $validasiData['user_id'] = $findUser->id;
@@ -220,16 +224,20 @@ class ProfileAlumniController extends Controller
             'jenis_pekerjaan' => 'in:1, 2, 3, 4, 5',
             'bidang' => 'string',
             'tahun_awal_pekerjaan' => 'date',
-            'tahun_akhir_pekerjaan' => 'date',
+            'tahun_akhir_pekerjaan' => '',
         ]);
 
         $tanggalAwal = $validasiData['tahun_awal_pekerjaan'];
         $validasiData['tahun_awal_pekerjaan'] = date('d/m/Y', strtotime($tanggalAwal));
         $validasiData['tahun_awal_pekerjaan'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_awal_pekerjaan'])->format('l, j F Y');
         
-        $tanggalAkhir = $validasiData['tahun_akhir_pekerjaan'];
-        $validasiData['tahun_akhir_pekerjaan'] = date('d/m/Y', strtotime($tanggalAkhir));
-        $validasiData['tahun_akhir_pekerjaan'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_akhir_pekerjaan'])->format('l, j F Y');
+        if ($request->tahun_akhir_pekerjaan != null) {
+            $tanggalAkhir = $validasiData['tahun_akhir_pekerjaan'];
+            $validasiData['tahun_akhir_pekerjaan'] = date('d/m/Y', strtotime($tanggalAkhir));
+            $validasiData['tahun_akhir_pekerjaan'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_akhir_pekerjaan'])->format('l, j F Y');
+        } else {
+            $validasiData['tahun_akhir_pekerjaan'] = 'Masih bekerja sampai sekarang';
+        }
 
         $findUser = User::findOrFail($dataAlumni->user_id);
         $validasiData['user_id'] = $findUser->id;
@@ -244,7 +252,7 @@ class ProfileAlumniController extends Controller
             'nama_sertifikasi' => 'string',
             'nama_penerbit' => 'string',
             'tahun_terbit' => 'date',
-            'tahun_kadaluarsa' => 'date',
+            'tahun_kadaluarsa' => '',
             'kode_sertifikasi' => 'required',
             'link_sertifikasi' => '',
             'file_sertifikasi' => 'required|image|mimes:jpeg,jpg,|max:2048',
@@ -254,10 +262,14 @@ class ProfileAlumniController extends Controller
         $validasiData['tahun_terbit'] = date('d/m/Y', strtotime($tanggalAwal));
         $validasiData['tahun_terbit'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_terbit'])->format('l, j F Y');
         
-        $tanggalAkhir = $validasiData['tahun_kadaluarsa'];
-        $validasiData['tahun_kadaluarsa'] = date('d/m/Y', strtotime($tanggalAkhir));
-        $validasiData['tahun_kadaluarsa'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_kadaluarsa'])->format('l, j F Y');
-        
+        if ($request->tahun_kadaluarsa != null) {
+            $tanggalAkhir = $validasiData['tahun_kadaluarsa'];
+            $validasiData['tahun_kadaluarsa'] = date('d/m/Y', strtotime($tanggalAkhir));
+            $validasiData['tahun_kadaluarsa'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_kadaluarsa'])->format('l, j F Y');
+        } else {
+            $validasiData['tahun_kadaluarsa'] = 'Sampai Sekarang';
+        }
+
         if($request->file('file_sertifikasi')) {
             $validasiData['file_sertifikasi'] = $request->file('file_sertifikasi')->getClientOriginalName();
             $validasiData['file_sertifikasi'] = $request->file('file_sertifikasi')->storeAs('file_sertifikasi_Alumni', $validasiData['file_sertifikasi']);
@@ -277,7 +289,7 @@ class ProfileAlumniController extends Controller
             'nama_juara_kompetensi' => 'string',
             'tingkat_perlombaan' => 'in:1,2,3,4,5',
             'tanggal_terbit' => 'date',
-            'tanggal_kadaluarsa' => 'date',
+            'tanggal_kadaluarsa' => '',
             'file_sertifikasi' => 'required|image|mimes:jpeg,jpg,|max:2048',
         ]);
         
@@ -285,9 +297,13 @@ class ProfileAlumniController extends Controller
         $validasiData['tanggal_terbit'] = date('d/m/Y', strtotime($tanggalAwal));
         $validasiData['tanggal_terbit'] = Carbon::createFromFormat('d/m/Y', $validasiData['tanggal_terbit'])->format('l, j F Y');
         
-        $tanggalAkhir = $validasiData['tanggal_kadaluarsa'];
-        $validasiData['tanggal_kadaluarsa'] = date('d/m/Y', strtotime($tanggalAkhir));
-        $validasiData['tanggal_kadaluarsa'] = Carbon::createFromFormat('d/m/Y', $validasiData['tanggal_kadaluarsa'])->format('l, j F Y');
+        if ($request->tanggal_kadaluarsa != null) {
+            $tanggalAkhir = $validasiData['tanggal_kadaluarsa'];
+            $validasiData['tanggal_kadaluarsa'] = date('d/m/Y', strtotime($tanggalAkhir));
+            $validasiData['tanggal_kadaluarsa'] = Carbon::createFromFormat('d/m/Y', $validasiData['tanggal_kadaluarsa'])->format('l, j F Y');
+        } else {
+            $validasiData['tanggal_kadaluarsa'] = 'Sampai Sekarang';
+        }
         
         if($request->file('file_sertifikasi')) {
             $validasiData['file_sertifikasi'] = $request->file('file_sertifikasi')->getClientOriginalName();
@@ -339,16 +355,19 @@ class ProfileAlumniController extends Controller
             'jenis_pendidikan' => 'in:1, 2, 3, 4, 5',
             'nilai_rata_rata' => 'numeric|decimal:0,100.00',
             'tahun_awal_pendidikan' => 'date',
-            'tahun_akhir_pendidikan' => 'date',
+            'tahun_akhir_pendidikan' => '',
         ]);
 
         $tanggalAwal = $validasiData['tahun_awal_pendidikan'];
         $validasiData['tahun_awal_pendidikan'] = date('d/m/Y', strtotime($tanggalAwal));
         $validasiData['tahun_awal_pendidikan'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_awal_pendidikan'])->format('l, j F Y');
-        
-        $tanggalAkhir = $validasiData['tahun_akhir_pendidikan'];
-        $validasiData['tahun_akhir_pendidikan'] = date('d/m/Y', strtotime($tanggalAkhir));
-        $validasiData['tahun_akhir_pendidikan'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_akhir_pendidikan'])->format('l, j F Y');
+        if ($request->tahun_akhir_pendidikan) {
+            $tanggalAkhir = $validasiData['tahun_akhir_pendidikan'];
+            $validasiData['tahun_akhir_pendidikan'] = date('d/m/Y', strtotime($tanggalAkhir));
+            $validasiData['tahun_akhir_pendidikan'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_akhir_pendidikan'])->format('l, j F Y');
+        } else {
+            $validasiData['tahun_akhir_pendidikan'] = 'Masih bersekolah sampai sekarang';
+        }
 
         RiwayatPendidikanModel::find($request->id)->update($validasiData);
         return back()->with('success', 'Riwayat pendidikan berhasil diubah');
@@ -361,17 +380,21 @@ class ProfileAlumniController extends Controller
             'jenis_pekerjaan' => 'in:1, 2, 3, 4, 5',
             'bidang' => 'string',
             'tahun_awal_pekerjaan' => 'date',
-            'tahun_akhir_pekerjaan' => 'date',
+            'tahun_akhir_pekerjaan' => '',
         ]);
         $tanggalAwal = $validasiData['tahun_awal_pekerjaan'];
         $validasiData['tahun_awal_pekerjaan'] = date('d/m/Y', strtotime($tanggalAwal));
         $validasiData['tahun_awal_pekerjaan'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_awal_pekerjaan'])->format('l, j F Y');
         
-        $tanggalAkhir = $validasiData['tahun_akhir_pekerjaan'];
-        $validasiData['tahun_akhir_pekerjaan'] = date('d/m/Y', strtotime($tanggalAkhir));
-        $validasiData['tahun_akhir_pekerjaan'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_akhir_pekerjaan'])->format('l, j F Y');
+        if ($request->tahun_akhir_pekerjaan != null) {
+            $tanggalAkhir = $validasiData['tahun_akhir_pekerjaan'];
+            $validasiData['tahun_akhir_pekerjaan'] = date('d/m/Y', strtotime($tanggalAkhir));
+            $validasiData['tahun_akhir_pekerjaan'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_akhir_pekerjaan'])->format('l, j F Y');
+        } else {
+            $validasiData['tahun_akhir_pekerjaan'] = 'Masih bekerja sampai sekarang';
+        }
+        // dd($validasiData['tahun_akhir_pekerjaan']);
         
-        // dd($validasiData);
         RiwayatPekerjaanModel::findOrFail($request->id)->update($validasiData);
         return back()->with('success', 'Riwayat pekerjaan berhasil diubah');
     }
@@ -381,7 +404,7 @@ class ProfileAlumniController extends Controller
             'nama_sertifikasi' => 'string',
             'nama_penerbit' => 'string',
             'tahun_terbit' => 'date',
-            'tahun_kadaluarsa' => 'date',
+            'tahun_kadaluarsa' => '',
             'kode_sertifikasi' => 'required',
             'link_sertifikasi' => '',
             'file_sertifikasi' => 'image|mimes:jpeg,jpg,|max:2048',
@@ -391,9 +414,13 @@ class ProfileAlumniController extends Controller
         $validasiData['tahun_terbit'] = date('d/m/Y', strtotime($tanggalAwal));
         $validasiData['tahun_terbit'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_terbit'])->format('l, j F Y');
         
-        $tanggalAkhir = $validasiData['tahun_kadaluarsa'];
-        $validasiData['tahun_kadaluarsa'] = date('d/m/Y', strtotime($tanggalAkhir));
-        $validasiData['tahun_kadaluarsa'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_kadaluarsa'])->format('l, j F Y');
+        if ($request->tahun_kadaluarsa) {
+            $tanggalAkhir = $validasiData['tahun_kadaluarsa'];
+            $validasiData['tahun_kadaluarsa'] = date('d/m/Y', strtotime($tanggalAkhir));
+            $validasiData['tahun_kadaluarsa'] = Carbon::createFromFormat('d/m/Y', $validasiData['tahun_kadaluarsa'])->format('l, j F Y');
+        } else {
+            $validasiData['tahun_kadaluarsa'] = 'Sampai Sekarang';
+        }
         
         $validasiData['file_sertifikasi'] = $request->oldSertifikasi;
 
@@ -417,7 +444,7 @@ class ProfileAlumniController extends Controller
             'nama_juara_kompetensi' => 'string',
             'tingkat_perlombaan' => 'in:1,2,3,4,5',
             'tanggal_terbit' => 'date',
-            'tanggal_kadaluarsa' => 'date',
+            'tanggal_kadaluarsa' => '',
             'file_sertifikasi' => 'image|mimes:jpeg,jpg,|max:2048',
         ]);
         
@@ -425,9 +452,13 @@ class ProfileAlumniController extends Controller
         $validasiData['tanggal_terbit'] = date('d/m/Y', strtotime($tanggalAwal));
         $validasiData['tanggal_terbit'] = Carbon::createFromFormat('d/m/Y', $validasiData['tanggal_terbit'])->format('l, j F Y');
         
-        $tanggalAkhir = $validasiData['tanggal_kadaluarsa'];
-        $validasiData['tanggal_kadaluarsa'] = date('d/m/Y', strtotime($tanggalAkhir));
-        $validasiData['tanggal_kadaluarsa'] = Carbon::createFromFormat('d/m/Y', $validasiData['tanggal_kadaluarsa'])->format('l, j F Y');
+        if ($request->tanggal_kadaluarsa) {
+            $tanggalAkhir = $validasiData['tanggal_kadaluarsa'];
+            $validasiData['tanggal_kadaluarsa'] = date('d/m/Y', strtotime($tanggalAkhir));
+            $validasiData['tanggal_kadaluarsa'] = Carbon::createFromFormat('d/m/Y', $validasiData['tanggal_kadaluarsa'])->format('l, j F Y');
+        } else {
+            $validasiData['tanggal_kadaluarsa'] = 'Sampai Sekarang';
+        }
         
         $validasiData['file_sertifikasi'] = $request->oldSertifikasi;
 
