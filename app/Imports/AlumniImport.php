@@ -21,10 +21,18 @@ class AlumniImport implements ToModel, WithHeadingRow
     }
     public function model(array $row)
     {
-        $user = User::create([
-            'name' => $row['nisn'],
-            'password' => bcrypt($row['nisn'])
-        ]);
+        if($row['username'] == null OR $row['email'] == null){
+            $user = User::create([
+                'name' => $row['nisn'],
+                'password' => bcrypt($row['nisn'])
+            ]);
+        }
+        if($row['username'] != null AND $row['password'] != null){
+            $user = User::create([
+                'name' => $row['username'],
+                'password' => bcrypt($row['password'])
+            ]);
+        }
         $user->assignRole('alumni');
          StatusAlumniModel::create([
              'nisn' => $row['nisn'],
@@ -32,8 +40,8 @@ class AlumniImport implements ToModel, WithHeadingRow
              'tahun_lulus' => $row['kode_lulusid'],
              'status_bekerja' => 2,
              'status_pendidikan' => 2,
-             'universitas' => "",
-             'perusahaan' => "",
+             'universitas' => null,
+             'perusahaan' => null,
              'user_id'=> $user->id 
          ]);
         return new AlumniModel([

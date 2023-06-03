@@ -44,9 +44,9 @@
                         <div class="col-md-9 pdt-6 mt-3">
                             Catatan:
                             <ul>
-                                <li>* Username dan Password Secara Default adalah NISN Alumni Tersebut</li>
+                                <li><b>* Username dan Password Secara Default adalah NISN Alumni Tersebut</b></li>
                                 <li>* Mohon dipastikan Data Dapodik Terlebih dahulu sebelum melakukan import</li>
-                                <li>* Apabila Terjadi Duplikasi NISN dan NIS maka Akan Terjadi Erro</li>
+                                <li>* Apabila Terjadi Duplikasi NISN dan NIS maka Akan Terjadi Error</li>
                             </ul>
                         </div>
                     </div>
@@ -147,12 +147,12 @@
                                         </tr>
                                         <tr>
                                             <td>jenis_kelaminId</td>
-                                            <td>Optional Pilihan: Laki-Laki = 1, Perempuan = 2</td>
+                                            <td>Wajib Pilihan: Laki-Laki = 1, Perempuan = 2</td>
                                             <td>1 (Pilih 1: Laki-Laki)</td>
                                         </tr>
                                         <tr>
                                             <td>agamaId</td>
-                                            <td>Optional Pilihan: Islam = 1, Kristen = 2, Hindu = 3, Budha = 4, Konghucu = 5
+                                            <td>Wajib Pilihan: Islam = 1, Kristen = 2, Hindu = 3, Budha = 4, Konghucu = 5
                                             </td>
                                             <td>1 (Pilih 1: Islam)</td>
                                         </tr>

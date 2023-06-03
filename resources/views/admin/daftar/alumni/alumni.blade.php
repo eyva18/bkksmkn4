@@ -42,9 +42,9 @@
                                 <option selected>Jurusan</option>
                                 @foreach ($datajurusan as $item)
                                     @if(request('idjurusan') == $item->id)
-                                        <option value="{{ $item->id }}" selected>{{ $item->jurusan }}</option>
+                                        <option value="{{ $item->id ?? '-'}}" selected>{{ $item->jurusan ?? '-'}}</option>
                                     @else
-                                        <option value="{{ $item->id }}">{{ $item->jurusan }}</option>
+                                        <option value="{{ $item->id ?? '-'}}">{{ $item->jurusan ?? '-'}}</option>
                                     @endif
                                 @endforeach
                             </select>
@@ -54,9 +54,9 @@
                                 <option selected>Tahun Lulus</option>
                                 @foreach ($datatahunlulus as $item)
                                     @if (request('idtahunlulus') == $item->id)
-                                        <option value="{{ $item->id }}"selected>{{ $item->tahun_lulus }}</option>
+                                        <option value="{{ $item->id ?? '-'}}"selected>{{ $item->tahun_lulus ?? '-'}}</option>
                                     @else
-                                        <option value="{{ $item->id }}">{{ $item->tahun_lulus }}</option>
+                                        <option value="{{ $item->id ?? '-'}}">{{ $item->tahun_lulus ?? '-'}}</option>
                                     @endif
                                 @endforeach
                             </select>
@@ -136,7 +136,7 @@
                                 <li class="half-size-width">
                                     <button type="button" class="btn btn-danger text-white full-size-width"
                                         data-bs-toggle="modal"
-                                        data-bs-target="#deletemodal{{ $alumni->id ??'-' }}">Hapus</button>
+                                        data-bs-target="#deletemodal{{ $alumni->id ?? '-' }}">Hapus</button>
                                 </li>
                             </ul>
                         </div>

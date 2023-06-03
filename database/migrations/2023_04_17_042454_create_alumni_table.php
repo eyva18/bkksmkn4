@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('alumni', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('nisn');
-            $table->bigInteger('nis');
-            $table->string('nama');
+            $table->string('nisn')->nullable();
+            $table->string('nis')->nullable();
+            $table->string('nama')->nullable();
             $table->bigInteger('no_hp')->nullable();
             $table->text('biografi')->nullable();
             $table->foreignId('agamaId')->nullable();

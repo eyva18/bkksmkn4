@@ -20,8 +20,8 @@ class UserSeeder extends Seeder
     {
         $admin = User::create([
             'id' => 1,
-            'name' => 'Admin Web',
-            'email' => 'admin@web',
+            'name' => 'administrator',
+            'email' => 'admin@gmail.com',
             'password' => bcrypt('admin123'),
             'photo_profile' => 'ui-avatars.svg'
         ]);
@@ -29,8 +29,8 @@ class UserSeeder extends Seeder
 
         $useralumni = User::create([
             'id' => 2,
-            'name' => 'Alumni',
-            'email' => 'alumni@web',
+            'name' => 'alumni-web',
+            'email' => 'alumni@gmail.com',
             'password' => bcrypt('alumni123'),
             'photo_profile' => "Photo_Profile_Alumni/MN2lf1yINs5gcFDvFWQTecvhBruXNFGmiqeCsLb8.jpg"
         ]);
@@ -52,7 +52,7 @@ class UserSeeder extends Seeder
             'user_id'=> $useralumni->id
         ]);
         StatusAlumniModel::create([
-            'nisn' => $alumnicreate->nisn,
+            'nisn' => $alumnicreate->NISN,
             'jurusan' => $alumnicreate->kode_jurusanId,
             'tahun_lulus' => $alumnicreate->kode_lulusId,
             'status_bekerja' => 1,
@@ -64,8 +64,8 @@ class UserSeeder extends Seeder
 
         $kepala_sekolah = User::create([
             'id' => 3,
-            'name' => 'Drs. Syafruddin Noor, M.Pd.',
-            'email' => 'kepala_sekolah@web',
+            'name' => 'kepala-sekolah',
+            'email' => 'kepala_sekolah@gmail.com',
             'password' => bcrypt('kepalasekolah123'),
             'photo_profile' => 'syafruddin-noor.jpeg'
         ]);
@@ -85,18 +85,18 @@ class UserSeeder extends Seeder
 
         $dudi = User::create([
             'id' => 4,
-            'name' => 'Dunia Industri',
-            'email' => 'dudi@web',
+            'name' => 'dunia-industri',
+            'email' => 'dudi@gmail.com',
             'password' => bcrypt('dudi123')
         ]);
         $dudi->assignRole('dudi');
        
         DudiModel::create([
             'nama' => "PT Test Web Dudi",
-            'bidang' => "Test Web",
-            'no_telp' => +62087868623,
-            'deskripsi' => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati aliquid laborum est enim mollitia, cum perferendis tenetur praesentium suscipit excepturi repudiandae ex voluptatibus minima quod, quisquam veniam. Animi error magnam deleniti quia, porro, asperiores, amet ipsam modi hic exercitationem veritatis rem incidunt ipsa eos. Ex, velit sint eum deleniti veritatis quaerat repellat voluptates in saepe obcaecati nisi, recusandae quisquam necessitatibus rem provident neque. Quibusdam ipsa porro, iusto dolore nemo facilis quam tenetur quisquam, sapiente odit explicabo, architecto rerum sint nesciunt optio consequatur aspernatur possimus assumenda deserunt itaque. Rerum quod rem totam vero aperiam itaque fugit officia, consequuntur laudantium ad culpa?",
-            'alamat' => "Banjarmasin Selatan, Kelayan B",
+            'bidang' => null,
+            'no_telp' => null,
+            'deskripsi' => null,
+            'alamat' => null,
             'logo' => "ph.png",
             'user_id' => $dudi->id,
         ]);

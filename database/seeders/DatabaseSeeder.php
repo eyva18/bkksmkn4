@@ -25,8 +25,6 @@ class DatabaseSeeder extends Seeder
         $this->call(TingkatPerlombaanSeeder::class);
         $this->call(StatusBekerjaSeeder::class);
         $this->call(StatusPendidikanSeeder::class);
-        StatusAlumniModel::factory(25)->create();
-        DudiModel::factory(10)->create();
         $this->call(RoleSeeder::class);
         $this->call(UserSeeder::class);
     }

@@ -49,17 +49,17 @@
                         <img class="card-img-top img-fluid"
                             src="{{ URL::asset('storage' . '/' . $dataAlumni->photo_profile) }}" alt="Card image cap">
                         <div class="card-body">
-                            <h4 class="card-title text-light fs-4">{{ $dataAlumni->nama }} ~ {{ $dataAlumni->nisn }}</h4>
+                            <h4 class="card-title text-light fs-4">{{ $dataAlumni->nama ?? '-'}} ~ {{ $dataAlumni->nisn ?? '-'}}</h4>
                             <p class="card-text"><i class="mdi mdi-calendar-clock  text-light"></i> <span
-                                    class="status-alumni">Lulus - {{ $dataAlumni->tahunlulus->tahun_lulus }}</span></p>
+                                    class="status-alumni">Lulus - {{ $dataAlumni->tahunlulus->tahun_lulus ?? '-'}}</span></p>
                             <p class="card-text"><i class="mdi mdi-school text-light"></i> <span
-                                    class="status-alumni">{{ $dataAlumni->jurusan->jurusan }}</span></p>
+                                    class="status-alumni">{{ $dataAlumni->jurusan->jurusan ?? '-'}}</span></p>
                             <p class="card-text"><i class="mdi mdi-cake-layered  text-light"></i> <span
-                                    class="status-alumni">{{ $dataAlumni->tempatTanggalLahir }}</span></p>
+                                    class="status-alumni">{{ $dataAlumni->tempatTanggalLahir ?? '-'}}</span></p>
                             <p class="card-text"><i class=" mdi mdi-account text-light"></i> <span
-                                    class="status-alumni">{{ $dataAlumni->Jenis_Kelamin->jenis_kelamin }}</span></p>
+                                    class="status-alumni">{{ $dataAlumni->Jenis_Kelamin->jenis_kelamin ?? '-'}}</span></p>
                             <p class="card-text"><i class="mdi mdi-phone text-light"></i> <span
-                                    class="status-alumni">{{ $dataAlumni->no_hp }}</span></p>
+                                    class="status-alumni">{{ $dataAlumni->no_hp ?? '-'}}</span></p>
                         </div>
                     </div>
                 </div>
@@ -1485,23 +1485,6 @@
                 
             </div>
         </div> --}}
-<<<<<<< HEAD
-=======
-            {{-- <div class="col-md-6">
-                <div class="form-group mb-2">
-                    <label class="content-hidden">Tahun Berakhir <span class="text-red">
-                            *</span></label>
-                    <input type="date" id="tahunberakhir_tambah" name="tahun_akhir_pendidikan"
-                        class="form-control @error('tahun_akhir_pendidikan') is-invalid @enderror"
-                        value="{{ old('tahun_akhir_pendidikan') }}">
-                    @error('tahun_akhir_pendidikan')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
-            </div> --}}
->>>>>>> 699d1d0d8c0a98a162d4a8a02269eda51a91124e
         @endsection
         @section('js-tambahan')
         @endsection

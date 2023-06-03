@@ -42,12 +42,12 @@
                             <li class="nav-item nav-profile dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
                                     id="profileDropdown">
-                                    <span class="nav-profile-name">{{ Auth()->user()->name }}</span>
-                                    <img src="{{ URL::asset('storage/' . Auth::user()->photo_profile) }}" alt="profile" style="object-fit: cover;" />
+                                    <span class="nav-profile-name">{{ Auth()->user()->name ?? '-'}}</span>
+                                    <img src="{{ URL::asset('storage/' . Auth::user()->photo_profile) ?? '-'}}" alt="profile" style="object-fit: cover;" />
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown"
                                     aria-labelledby="profileDropdown">
-                                    <a class="dropdown-item" href="/profile/{{ $dataAlumni->nama }}">
+                                    <a class="dropdown-item" href="/profile/{{ $dataAlumni->nama ?? '-'}}">
                                         <i class="mdi mdi-settings text-primary"></i>
                                         Profile
                                     </a>
