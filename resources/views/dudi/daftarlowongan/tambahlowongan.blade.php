@@ -88,7 +88,7 @@
                                     <div class="input-group mb-3">
                                         <label class="input-group-text" for="inputGroupSelect01">Pilih</label>
                                         <select class="form-select" id="inputGroupSelect01" name="id_kategoti_pekerjaan">
-                                            <option selected="">Spesialis Pekerjaan</option>
+                                            <option selected="" value="">Spesialis Pekerjaan</option>
                                             @foreach ($category as $item)
                                                 <option value="{{ $item->id }}">{{ $item->nama_kategori }}</option>
                                             @endforeach

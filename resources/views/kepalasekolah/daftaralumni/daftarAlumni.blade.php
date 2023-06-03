@@ -90,15 +90,15 @@
                             <ul class="list-unstyled">
                                 <li class="media d-flex align-items-start company-show">
                                     <img class="d-flex me-3 logo-company"
-                                        src="{{ URL::asset('storage') . '/' . $alumni->photo_profile }}" alt="Logo Test"
+                                        src="{{ URL::asset('storage') . '/' . $alumni->photo_profile }}" alt="Image"
                                         width="100">
                                     <div class="media-body">
                                         <ul class="list-unstyled">
-                                            <li class="card-text"><i class="mdi mdi-calendar-clock  text-black"></i> <span class="status-alumni">Lulus Tahun - {{ $alumni->tahunlulus->tahun_lulus }}</span></li>
-                                            <li class="card-text"><i class="mdi mdi-school text-black"></i> <span class="status-alumni">{{ $alumni->jurusan->jurusan }}</span></li>
-                                            <li class="card-text"><i class="mdi mdi-cake-layered  text-black"></i> <span class="status-alumni">{{ $alumni->tempatTanggalLahir }}</span></li>
-                                            <li class="card-text"><i class=" mdi mdi-account text-black"></i> <span class="status-alumni">{{ $alumni->Jenis_Kelamin->jenis_kelamin }}</span></li>
-                                            <li class="card-text"><i class="mdi mdi-phone text-black"></i> <span class="status-alumni">{{ $alumni->no_hp }}</span></li>
+                                            <li class="card-text"><i class="mdi mdi-calendar-clock  text-black"></i> <span class="status-alumni">Lulus Tahun - {{ $alumni->tahunlulus->tahun_lulus ?? '-'}}</span></li>
+                                            <li class="card-text"><i class="mdi mdi-school text-black"></i> <span class="status-alumni">{{ $alumni->jurusan->jurusan ?? '-'}}</span></li>
+                                            <li class="card-text"><i class="mdi mdi-cake-layered  text-black"></i> <span class="status-alumni">{{ $alumni->tempatTanggalLahir ?? '-'}}</span></li>
+                                            <li class="card-text"><i class=" mdi mdi-account text-black"></i> <span class="status-alumni">{{ $alumni->Jenis_Kelamin->jenis_kelamin ?? '-'}}</span></li>
+                                            <li class="card-text"><i class="mdi mdi-phone text-black"></i> <span class="status-alumni">{{ $alumni->no_hp ?? '-'}}</span></li>
                                         </ul>
                                     </div>
                                 </li>

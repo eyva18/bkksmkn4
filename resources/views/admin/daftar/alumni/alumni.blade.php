@@ -129,11 +129,7 @@
                                 <button class="btn btn-primary full-size-width">Profile Alumni</button>
                             </form>
                             <ul class="list-unstyled d-flex none-mbt">
-                                <li class="half-size-width">
-                                    <a href="javascript:void(0)"
-                                        class="btn btn-warning text-white full-size-width">Masuk</a>
-                                </li>
-                                <li class="half-size-width">
+                                <li class="full-size-width">
                                     <button type="button" class="btn btn-danger text-white full-size-width"
                                         data-bs-toggle="modal"
                                         data-bs-target="#deletemodal{{ $alumni->id ?? '-' }}">Hapus</button>

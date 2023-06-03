@@ -88,7 +88,7 @@
                             <ul class="list-unstyled">
                                 <li class="media d-flex align-items-start">
                                     <img class="d-flex me-3 logo-company" src="/images/profileimg/{{ $data->dudi->logo }}"
-                                        alt="Logo Test" width="100">
+                                        alt="Image" width="100">
                                     <div class="media-body">
                                         <ul class="list-unstyled">
                                             <li><i class="fas fa-building color-23"></i> <span

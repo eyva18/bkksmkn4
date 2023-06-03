@@ -83,7 +83,7 @@
                             <h4 class="card-title">{{ $datalowongan->dudi->nama ?? '-'}}</h4>
                             <ul class="list-unstyled">
                                 <li class="media d-flex align-items-start company-show">
-                                    <img class="d-flex me-3 logo-company" src="/images/profileimg/{{ $datalowongan->dudi->logo ?? '-'}}" alt="Logo Test" width="100">
+                                    <img class="d-flex me-3 logo-company" src="/images/profileimg/{{ $datalowongan->dudi->logo ?? '-'}}" alt="Image" width="100">
                                     <div class="media-body">
                                         <ul class="list-unstyled">
                                             <li><i class="mdi mdi-clipboard-text  color-23"></i> <span class="mrl-5 text-black">{{ $datalowongan->dudi->bidang ?? '-'}}</span></li>
@@ -127,7 +127,7 @@
                         <h4 class="card-title">{{ $item->nama }}</h4>
                         <ul class="list-unstyled">
                             <li class="media d-flex align-items-start company-show">
-                                <img class="d-flex me-3 logo-company" src="/images/profileimg/{{ $item->dudi->logo }}" alt="Logo Test" width="100">
+                                <img class="d-flex me-3 logo-company" src="/images/profileimg/{{ $item->dudi->logo }}" alt="Image" width="100">
                                 <div class="media-body">
                                     <ul class="list-unstyled">
                                         <li><i class="mdi mdi-hospital-building color-23"></i> <span class="mrl-5 text-black">{{ $item->dudi->nama }}</span></li>

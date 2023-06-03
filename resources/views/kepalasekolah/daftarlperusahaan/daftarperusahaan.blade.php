@@ -86,7 +86,7 @@
                             <ul class="list-unstyled">
                                 <li class="media d-flex align-items-start company-show">
                                     <img class="d-flex me-3 logo-company"
-                                        src="/images/profileimg/{{ $dataperusahaan->logo }}" alt="Logo Test" width="100">
+                                        src="/images/profileimg/{{ $dataperusahaan->logo }}" alt="Image" width="100">
                                     <div class="media-body">
                                         <ul class="list-unstyled">
                                             <li><i class="mdi mdi-newspaper color-23"></i> <span
@@ -139,7 +139,7 @@
                             <ul class="list-unstyled">
                                 <li class="media d-flex align-items-start company-show">
                                     <img class="d-flex me-3 logo-company"
-                                        src="/images/profileimg/{{ $datalowongan->dudi->logo }}" alt="Logo Test"
+                                        src="/images/profileimg/{{ $datalowongan->dudi->logo }}" alt="Image"
                                         width="100">
                                     <div class="media-body">
                                         <ul class="list-unstyled">

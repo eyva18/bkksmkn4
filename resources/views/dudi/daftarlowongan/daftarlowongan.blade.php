@@ -76,7 +76,7 @@
                             <ul class="list-unstyled">
                                 <li class="media d-flex align-items-start company-show">
                                     <img class="d-flex me-3 logo-company"
-                                        src="/images/profileimg/{{ $datalowongan->dudi->logo }}" alt="Logo Test"
+                                        src="/images/profileimg/{{ $datalowongan->dudi->logo }}" alt="Image"
                                         width="100">
                                     <div class="media-body">
                                         <ul class="list-unstyled">
@@ -207,7 +207,7 @@
                                 <ul class="list-unstyled">
                                     <li class="media d-flex align-items-start company-show">
                                         <img class="d-flex me-3 logo-company"
-                                            src="/images/profileimg/{{ $datalowongan->dudi->logo }}" alt="Logo Test"
+                                            src="/images/profileimg/{{ $datalowongan->dudi->logo }}" alt="Image"
                                             width="100">
                                         <div class="media-body">
                                             <ul class="list-unstyled">
