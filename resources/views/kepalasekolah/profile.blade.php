@@ -191,14 +191,14 @@
                                 <div class="col-md-8 pdt-6">
                                     <input type="text"
                                         class="form-control font-weight-normal @error('username') is-invalid @enderror"
-                                        placeholder="Username Perusahaan..." name="username"
+                                        placeholder="Username..." name="username"
                                         value="{{ old('username', $dataUser->name) }}">
                                     @error('username')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror
-                                </div>
+                                </div>  
                             </div>
                             <div class="row pdt-20">
                                 <div class="col-md-4">
@@ -208,7 +208,7 @@
                                 <div class="col-md-8 pdt-6">
                                     <input type="email"
                                         class="form-control font-weight-normal @error('email') is-invalid @enderror"
-                                        placeholder="E-Mail Perusahaan..." name="email"
+                                        placeholder="E-Mail..." name="email"
                                         value="{{ old('email', $dataUser->email) }}">
                                     @error('email')
                                         <div class="invalid-feedback">
@@ -225,7 +225,7 @@
                                 <div class="col-md-8 pdt-6">
                                     <input type="password"
                                         class="form-control font-weight-normal @error('password') is-invalid @enderror"
-                                        placeholder="Password Pengguna Perusahaan..." name="password"
+                                        placeholder="Password Pengguna..." name="password"
                                         value="{{ old('password') }}">
                                     @error('password')
                                         <div class="invalid-feedback">

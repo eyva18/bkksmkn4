@@ -402,10 +402,10 @@
                             <div class="row mrt-6">
                                 <div class="col-md-4">
                                     <h4 class="text-black m-0">Username<span class="text-red"> *</span></h4>
-                                    <p class="text-muted mt-0 text-sm">Username Perusahaan</p>
+                                    <p class="text-muted mt-0 text-sm">Username Alumni</p>
                                 </div>
                                 <div class="col-md-8 pdt-6">
-                                    <input type="text" class="form-control font-weight-normal @error('username') is-invalid @enderror" placeholder="Username Perusahaan..." name="username" value="{{ old('username', $dataUser->name) }}">
+                                    <input type="text" class="form-control font-weight-normal @error('username') is-invalid @enderror" placeholder="Username Alumni..." name="username" value="{{ old('username', $dataUser->name) }}">
                                     @error('username')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -416,10 +416,10 @@
                             <div class="row pdt-20">
                                 <div class="col-md-4">
                                     <h4 class="text-black m-0">E-Mail<span class="text-red"> *</span></h4>
-                                    <p class="text-muted mt-0 text-sm">E-Mail Perusahaan</p>
+                                    <p class="text-muted mt-0 text-sm">E-Mail Alumni</p>
                                 </div>
                                 <div class="col-md-8 pdt-6">
-                                    <input type="email" class="form-control font-weight-normal @error('email') is-invalid @enderror" placeholder="E-Mail Perusahaan..." name="email" value="{{ old('email', $dataUser->email) }}">
+                                    <input type="email" class="form-control font-weight-normal @error('email') is-invalid @enderror" placeholder="E-Mail Alumni..." name="email" value="{{ old('email', $dataUser->email) }}">
                                     @error('email')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -430,10 +430,10 @@
                             <div class="row mrt-6">
                                 <div class="col-md-4">
                                     <h4 class="text-black m-0">Password<span class="text-red"> *</span></h4>
-                                    <p class="text-muted mt-0 text-sm">Password Pengguna Perusahaan</p>
+                                    <p class="text-muted mt-0 text-sm">Password Pengguna Alumni</p>
                                 </div>
                                 <div class="col-md-8 pdt-6">
-                                    <input type="password" class="form-control font-weight-normal @error('password') is-invalid @enderror" placeholder="Password Pengguna Perusahaan..." name="password" value="{{ old('password') }}">
+                                    <input type="password" class="form-control font-weight-normal @error('password') is-invalid @enderror" placeholder="Password Pengguna Alumni..." name="password" value="{{ old('password') }}">
                                     @error('password')
                                         <div class="invalid-feedback">
                                             {{ $message }}

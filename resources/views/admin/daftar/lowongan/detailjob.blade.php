@@ -80,7 +80,7 @@
                             <h4 class="mb-0 text-white">Deskripsi Pekerjaan <i class="fas fa-info-circle text-white"></i></h4>
                         </div>
                         <div class="card-body">
-                            <p class="card-text">{{ $datalowongan->deskripsi_pekerjaan ?? '-' }}</p>
+                            <p class="card-text">{!! $datalowongan->deskripsi_pekerjaan ?? '-' !!}</p>
                         </div>
                     </div>
                     <div class="card border-dark">
@@ -88,7 +88,7 @@
                             <h4 class="mb-0 text-white">Deskripsi Perusahaan <i class="fas fa-info-circle text-white"></i></h4>
                         </div>
                         <div class="card-body">
-                            <p class="card-text">{{ $datalowongan->deskripsi_perusahaan ?? '-' }}</p>
+                            <p class="card-text">{!! $datalowongan->dudi->deskripsi ?? '-' !!}</p>
                         </div>
                     </div>
                 </div>
