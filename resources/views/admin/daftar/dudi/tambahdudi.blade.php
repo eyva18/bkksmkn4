@@ -122,21 +122,21 @@
                     <div class="row pdt-20">
                         <div class="col-md-4">
                             <h4 class="text-black m-0">E-Mail<span class="text-red"> *</span></h4>
-                            <p class="text-muted mt-0 text-sm">E-Mail Perusahaan</p>
+                            <p class="text-muted mt-0 text-sm"></p>
                         </div>
                         <div class="col-md-8 pdt-6">
                             <input type="text" class="form-control font-weight-normal"
-                                placeholder="E-Mail Perusahaan..." name="email">
+                                placeholder="..." name="email">
                         </div>
                     </div>
                     <div class="row mrt-6">
                         <div class="col-md-4">
                             <h4 class="text-black m-0">Username<span class="text-red"> *</span></h4>
-                            <p class="text-muted mt-0 text-sm">Username Perusahaan</p>
+                            <p class="text-muted mt-0 text-sm"></p>
                         </div>
                         <div class="col-md-8 pdt-6">
                             <input type="text" class="form-control font-weight-normal"
-                                placeholder="Username Perusahaan..." name="username">
+                                placeholder="..." name="username">
                         </div>
                     </div>
                     <div class="row mrt-6">
@@ -163,7 +163,7 @@
         <!-- footer -->
         <!-- ============================================================== -->
         <footer class="footer text-center text-muted">
-            © 2023 - 2024 Bursa Kerja Khusus — SMK Negeri 4 Banjarmasin by Taufiq Ari Rahman
+            © 2023 - 2024 Bursa Kerja Khusus — SMK Negeri 4 Banjarmasin 
         </footer>
         <!-- ============================================================== -->
         <!-- End footer -->

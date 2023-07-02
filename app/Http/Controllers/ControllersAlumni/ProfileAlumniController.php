@@ -56,6 +56,31 @@ class ProfileAlumniController extends Controller
             $yz = LowonganModel::where('id_dudi', $data->id)->count();
             $lowongan[$data->id] = $yz;
         }
+        $precentasekelengkapanprofile = [];
+        $countdata = 0;
+            $statusAlumnidata = StatusAlumniModel::where('nisn', $dataAlumni->nisn)->first();
+            $userAlumniData = User::find($dataAlumni->user_id)->first();
+            if ($dataAlumni->nisn != null) {$countdata++;}
+            if ($dataAlumni->nis != null) {$countdata++;}
+            if ($dataAlumni->nama != null) {$countdata++;}
+            if ($dataAlumni->no_hp != null) {$countdata++;}
+            if ($dataAlumni->biografi != null) {$countdata++;}
+            if ($dataAlumni->agamaId != null) {$countdata++;}
+            if ($dataAlumni->jenis_kelaminId != null) {$countdata++;}
+            if ($dataAlumni->alamat != null) {$countdata++;}
+            if ($dataAlumni->tempatTanggalLahir != null) {$countdata++;}
+            if ($dataAlumni->photo_profile != null) {$countdata++;}
+            if ($dataAlumni->transkrip_nilai != null) {$countdata++;}
+            if ($dataAlumni->kode_jurusanId != null) {$countdata++;}
+            if ($dataAlumni->kode_lulusId != null) {$countdata++;}
+            if ($statusAlumnidata->status_bekerja != null) {$countdata++;}
+            if ($statusAlumnidata->status_pendidikan != null) {$countdata++;}
+            if ($userAlumniData->name != null) {$countdata++;}
+            if ($userAlumniData->email != null) {$countdata++;}
+            if ($userAlumniData->password != null) {$countdata++;}
+            $countprecentase = ($countdata/18)*100;
+            $tostringpresentase = sprintf("%.0f", $countprecentase)."%";
+            $precentasekelengkapanprofile = $tostringpresentase;
         if (Auth::user()->hasRole('alumni')) {
             return view('alumni.dashboard', [
                 'dataAlumni' => $dataAlumni,
@@ -70,7 +95,8 @@ class ProfileAlumniController extends Controller
                 'lowongan' => LowonganModel::with('dudi')->paginate(10),
                 "datadudi" => $datadudi,
                 "countlowongan" => $lowongan,
-                'category' => CategoryModel::all()
+                'category' => CategoryModel::all(),
+                'precentasedata' => $precentasekelengkapanprofile
             ]);
         }
     }

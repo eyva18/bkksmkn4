@@ -21,6 +21,8 @@
     <link rel="icon" type="image/png" href="{{ URL::asset('images/homepage/logo.png') }}">
     {{-- Trix --}}
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
+    <!-- Taufiq Ari Rahman Was Here -->
+
 </head>
 
 <body>
@@ -110,7 +112,7 @@
                         <div class="d-sm-flex justify-content-center justify-content-sm-between">
                             <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">© 2023 - 2024
                                 Bursa Kerja Khusus — <a href="https://smkn4bjm.sch.id/" target="_blank">SMK Negeri 4
-                                    Banjarmasin</a> by Taufiq Ari Rahman & Husain Ali Ridha</span>
+                                    Banjarmasin</a>  </span>
                         </div>
                     </div>
                 </footer>

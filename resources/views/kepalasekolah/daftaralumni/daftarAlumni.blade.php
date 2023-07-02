@@ -87,6 +87,9 @@
                     <div class="card border-top-black-300 mt-5">
                         <div class="col-md-12 p-4">
                             <h4 class="card-title">{{ $alumni->nama }}</h4>
+                            <p class="card-description text-primary">
+                                Kelengkapan Profile {{ $percentasaeprofile[$alumni->nisn] }}
+                            </p>
                             <ul class="list-unstyled">
                                 <li class="media d-flex align-items-start company-show">
                                     <img class="d-flex me-3 logo-company"

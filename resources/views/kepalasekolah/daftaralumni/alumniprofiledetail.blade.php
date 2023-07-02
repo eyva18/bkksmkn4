@@ -57,6 +57,30 @@
                 </div>
             </div>
         </div>
+        <div class="row mb-3">
+            <div class="col-sm-12 grid-margin stretch-card">
+                <div class="card text-bg-dark mb-3" style="max-width: 18rem;">
+                    <div class="card-header bg-dark">
+                        <h5 class="fw-bold pt-2 fs-4 text-light">Kegiatan Alumni Sekarang
+                            
+                        </h5>
+                    </div>
+                    <div class="card-body bg-dark text-light">
+                        <p class="card-text"><i class="mdi mdi-bookmark-check  text-light"></i> <span
+                                class="status-alumni">{{ $dataStatusAlumni->StatusBekerja->status_bekerja }}</span></p>
+                        <p class="card-text"><i class="mdi mdi-bookmark-check  text-light"></i> <span
+                                class="status-alumni">{{ $dataStatusAlumni->StatusPendidikan->status_pendidikan }}</span>
+                        </p>
+                        <hr>
+                        <p class="card-text"><b>Rincian</b></p>
+                        <p class="card-text"><i class="mdi mdi-office-building text-light"></i> <span
+                            class="status-alumni">{{ $dataStatusAlumni->perusahaan ?? '-' }}</span></p>
+                        <p class="card-text"><i class="mdi mdi-chair-school text-light"></i> <span
+                                class="status-alumni">{{ $dataStatusAlumni->universitas ?? '-' }}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="col-sm-8 flex-column d-flex stretch-card">
         <div class="row">

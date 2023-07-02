@@ -91,11 +91,39 @@ class KepalaSekolahController extends Controller
     {
         $dataUser = KepalaSekolahModel::with('user')->where('user_id', Auth()->user()->id)->first();
         $Alumnidata = AlumniModel::paginate(9);
+        $precentasekelengkapanprofile = [];
+        $countdata = 0;
+        foreach ($Alumnidata as $data) {
+            $statusAlumnidata = StatusAlumniModel::where('nisn', $data->nisn)->first();
+            $userAlumniData = User::find($data->user_id)->first();
+            if ($data->nisn != null) {$countdata++;}
+            if ($data->nis != null) {$countdata++;}
+            if ($data->nama != null) {$countdata++;}
+            if ($data->no_hp != null) {$countdata++;}
+            if ($data->biografi != null) {$countdata++;}
+            if ($data->agamaId != null) {$countdata++;}
+            if ($data->jenis_kelaminId != null) {$countdata++;}
+            if ($data->alamat != null) {$countdata++;}
+            if ($data->tempatTanggalLahir != null) {$countdata++;}
+            if ($data->photo_profile != null) {$countdata++;}
+            if ($data->transkrip_nilai != null) {$countdata++;}
+            if ($data->kode_jurusanId != null) {$countdata++;}
+            if ($data->kode_lulusId != null) {$countdata++;}
+            if ($statusAlumnidata->status_bekerja != null) {$countdata++;}
+            if ($statusAlumnidata->status_pendidikan != null) {$countdata++;}
+            if ($userAlumniData->name != null) {$countdata++;}
+            if ($userAlumniData->email != null) {$countdata++;}
+            if ($userAlumniData->password != null) {$countdata++;}
+            $countprecentase = ($countdata/18)*100;
+            $tostringpresentase = sprintf("%.0f", $countprecentase)."%";
+            $precentasekelengkapanprofile[$data->nisn] = $tostringpresentase;
+        }
         return view('kepalasekolah.daftaralumni.daftarAlumni', [
             'dataKepalaSekolah' => $dataUser,
             'Alumnidata' => $Alumnidata,
             'jurusan' => JurusanModel::all(),
             'tahunlulus' => TahunLulusModel::all(),
+            "percentasaeprofile" => $precentasekelengkapanprofile,
         ]);
     }
     public function alumniprofile(AlumniModel $alumni)
@@ -105,9 +133,14 @@ class KepalaSekolahController extends Controller
         $dataPekerjaan = RiwayatPekerjaanModel::where('user_id', $alumni->user_id)->get();
         $dataSertifikasi = SertifikasiModel::where('user_id',  $alumni->user_id)->get();
         $dataSertifikasiLomba = SertifikasiLombaModel::where('user_id',  $alumni->user_id)->get();
+        $dataStatusAlumni = StatusAlumniModel::where('user_id', $alumni->user_id)->get();
+        foreach ($dataStatusAlumni as $data) {
+            $dataStatusA = $data;
+        }
         return view('kepalasekolah.daftaralumni.alumniprofiledetail', [
             'dataKepalaSekolah' => $dataUser,
             'dataAlumni' => $alumni,
+            'dataStatusAlumni' => $dataStatusA,
             'dataPendidikan' => $dataPendidikan,
             'dataPekerjaan' => $dataPekerjaan,
             'dataSertifikasi' => $dataSertifikasi,

@@ -67,7 +67,7 @@
                             <p class="text-muted mt-0 text-sm">E-Mail User</p>
                         </div>
                         <div class="col-md-8 pdt-6">
-                            <input type="text" class="form-control font-weight-normal" placeholder="E-Mail Perusahaan..."
+                            <input type="text" class="form-control font-weight-normal" placeholder="..."
                                 value="{{ $userUpdate->email }}" name="email">
                         </div>
                     </div>
@@ -78,7 +78,7 @@
                         </div>
                         <div class="col-md-8 pdt-6">
                             <input type="text" class="form-control font-weight-normal"
-                                placeholder="Username Perusahaan..." name="username" value="{{ $userUpdate->name }}">
+                                placeholder="..." name="username" value="{{ $userUpdate->name }}">
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -188,7 +188,7 @@
         <!-- footer -->
         <!-- ============================================================== -->
         <footer class="footer text-center text-muted">
-            © 2023 - 2024 Bursa Kerja Khusus — SMK Negeri 4 Banjarmasin by Taufiq Ari Rahman
+            © 2023 - 2024 Bursa Kerja Khusus — SMK Negeri 4 Banjarmasin 
         </footer>
         <!-- ============================================================== -->
         <!-- End footer -->

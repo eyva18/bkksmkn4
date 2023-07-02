@@ -697,7 +697,7 @@
         <!-- footer -->
         <!-- ============================================================== -->
         <footer class="footer text-center text-muted">
-            © 2023 - 2024 Bursa Kerja Khusus — SMK Negeri 4 Banjarmasin by Taufiq Ari Rahman
+            © 2023 - 2024 Bursa Kerja Khusus — SMK Negeri 4 Banjarmasin 
         </footer>
         <!-- ============================================================== -->
         <!-- End footer -->

@@ -354,12 +354,39 @@ class AdminController extends Controller
         } elseif ($request->idjurusan == "Jurusan" and $request->idtahunlulus == "Tahun Lulus") {
             $dataalumni = AlumniModel::where('nama', 'like', "%" . $request->nama_alumni . "%")->latest()->paginate(25);
         }
-
+        $precentasekelengkapanprofile = [];
+        $countdata = 0;
+        foreach ($dataalumni as $data) {
+            $statusAlumnidata = StatusAlumniModel::where('nisn', $data->nisn)->first();
+            $userAlumniData = User::find($data->user_id)->first();
+            if ($data->nisn != null) {$countdata++;}
+            if ($data->nis != null) {$countdata++;}
+            if ($data->nama != null) {$countdata++;}
+            if ($data->no_hp != null) {$countdata++;}
+            if ($data->biografi != null) {$countdata++;}
+            if ($data->agamaId != null) {$countdata++;}
+            if ($data->jenis_kelaminId != null) {$countdata++;}
+            if ($data->alamat != null) {$countdata++;}
+            if ($data->tempatTanggalLahir != null) {$countdata++;}
+            if ($data->photo_profile != null) {$countdata++;}
+            if ($data->transkrip_nilai != null) {$countdata++;}
+            if ($data->kode_jurusanId != null) {$countdata++;}
+            if ($data->kode_lulusId != null) {$countdata++;}
+            if ($statusAlumnidata->status_bekerja != null) {$countdata++;}
+            if ($statusAlumnidata->status_pendidikan != null) {$countdata++;}
+            if ($userAlumniData->name != null) {$countdata++;}
+            if ($userAlumniData->email != null) {$countdata++;}
+            if ($userAlumniData->password != null) {$countdata++;}
+            $countprecentase = ($countdata/18)*100;
+            $tostringpresentase = sprintf("%.0f", $countprecentase)."%";
+            $precentasekelengkapanprofile[$data->nisn] = $tostringpresentase;
+        }
         return view('admin.daftar.alumni.alumni', [
             'Alumni' => $Alumni,
             "dataalumni" => $dataalumni,
             "datajurusan" => JurusanModel::all(),
-            "datatahunlulus" => TahunLulusModel::all()
+            "datatahunlulus" => TahunLulusModel::all(),
+            "percentasaeprofile" => $precentasekelengkapanprofile,
         ]);
     }
 

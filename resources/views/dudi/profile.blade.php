@@ -171,12 +171,12 @@
                             <div class="row mrt-6">
                                 <div class="col-md-4">
                                     <h4 class="text-black m-0">Username<span class="text-red"> *</span></h4>
-                                    <p class="text-muted mt-0 text-sm">Username Perusahaan</p>
+                                    <p class="text-muted mt-0 text-sm"></p>
                                 </div>
                                 <div class="col-md-8 pdt-6">
                                     <input type="text"
                                         class="form-control font-weight-normal @error('username') is-invalid @enderror"
-                                        placeholder="Username Perusahaan..." name="username"
+                                        placeholder="..." name="username"
                                         value="{{ old('username', $dataUser->name) }}">
                                     @error('username')
                                         <div class="invalid-feedback">
@@ -188,12 +188,12 @@
                             <div class="row pdt-20">
                                 <div class="col-md-4">
                                     <h4 class="text-black m-0">E-Mail<span class="text-red"> *</span></h4>
-                                    <p class="text-muted mt-0 text-sm">E-Mail Perusahaan</p>
+                                    <p class="text-muted mt-0 text-sm"></p>
                                 </div>
                                 <div class="col-md-8 pdt-6">
                                     <input type="email"
                                         class="form-control font-weight-normal @error('email') is-invalid @enderror"
-                                        placeholder="E-Mail Perusahaan..." name="email"
+                                        placeholder="..." name="email"
                                         value="{{ old('email', $dataUser->email) }}">
                                     @error('email')
                                         <div class="invalid-feedback">

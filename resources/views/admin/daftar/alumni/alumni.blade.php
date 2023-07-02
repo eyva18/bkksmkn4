@@ -97,6 +97,9 @@
                         <div class="card border-top-300">
                             <div class="col-md-12 p-4">
                                 <h4 class="card-title">{{ $alumni->nama ?? '-' }}</h4>
+                                <p class="card-description text-primary">
+                                    Kelengkapan Profile {{ $percentasaeprofile[$alumni->nisn] }}
+                                </p>
                                 <ul class="list-unstyled">
                                     <li class="media d-flex align-items-start alumni-show">
                                         <img class="d-flex me-3 logo-alumni"
@@ -171,7 +174,7 @@
         <!-- footer -->
         <!-- ============================================================== -->
         <footer class="footer text-center text-muted">
-            © 2023 - 2024 Bursa Kerja Khusus — SMK Negeri 4 Banjarmasin by Taufiq Ari Rahman
+            © 2023 - 2024 Bursa Kerja Khusus — SMK Negeri 4 Banjarmasin 
         </footer>
         <!-- ============================================================== -->
         <!-- End footer -->

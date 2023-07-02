@@ -60,26 +60,32 @@
                                     class="status-alumni">{{ $dataAlumni->Jenis_Kelamin->jenis_kelamin ?? '-'}}</span></p>
                             <p class="card-text"><i class="mdi mdi-phone text-light"></i> <span
                                     class="status-alumni">{{ $dataAlumni->no_hp ?? '-'}}</span></p>
+                            <p class="btn btn-primary">Kelengkapan Profile Anda {{ $precentasedata }}</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row mb-3">
+            <div class="row mb-3">  
                 <div class="col-sm-12 grid-margin stretch-card">
                     <div class="card text-bg-dark mb-3" style="max-width: 18rem;">
                         <div class="card-header bg-dark">
-                            <h5 class="fw-bold pt-2 fs-4 text-light">Status Alumni</h5>
+                            <h5 class="fw-bold pt-2 fs-4 text-light">Kegiatan Alumni Sekarang
+                                
+                            </h5>
                         </div>
                         <div class="card-body bg-dark text-light">
-                            <p class="card-text"><i class="mdi mdi-office text-light"></i> <span
+                            <p class="card-text"><i class="mdi mdi-bookmark-check  text-light"></i> <span
                                     class="status-alumni">{{ $dataStatusAlumni->StatusBekerja->status_bekerja }}</span></p>
-                            <p class="card-text"><i class="mdi mdi-school text-light"></i> <span
+                            <p class="card-text"><i class="mdi mdi-bookmark-check  text-light"></i> <span
                                     class="status-alumni">{{ $dataStatusAlumni->StatusPendidikan->status_pendidikan }}</span>
                             </p>
+                            <hr>
+                            <p class="card-text"><b>Rincian</b></p>
+                            <p class="card-text"><i class="mdi mdi-office-building text-light"></i> <span
+                                class="status-alumni">{{ $dataStatusAlumni->perusahaan ?? '-' }}</span></p>
                             <p class="card-text"><i class="mdi mdi-chair-school text-light"></i> <span
                                     class="status-alumni">{{ $dataStatusAlumni->universitas ?? '-' }}</span></p>
-                            <p class="card-text"><i class="mdi mdi-office-building text-light"></i> <span
-                                    class="status-alumni">{{ $dataStatusAlumni->perusahaan ?? '-' }}</span></p>
+                            <a href="/profile/{{ $dataAlumni->nama }}" class="btn btn-primary">Edit</a>
                         </div>
                     </div>
                 </div>

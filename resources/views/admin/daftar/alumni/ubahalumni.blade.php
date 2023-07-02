@@ -290,7 +290,7 @@
                 <div class="card-body collapse show">
                     <div class="row">
                         <div class="col-md-9">
-                            <h3 class="card-title">Status Alumni</h3>
+                            <h3 class="card-title">Kegiatan Alumni Sekarang</h3>
                         </div>
                     </div>
                     <div class="row mrt-6">
@@ -439,7 +439,7 @@
         <!-- footer -->
         <!-- ============================================================== -->
         <footer class="footer text-center text-muted">
-            © 2023 - 2024 Bursa Kerja Khusus — SMK Negeri 4 Banjarmasin by Taufiq Ari Rahman
+            © 2023 - 2024 Bursa Kerja Khusus — SMK Negeri 4 Banjarmasin 
         </footer>
         <!-- ============================================================== -->
         <!-- End footer -->
