@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('riwayat_pendidikan', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('nisn');
+            $table->string('nisn');
             $table->string('nama_instansi')->nullable();
             $table->foreignId('jenis_pendidikan')->nullable();
             $table->float('nilai_rata_rata')->nullable();

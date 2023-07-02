@@ -81,7 +81,7 @@
                         <div class="card-body collapse show">
                             <div class="row">
                                 <div class="col-md-12 text-center mt-3">
-                                    <h4 class="card-title">Lowongan Tidak Tersedia</h4>
+                                    <h4 class="card-title">Tidak Tersedia</h4>
                                 </div>
                             </div>
                         </div>

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('riwayat_pekerjaan', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('nisn');
+            $table->string('nisn');
             $table->string('nama_perusahaan');
             $table->foreignId('jenis_pekerjaan');
             $table->string('bidang');

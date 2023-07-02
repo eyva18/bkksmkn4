@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('status_alumni', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('nisn')->nullable();
+            $table->string('nisn')->nullable();
             $table->foreignId('jurusan')->nullable();
             $table->foreignId('tahun_lulus')->nullable();
             $table->foreignId('status_bekerja')->nullable();
