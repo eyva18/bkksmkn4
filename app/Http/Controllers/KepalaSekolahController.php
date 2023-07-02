@@ -94,6 +94,7 @@ class KepalaSekolahController extends Controller
         $precentasekelengkapanprofile = [];
         $countdata = 0;
         foreach ($Alumnidata as $data) {
+            $countdata = 0;
             $statusAlumnidata = StatusAlumniModel::where('nisn', $data->nisn)->first();
             $userAlumniData = User::find($data->user_id)->first();
             if ($data->nisn != null) {$countdata++;}
